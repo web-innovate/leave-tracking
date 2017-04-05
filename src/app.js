@@ -1,11 +1,14 @@
 export class App {
-  constructor() {
-    this.user = {
-        name: 'Awesome name'
-    }
+    configureRouter(config, router){
+      config.title = 'Aurelia';
 
-    this.company = {
-        logo: 'http://www.issco.ro/wp-content/uploads/2013/11/issco_logo.png'
-    }
-  }
+      config.map([
+         { route: ['','home'],  name: 'home',
+            moduleId: './dash',  nav: true, title:'Home' },
+         { route: 'profile',  name: 'about',
+            moduleId: './profile',    nav: true, title:'Profile' }
+      ]);
+
+      this.router = router;
+   }
 }
