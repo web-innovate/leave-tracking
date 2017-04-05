@@ -7,7 +7,7 @@
     "url": "???"
   },
   "scripts": {
-    "start": "npm install && node_modules/aurelia-cli/bin/aurelia-cli.js build && node server.js"
+    "start": "npm install && au build --env dev && node server.js"
   },
   "license": "MIT",
   "dependencies": {
