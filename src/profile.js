@@ -11,5 +11,7 @@ export class Profile {
             remaining: 10,
             taken: 14
         }
+
+        console.log('user', this.user);
     }
 }
