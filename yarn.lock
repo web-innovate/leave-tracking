@@ -353,6 +353,13 @@ aurelia-history@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/aurelia-history/-/aurelia-history-1.0.0.tgz#3b3a47eea34a2c2cb17e46d4fbe3565fa7461149"
 
+aurelia-http-client@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/aurelia-http-client/-/aurelia-http-client-1.1.1.tgz#9eaa96485c1e2ac2d9584f427ee5efd94f962867"
+  dependencies:
+    aurelia-pal "^1.0.0"
+    aurelia-path "^1.0.0"
+
 aurelia-loader-default@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/aurelia-loader-default/-/aurelia-loader-default-1.0.2.tgz#0bacb0a0e06ea4a8f21d356e236e0c90b2634615"
@@ -383,6 +390,10 @@ aurelia-metadata@^1.0.0:
   resolved "https://registry.yarnpkg.com/aurelia-metadata/-/aurelia-metadata-1.0.3.tgz#1e8d59da188e2871a8ad749ba42ca85084a3f30e"
   dependencies:
     aurelia-pal "^1.0.0"
+
+aurelia-oauth@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/aurelia-oauth/-/aurelia-oauth-0.3.0.tgz#f86100ae6c3d84c76c89f303b54ef3ea3b780070"
 
 aurelia-pal-browser@^1.0.0:
   version "1.2.0"
@@ -1689,13 +1700,13 @@ debug-fabulous@0.0.X:
     lazy-debug-legacy "0.0.X"
     object-assign "4.1.0"
 
-debug@2.2.0, debug@^2.2.0, debug@~2.2.0:
+debug@2.2.0, debug@~2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.2.0.tgz#f87057e995b1a1f6ae6a4960664137bc56f039da"
   dependencies:
     ms "0.7.1"
 
-debug@2.3.3, debug@2.X, debug@^2.1.1:
+debug@2.3.3:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.3.3.tgz#40c453e67e6e13c901ddec317af8986cda9eff8c"
   dependencies:
@@ -1707,7 +1718,7 @@ debug@2.6.1:
   dependencies:
     ms "0.7.2"
 
-debug@2.6.3:
+debug@2.6.3, debug@2.X, debug@^2.1.1, debug@^2.2.0:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.3.tgz#0f7eb8c30965ec08c72accfa0130c8b79984141d"
   dependencies:
