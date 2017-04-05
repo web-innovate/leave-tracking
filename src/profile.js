@@ -1,5 +1,5 @@
 export class Profile {
-	constructor() {
-		console.log('initted profile')
-	}
+    constructor() {
+        console.log('initted profile')
+    }
 }
