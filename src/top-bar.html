@@ -12,14 +12,18 @@
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
+                    <li show.bind="auth.isLogged"
+                        class="dropdown">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
                             <i class="glyphicon glyphicon-user"></i> ${user.name} <span class="caret"></span>
                         </a>
                             <ul id="g-account-menu" class="dropdown-menu" role="menu">
                                 <li><a href="#/profile">My Profile</a></li>
-                                <li><a href="#"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
+                                <li><a click.delegate="auth.logout()"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
                             </ul>
+                    </li>
+                    <li show.bind="!auth.isLogged" class="dropdown">
+                        <a click.delegate="auth.login()">Login</a>
                     </li>
                 </ul>
             </div>

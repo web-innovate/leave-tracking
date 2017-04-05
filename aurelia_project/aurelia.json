@@ -98,6 +98,7 @@
         ],
         "dependencies": [
           "aurelia-binding",
+          "aurelia-http-client",
           "aurelia-bootstrapper",
           "aurelia-dependency-injection",
           "aurelia-event-aggregator",
@@ -143,6 +144,14 @@
             "main": "index",
             "resources": [
               "**/*.html"
+            ]
+          },
+                    {
+            "name": "aurelia-oauth",
+            "path": "../node_modules/aurelia-oauth/dist/amd",
+            "main": "aurelia-oauth",
+            "resources": [
+              "**/*.js"
             ]
           },
           "jquery",

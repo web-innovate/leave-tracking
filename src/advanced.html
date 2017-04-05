@@ -4,6 +4,16 @@
         <hr>
 
         <div class="row">
+
+        <button
+            show.bind="!auth.isLogged"
+            class="btn btn-block btn-google-plus"
+            click.delegate="auth.login()">
+
+          <span show.bind="!auth.isLogged">Sign in with Google</span>
+        </button>
+        <span show.bind="auth.isLogged">You're in :)</span>
+
         </div>
     </div>
 </template>
