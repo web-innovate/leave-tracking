@@ -1,3 +1,32 @@
 <template>
-    <h1>Profile data</h1>
+    <div class="col-sm-9">
+        <h3><i class="glyphicon glyphicon-dashboard"></i> Profile</h3>
+        <hr>
+
+        <div class="row">
+            <div class="panel panel-info">
+            <div class="panel-heading"><h3 class="panel-title">${user.name}</h3>
+            <div class="span2" style="margin-top:-25px; float:right;">
+            </div>
+        </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-3 col-lg-3 " align="center">
+                    <img alt="User Pic" src="${user.avatar}" class="img-circle img-responsive">
+                </div>
+                <div class=" col-md-9 col-lg-9 "> 
+                  <ul>
+                      <li>Department: ${user.department}</li>
+                      <li>Project: ${user.project}</li>
+                      <li>Total days/year: ${user.totalDaysPerYear}</li>
+                      <li>Remaining days: ${user.remaining}</li>
+                      <li>Taken days: ${user.taken}</li>
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
 </template>
