@@ -16,6 +16,20 @@ export class App {
                 moduleId: './profile',
                 nav: true,
                 title:'Profile'
+            },
+            {
+                route: 'reports',
+                name: 'reports',
+                moduleId: './reports',
+                nav: true,
+                title:'Reports'
+            },
+            {
+                route: 'advanced',
+                name: 'advanced',
+                moduleId: './advanced',
+                nav: true,
+                title:'Advanced'
             }
         ]);
 
