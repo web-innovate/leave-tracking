@@ -16,7 +16,7 @@ export class App {
                 moduleId: './profile',
                 nav: true,
                 title:'Profile',
-                settings: { requireLogin: true }
+                // settings: { requireLogin: true }
             },
             {
                 route: 'reports',

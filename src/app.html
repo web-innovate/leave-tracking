@@ -1,13 +1,13 @@
 <template>
     <require from="bootstrap/css/bootstrap.css"></require>
     <require from="./dash"></require>
-    <require from="./top-bar"></require>
-    <require from="./side-bar.html"></require>
+    <require from="./navs/top-nav"></require>
+    <require from="./navs/side-nav.html"></require>
 
-    <top-bar></top-bar>
+    <top-nav></top-nav>
 
     <div class="container">
-        <side-bar router.bind="router"></side-bar>
+        <side-nav router.bind="router"></side-nav>
         <div class="page-host">
             <router-view></router-view>
         </div>
