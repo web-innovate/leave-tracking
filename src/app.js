@@ -13,7 +13,7 @@ export class App {
             {
                 route: 'profile',
                 name: 'about',
-                moduleId: './profile',
+                moduleId: './profile/profile',
                 nav: true,
                 title:'Profile',
                 // settings: { requireLogin: true }
@@ -26,11 +26,11 @@ export class App {
                 title:'Reports'
             },
             {
-                route: 'advanced',
-                name: 'advanced',
-                moduleId: './advanced',
+                route: 'add-request',
+                name: 'add-request',
+                moduleId: './add-request/add-request',
                 nav: true,
-                title:'Advanced'
+                title:'Add request'
             }
         ]);
 

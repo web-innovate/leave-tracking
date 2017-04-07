@@ -97,6 +97,9 @@
           "node_modules/requirejs/require.js"
         ],
         "dependencies": [
+          "moment-business",
+          "nearest-periodic-value",
+          "contained-periodic-values",
           "aurelia-binding",
           "aurelia-http-client",
           "aurelia-bootstrapper",
@@ -138,6 +141,14 @@
           },
           "velocity-animate",
           "tether",
+                    {
+            "name": "aurelia-validation",
+            "path": "../node_modules/aurelia-validation/dist/amd",
+            "main": "aurelia-validation.js",
+            "resources": [
+              "**/*.js"
+            ]
+          },
           {
             "name": "aurelia-bootstrap",
             "path": "../node_modules/aurelia-bootstrap/dist/amd",
@@ -146,7 +157,7 @@
               "**/*.html"
             ]
           },
-                    {
+          {
             "name": "aurelia-oauth",
             "path": "../node_modules/aurelia-oauth/dist/amd",
             "main": "aurelia-oauth",
@@ -159,12 +170,31 @@
             "name": "bootstrap",
             "path": "../node_modules/bootstrap/dist",
             "main": "js/bootstrap.min",
-            "deps": ["jquery"],
+            "deps": [
+              "jquery"
+            ],
             "exports": "$",
             "resources": [
-            "css/bootstrap.css"
+              "css/bootstrap.css"
             ]
-          }
+          },
+          {
+            "name": "eonasdan-bootstrap-datetimepicker",
+            "path": "../node_modules/eonasdan-bootstrap-datetimepicker/build",
+            "main": "js/bootstrap-datetimepicker.min",
+            "resources": [
+              "css/bootstrap-datetimepicker.min.css"
+            ]
+          },
+          {
+            "name": "aurelia-bootstrap-datetimepicker",
+            "path": "../node_modules/aurelia-bootstrap-datetimepicker/dist/amd",
+            "main": "index",
+            "resources": [
+              "**/*.{css,html}"
+            ]
+          },
+          "moment"
         ]
       }
     ],
