@@ -13,7 +13,7 @@ export class Dash {
     }
 
     leaveRequests() {
-        return this.api.getLeaveRequests().then( result => this.allRequests = result);
+        return this.api.getLeaveRequests().then(result => this.allRequests = result);
     }
 
     computeBadge(requestStatus) {

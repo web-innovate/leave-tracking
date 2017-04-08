@@ -24,7 +24,9 @@ export class Api {
 
     getLeaveRequests() {
         return new Promise((resolve, reject) => {
-            resolve(this.leaveRequests);
+            setTimeout(() => {
+                resolve(this.leaveRequests);
+            }, 2000);
         });
     }
 
