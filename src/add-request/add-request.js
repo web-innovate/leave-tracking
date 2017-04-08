@@ -1,38 +1,29 @@
-import { bindable, inject, ObserverLocator } from 'aurelia-framework';
+import { bindable, inject } from 'aurelia-framework';
+import { Api } from '../api/api';
 import moment from 'moment'
 import business from 'moment-business';
 
 
-@inject(ObserverLocator)
+@inject(Api)
 export class AddRequest {
     @bindable sPick;
     @bindable ePick;
 
+    constructor(api) {
+        this.api = api;
+    }
+
+    start = moment().toDate();
+    end = moment().toDate();
+
     pickerOptions = {
-        daysOfWeekDisabled: [0, 6],
+        daysOfWeekDisabled: [0, 6], // we disable saturday & sunday
         format: 'YYYY-MM-DD',
-        showTodayButton: true,
-        minDate: moment.now(),
+        minDate: moment().toDate(),
         widgetPositioning: {
             horizontal: 'left'
         }
     };
-
-    start = '';
-    end = '';
-
-
-    constructor(observer) {
-        this.observer = observer;
-        const subscription = this.observer
-        .getObserver(this, 'end')
-        .subscribe(this.leaveChanged);
-    }
-
-    leaveChanged(newVal, oldVal) {
-        console.log('newVal', newVal)
-        console.log('oldVal', oldVal)
-    }
 
     sPickChanged() {
         this.sPick.events.onChange = (e) => {
@@ -48,8 +39,8 @@ export class AddRequest {
     }
 
     computeDiff(start, end) {
-        const fr = moment(end, 'YYYY-MM-DD');
-        const to = moment(start, 'YYYY-MM-DD');
+        const fr = moment(end);
+        const to = moment(start);
 
 
         this.dateDiff = business.weekDays(to,fr);
@@ -57,10 +48,24 @@ export class AddRequest {
         if (this.dateDiff < 0) {
             this.computeDiff(this.start, this.end)
         }
-
     }
 
     get canSave() {
         return this.start && this.end && this.dateDiff > 0;
+    }
+
+    submit() {
+        if (this.canSave) {
+            console.log('adding', this.start, this.end, this.dateDiff)
+            this.api.addLeaveRequest({
+                start: this.start,
+                end: this.end,
+                workDays: this.dateDiff
+            });
+
+            this.start = moment().toDate();
+            this.end = moment().toDate();
+            this.computeDiff(this.start, this.end)
+        }
     }
 }

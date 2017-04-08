@@ -1,6 +1,6 @@
 <template>
     <div class="col-sm-9">
-        <h3><i class="glyphicon glyphicon-dashboard"></i> Dashboard for: ${company.name}</h3>
+        <h3><i class="glyphicon glyphicon-dashboard"></i> Dashboard</h3>
         <hr>
 
         <div class="row">
@@ -10,21 +10,13 @@
                     <div class="panel-heading"><h4>Recent requests</h4></div>
                     <div class="panel-body">
                         <ul class="list-group">
-                            <li class="list-group-item list-group-item-success">
-                                Dapibus ac facilisis in
-                                <span class="badge badge-pill ">Approved</span>
-                            </li>
-                            <li class="list-group-item list-group-item-info">
-                                Cras sit amet nibh libero
-                                <span class="badge badge-pill">Pending</span>
-                            </li>
-                            <li class="list-group-item list-group-item-warning">
-                                Porta ac consectetur ac
-                                <span class="badge badge-pill">Question ?</span>
-                            </li>
-                            <li class="list-group-item list-group-item-danger">
-                                Vestibulum at eros
-                                <span class="badge badge-pill">Rejected</span>
+                            <li repeat.for="request of allRequests"
+                                class="list-group-item ${computeBadge(request.status)}">
+                                <span>
+                                    ${request.workDays} ${request.workDays > 1 ? 'Days' : 'Day'} |
+                                </span>
+                                ${request.start | dateFormat} - ${request.end | dateFormat}
+                                <span class="badge badge-pill">${request.status}</span>
                             </li>
                         </ul>
                     </div>

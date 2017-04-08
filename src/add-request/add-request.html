@@ -4,7 +4,7 @@
         <h3><i class="glyphicon glyphicon-plus"></i> Add a new leave request here</h3>
         <hr>
 
-        <form>
+        <form submit.delegate = "submit()">
             <div class="form-group">
                 <label>Start date</label>
 
@@ -37,8 +37,7 @@
 
             <button
                 class="btn btn-primary ${canSave ? '' : 'disabled'}"
-                type="submit"
-                submit.delegate="submit()">
+                type="submit">
                 Submit
             </button>
         </form>
