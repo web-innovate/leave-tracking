@@ -1,6 +1,6 @@
 export class App {
     configureRouter(config, router){
-        config.title = 'Aurelia';
+        config.title = 'Leave tracker';
 
         config.map([
             {

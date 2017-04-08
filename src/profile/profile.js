@@ -1,17 +1,16 @@
-export class Profile {
-    constructor() {
-        this.user = {
-            name: 'my awesome name',
-            place: 'romanica',
-            email: 'my@awesome.list',
-            avatar: 'http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png',
-            department: 'QA/DEV/Lead',
-            project: 'Bamboo',
-            totalDaysPerYear: 24,
-            remaining: 10,
-            taken: 14
-        }
+import { inject } from 'aurelia-framework';
+import { UserService } from '../services/user-service';
 
-        console.log('user', this.user);
+@inject(UserService)
+export class Profile {
+    constructor(userService) {
+        this.user = {};
+        this.userLoaded = false;
+        this.userService = userService;
+
+        this.userService.getUser().then(user => {
+            this.user = user;
+            this.userLoaded = true;
+        });
     }
 }
