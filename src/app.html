@@ -3,12 +3,10 @@
     <require from="./style.css"></require>
     <require from="./dash"></require>
     <require from="./navs/top-nav"></require>
-    <require from="./navs/side-nav.html"></require>
 
-    <top-nav></top-nav>
+    <top-nav router.bind="router"></top-nav>
 
     <div class="container">
-        <side-nav router.bind="router"></side-nav>
         <div class="page-host">
             <router-view></router-view>
         </div>

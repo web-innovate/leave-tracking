@@ -1,10 +1,12 @@
-import {inject} from 'aurelia-framework';
-import {DialogService} from 'aurelia-dialog';
-import {UserService} from '../services/user-service';
-import {Profile} from '../profile/profile';
+import { inject, bindable } from 'aurelia-framework';
+import { DialogService } from 'aurelia-dialog';
+import { UserService } from '../services/user-service';
+import { Profile } from '../profile/profile';
 
 @inject(UserService, DialogService)
 export class TopNav {
+    @bindable router;
+
   constructor(userService, dialogService) {
     this.user = {};
     this.userService = userService;

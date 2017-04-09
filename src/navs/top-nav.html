@@ -1,16 +1,20 @@
 <template>
-    <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-toggle"></span>
-                </button>
-                <div class="navbar-brand">
-                    <span>${company.name}</span>
-                </div>
-            </div>
-
             <div class="navbar-collapse collapse">
+               <ul class="nav navbar-nav navbar-left">
+                    <li repeat.for="row of router.navigation"
+                        class="${row.isActive ? 'active' : ''}">
+                        <a href.bind="row.href">
+                            <i class="glyphicon glyphicon-${row.settings.icon}"></i>
+                            ${row.title}</a>
+                    </li>
+
+                    <li show.bind="!auth.isLogged" class="dropdown">
+                        <a click.delegate="auth.login()">Login</a>
+                    </li>
+                </ul>
+
                 <ul class="nav navbar-nav navbar-right">
                     <li show.bind="auth.isLogged"
                         class="dropdown">
@@ -28,5 +32,5 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </nav>
 </template>

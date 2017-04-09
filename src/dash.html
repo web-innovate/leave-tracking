@@ -1,9 +1,33 @@
 <template>
-    <div class="col-sm-9">
+    <div class="col-md-12">
         <h3><i class="glyphicon glyphicon-dashboard"></i> Dashboard</h3>
         <hr>
         <div class="row">
-            <div class="col-md-12   ">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Recent requests</h4>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <spinner></spinner>
+
+                        <ul class="list-group">
+                            <li repeat.for="request of allRequests"
+                                class="list-group-item ${computeBadge(request.status)}">
+                                <span>
+                                    ${request.workDays} ${request.workDays > 1 ? 'Days' : 'Day'} |
+                                </span>
+                                ${request.start | dateFormat} - ${request.end | dateFormat}
+                                <span class="badge badge-pill">${request.status}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4>Recent requests</h4>

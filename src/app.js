@@ -8,21 +8,40 @@ export class App {
                 name: 'home',
                 moduleId: './dash',
                 nav: true,
-                title:'Home'
+                title:'Home',
+                settings: {
+                    icon: 'time'
+                }
             },
             {
                 route: 'reports',
                 name: 'reports',
                 moduleId: './reports',
                 nav: true,
-                title:'Reports'
+                title:'Reports',
+                settings: {
+                    icon: 'list-alt'
+                }
             },
             {
                 route: 'add-request',
                 name: 'add-request',
                 moduleId: './add-request/add-request',
                 nav: true,
-                title:'Add request'
+                title:'Add request',
+                settings: {
+                    icon: 'plus'
+                }
+            },
+            {
+                route: 'calendar',
+                name: 'calendar',
+                moduleId: './calendar',
+                nav: true,
+                title:'Calendar',
+                settings: {
+                    icon: 'list-alt'
+                }
             }
         ]);
 
