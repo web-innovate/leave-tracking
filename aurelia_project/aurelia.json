@@ -224,7 +224,8 @@
       "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2": "bootstrap/fonts",
       "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff": "bootstrap/fonts",
       "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf": "bootstrap/fonts",
-      "node_modules/bootstrap-calendar/tmpls/*": "bootstrap/tmpls"
+      "node_modules/bootstrap-calendar/tmpls/*": "bootstrap-calendar/tmpls",
+      "node_modules/bootstrap-calendar/img/*": "bootstrap-calendar/img"
     }
   }
 }
