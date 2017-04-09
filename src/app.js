@@ -11,14 +11,6 @@ export class App {
                 title:'Home'
             },
             {
-                route: 'profile',
-                name: 'about',
-                moduleId: './profile/profile',
-                nav: true,
-                title:'Profile',
-                // settings: { requireLogin: true }
-            },
-            {
                 route: 'reports',
                 name: 'reports',
                 moduleId: './reports',
