@@ -1,11 +1,11 @@
 import { inject } from 'aurelia-framework';
-import { Api } from './api/api';
+import { LeaveService } from './services/leave-service';
 import { REQUEST_STATUS } from './util/constants';
 
-@inject(Api)
+@inject(LeaveService)
 export class Dash {
-    constructor(api) {
-      this.api = api;
+    constructor(leaveService) {
+      this.leaveService = leaveService;
     }
 
     activate() {
@@ -13,7 +13,7 @@ export class Dash {
     }
 
     leaveRequests() {
-        return this.api.getLeaveRequests().then(result => this.allRequests = result);
+        return this.leaveService.getLeaveRequests().then(result => this.allRequests = result);
     }
 
     computeBadge(requestStatus) {

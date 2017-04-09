@@ -97,6 +97,7 @@
           "node_modules/requirejs/require.js"
         ],
         "dependencies": [
+          "underscore",
           "moment-business",
           "nearest-periodic-value",
           "contained-periodic-values",
@@ -194,14 +195,36 @@
               "**/*.{css,html}"
             ]
           },
-          "moment"
+          "moment",
+          {
+            "name": "fullcalendar",
+            "path": "../node_modules/fullcalendar/dist",
+            "main": "fullcalendar.js",
+            "resources": [
+              "*.{js,css}"
+            ]
+          },
+          {
+            "name": "bootstrap-calendar",
+            "path": "../node_modules/bootstrap-calendar",
+            "main": "js/calendar.js",
+            "resources": [
+              "css/calendar.css"
+            ]
+          },
+          {
+            "name": "aurelia-dialog",
+            "path": "../node_modules/aurelia-dialog/dist/amd",
+            "main": "aurelia-dialog"
+          }
         ]
       }
     ],
     "copyFiles": {
       "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2": "bootstrap/fonts",
       "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff": "bootstrap/fonts",
-      "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf": "bootstrap/fonts"
+      "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf": "bootstrap/fonts",
+      "node_modules/bootstrap-calendar/tmpls/*": "bootstrap/tmpls"
     }
   }
 }
