@@ -1,1 +1,1 @@
-web: npm install -g aurelia-cli && npm start
+web: au build --env dev && node server.js"
