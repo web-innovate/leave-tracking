@@ -24,6 +24,16 @@ export class App {
                 }
             },
             {
+                route: 'calendar',
+                name: 'calendar',
+                moduleId: './calendar',
+                nav: true,
+                title:'Calendar',
+                settings: {
+                    icon: 'list-alt'
+                }
+            },
+            {
                 route: 'add-request',
                 name: 'add-request',
                 moduleId: './add-request/add-request',
@@ -33,16 +43,6 @@ export class App {
                     icon: 'plus'
                 }
             },
-            {
-                route: 'calendar',
-                name: 'calendar',
-                moduleId: './calendar',
-                nav: true,
-                title:'Calendar',
-                settings: {
-                    icon: 'list-alt'
-                }
-            }
         ]);
 
         this.router = router;
