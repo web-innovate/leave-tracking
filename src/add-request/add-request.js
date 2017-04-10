@@ -2,7 +2,9 @@ import { bindable, inject } from 'aurelia-framework';
 import { LeaveService } from '../services/leave-service';
 import moment from 'moment'
 import business from 'moment-business';
+import { LEAVE_TYPES, HUMAN_LEAVE_TYPES } from '../util/constants';
 
+const { ANNUAL, SICK, PARENTING, UNPAID, STUDY, HALF_DAY } = LEAVE_TYPES;
 
 @inject(LeaveService)
 export class AddRequest {
@@ -32,12 +34,12 @@ export class AddRequest {
 
     selectedLeave = {};
     leaveTypes = [
-        { value: 'annual-leave', option: 'Annual Leave' },
-        { value: 'sick-leave', option: 'Sick Leave' },
-        { value: 'parenting-leave', option: 'Maternity\\Paternity Leave' },
-        { value: 'unpaid-leave', option: 'Study Leave' },
-        { value: 'annual-leave', option: 'Unpaid Leave' },
-        { value: 'half-day-leave', option: 'Half Day Off' }
+        { value: ANNUAL , option: HUMAN_LEAVE_TYPES[ANNUAL] },
+        { value: SICK, option: HUMAN_LEAVE_TYPES[SICK] },
+        { value: PARENTING, option: HUMAN_LEAVE_TYPES[PARENTING] },
+        { value: STUDY, option: HUMAN_LEAVE_TYPES[STUDY] },
+        { value: UNPAID, option: HUMAN_LEAVE_TYPES[UNPAID] },
+        { value: HALF_DAY, option: HUMAN_LEAVE_TYPES[HALF_DAY] }
     ];
 
     sPickChanged() {
@@ -81,6 +83,7 @@ export class AddRequest {
         if (this.canSave) {
             console.log('adding', this.start, this.end, this.dateDiff)
             this.leaveService.addLeaveRequest({
+                leaveType: this.selectedLeave[0],
                 start: this.start,
                 end: this.end,
                 workDays: this.dateDiff

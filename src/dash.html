@@ -22,6 +22,7 @@
                                 ${request.start | dateFormat}
                                 <span show.bind="showExtra(request)">
                                     - ${request.end | dateFormat}
+                                    | ${request.leaveType | humanizeLeave}
                                 </span>
                                 <span class="badge badge-pill">${request.status}</span>
                             </li>

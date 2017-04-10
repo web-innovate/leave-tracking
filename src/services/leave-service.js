@@ -50,10 +50,12 @@ export class LeaveService {
     }
 
     addLeaveRequest(request) {
-        const { start, end, workDays } = request;
+        const { start, end, workDays, leaveType } = request;
+        console.log('saving', request);
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 this.leaveRequests.push({
+                    leaveType,
                     start,
                     end,
                     workDays,
