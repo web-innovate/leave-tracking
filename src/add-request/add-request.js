@@ -35,6 +35,10 @@ export class AddRequest {
             this.start = e.date.toDate();
             this.computeDiff();
         }
+
+        this.sPick.events.onHide = (e) => {
+            this.ePick.methods.show();
+        }
     }
     ePickChanged() {
         const that = this;
