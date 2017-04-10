@@ -12,14 +12,15 @@ export class AddRequest {
     constructor(leaveService) {
         this.leaveService = leaveService;
     }
-
+    dateFormat = 'YYYY-MM-DD';
+    allowedDate = moment().subtract(1, "days").toDate();
     start = moment().toDate();
     end = moment().toDate();
 
     pickerOptions = {
         daysOfWeekDisabled: [0, 6], // we disable saturday & sunday
-        format: 'YYYY-MM-DD',
-        minDate: moment().toDate(),
+        format: this.dateFormat,
+        minDate: this.allowedDate,
         widgetPositioning: {
             horizontal: 'left'
         }
@@ -28,30 +29,34 @@ export class AddRequest {
     sPickChanged() {
         this.sPick.events.onChange = (e) => {
             this.ePick.methods.minDate(e.date);
-            this.computeDiff(e.date, this.end);
+            this.start = e.date.toDate();
+            this.computeDiff();
         }
     }
     ePickChanged() {
         const that = this;
         this.ePick.events.onChange = (e) => {
-            this.computeDiff(this.start, e.date);
+            this.end = e.date.toDate();
+            this.computeDiff();
         }
     }
 
-    computeDiff(start, end) {
-        const fr = moment(end);
-        const to = moment(start);
+    attached() {
+        this.computeDiff();
+    }
 
+    computeDiff() {
+        const fr = moment(this.start);
+        const to = moment(this.end);
 
-        this.dateDiff = business.weekDays(to,fr);
+        this.dateDiff = business.weekDays(fr,to) + 1;
 
-        if (this.dateDiff < 0) {
-            this.computeDiff(this.start, this.end)
-        }
+        console.log('from', fr)
+        console.log('to', to)
     }
 
     get canSave() {
-        return this.start && this.end && this.dateDiff > 0;
+        return this.start && this.end && this.dateDiff >= 1;
     }
 
     submit() {
@@ -65,7 +70,7 @@ export class AddRequest {
 
             this.start = moment().toDate();
             this.end = moment().toDate();
-            this.computeDiff(this.start, this.end)
+            this.computeDiff();
         }
     }
 }
