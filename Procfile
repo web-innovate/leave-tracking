@@ -1,1 +1,1 @@
-web: au build --env dev && node server.js"
+web: au build --env dev && node server.js
