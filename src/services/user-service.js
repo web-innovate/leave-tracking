@@ -1,5 +1,8 @@
+import { UserModel } from '../models/user-model';
+
 export class UserService {
     user = {
+        id: 'unu-doi-trei',
         name: 'my awesome name',
         place: 'romanica',
         email: 'my@awesome.list',
@@ -14,7 +17,7 @@ export class UserService {
     getUser() {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve(this.user);
+                resolve(new UserModel(this.user));
             }, 500)
         });
     }
