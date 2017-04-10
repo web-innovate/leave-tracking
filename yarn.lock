@@ -320,6 +320,14 @@ aurelia-bootstrap-datetimepicker@^1.0.2:
     jquery "^3.1.1"
     moment "^2.17.1"
 
+aurelia-bootstrap-select@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/aurelia-bootstrap-select/-/aurelia-bootstrap-select-0.1.1.tgz#6a50e8654951c018325e039ef2c3f57e1a62e464"
+  dependencies:
+    bootstrap "^3.3.7"
+    bootstrap-select "^1.12.2"
+    jquery "^3.1.1"
+
 aurelia-bootstrap@^0.1.17:
   version "0.1.17"
   resolved "https://registry.yarnpkg.com/aurelia-bootstrap/-/aurelia-bootstrap-0.1.17.tgz#754fd830bb7294a83f62e92bcc2fb5bd7bcfc5ac"
@@ -1291,7 +1299,13 @@ bootstrap-calendar@^0.2.4:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/bootstrap-calendar/-/bootstrap-calendar-0.2.4.tgz#4af891a0f20fdf03a86f2ebfbf867f3dc92cee6e"
 
-bootstrap@^3.3, bootstrap@^3.3.7:
+bootstrap-select@^1.12.2:
+  version "1.12.2"
+  resolved "https://registry.yarnpkg.com/bootstrap-select/-/bootstrap-select-1.12.2.tgz#58d095b3fd584b31443866fbe39b6fdd4e4e12a4"
+  dependencies:
+    jquery ">=1.8"
+
+bootstrap@3.3.7, bootstrap@^3.3, bootstrap@^3.3.7:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
 
@@ -2515,13 +2529,6 @@ fstream@^1.0.0, fstream@^1.0.10, fstream@^1.0.2, fstream@~1.0.10:
     mkdirp ">=0.5 0"
     rimraf "2"
 
-fullcalendar@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/fullcalendar/-/fullcalendar-3.3.1.tgz#e8d458d64b7dcb5ba70ce890dda2488b8911539a"
-  dependencies:
-    jquery "2 - 3"
-    moment "^2.9.0"
-
 gaia-tsort@*:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/gaia-tsort/-/gaia-tsort-0.1.0.tgz#c9ed461ff096e12b8662dd06c41efa6101d7e840"
@@ -3296,7 +3303,7 @@ jodid25519@^1.0.0:
   dependencies:
     jsbn "~0.1.0"
 
-"jquery@2 - 3", "jquery@^1.8.3 || ^2.0 || ^3.0", jquery@^3.1.1, jquery@^3.2.1:
+jquery@>=1.8, "jquery@^1.8.3 || ^2.0 || ^3.0", jquery@^3.1.1, jquery@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
@@ -3878,7 +3885,7 @@ moment-timezone@^0.4.0:
   dependencies:
     moment ">= 2.6.0"
 
-"moment@>= 2.6.0", moment@^2.10, moment@^2.17.1, moment@^2.9.0:
+"moment@>= 2.6.0", moment@^2.10, moment@^2.17.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 

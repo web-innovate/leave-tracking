@@ -159,6 +159,20 @@
             ]
           },
           {
+            "name": "bootstrap-select",
+            "path": "../node_modules/bootstrap-select/dist",
+            "main": "js/bootstrap-select.min",
+            "resources": [
+              "css/bootstrap-select.min.css"
+            ]
+          },
+          {
+            "name": "aurelia-bootstrap-select",
+            "path": "../node_modules/aurelia-bootstrap-select/dist/amd",
+            "main": "index",
+            "resources": ["**/*.{css,html}"]
+          },
+          {
             "name": "aurelia-oauth",
             "path": "../node_modules/aurelia-oauth/dist/amd",
             "main": "aurelia-oauth",
@@ -196,14 +210,6 @@
             ]
           },
           "moment",
-          {
-            "name": "fullcalendar",
-            "path": "../node_modules/fullcalendar/dist",
-            "main": "fullcalendar.js",
-            "resources": [
-              "*.{js,css}"
-            ]
-          },
           {
             "name": "bootstrap-calendar",
             "path": "../node_modules/bootstrap-calendar",

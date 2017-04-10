@@ -12,6 +12,7 @@ export class AddRequest {
     constructor(leaveService) {
         this.leaveService = leaveService;
     }
+
     dateFormat = 'YYYY-MM-DD';
     allowedDate = moment().subtract(1, "days").toDate();
     start = moment().toDate();
@@ -28,6 +29,16 @@ export class AddRequest {
             horizontal: 'left'
         }
     };
+
+    selectedLeave = {};
+    leaveTypes = [
+        { value: 'annual-leave', option: 'Annual Leave' },
+        { value: 'sick-leave', option: 'Sick Leave' },
+        { value: 'parenting-leave', option: 'Maternity\\Paternity Leave' },
+        { value: 'unpaid-leave', option: 'Study Leave' },
+        { value: 'annual-leave', option: 'Unpaid Leave' },
+        { value: 'half-day-leave', option: 'Half Day Off' }
+    ];
 
     sPickChanged() {
         this.sPick.events.onChange = (e) => {

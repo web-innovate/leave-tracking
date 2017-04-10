@@ -7,6 +7,7 @@ export function configure(aurelia) {
       .plugin('aurelia-bootstrap', config => config.options.version = 4)
       .plugin('aurelia-bootstrap-datetimepicker')
       .plugin('aurelia-validation')
+      .plugin('aurelia-bootstrap-select')
       .plugin('aurelia-dialog', config => {
         config.settings.lock = false;
         config.settings.enableEscClose = true;
