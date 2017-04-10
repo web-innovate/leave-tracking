@@ -19,7 +19,10 @@
                                 <span>
                                     ${request.workDays} ${request.workDays > 1 ? 'Days' : 'Day'} |
                                 </span>
-                                ${request.start | dateFormat} - ${request.end | dateFormat}
+                                ${request.start | dateFormat}
+                                <span show.bind="showExtra(request)">
+                                    - ${request.end | dateFormat}
+                                </span>
                                 <span class="badge badge-pill">${request.status}</span>
                             </li>
                         </ul>

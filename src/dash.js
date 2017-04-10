@@ -26,4 +26,8 @@ export class Dash {
                 return 'list-group-item-info';
         }
     }
+
+    showExtra(extra) {
+        return extra.workDays > 1 ? true : false;
+    }
 }
