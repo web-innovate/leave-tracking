@@ -69,7 +69,7 @@ export class LeaveService {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(this.approvedLeaves);
-            }, 1000)
+            }, 5000)
         })
     }
 }
