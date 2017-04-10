@@ -18,6 +18,9 @@ export class AddRequest {
     end = moment().toDate();
 
     pickerOptions = {
+        calendarWeeks: true,
+        showTodayButton: true,
+        showClose: true,
         daysOfWeekDisabled: [0, 6], // we disable saturday & sunday
         format: this.dateFormat,
         minDate: this.allowedDate,
@@ -42,7 +45,7 @@ export class AddRequest {
     }
 
     attached() {
-        this.computeDiff();
+        // this.computeDiff();
     }
 
     computeDiff() {
@@ -70,7 +73,7 @@ export class AddRequest {
 
             this.start = moment().toDate();
             this.end = moment().toDate();
-            this.computeDiff();
+            this.dateDiff = 0;
         }
     }
 }

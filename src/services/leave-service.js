@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export class LeaveService {
     leaveRequests = [
                 {
@@ -20,11 +22,30 @@ export class LeaveService {
                 }
             ];
 
+    approvedLeaves = [
+        {
+            "id": 1,
+            "title": "Jane",
+            "url": "http://example.com",
+            "class": "event-important",
+            "start": moment().subtract(2, 'days').toDate().valueOf(), // Milliseconds
+            "end": moment().valueOf() // Milliseconds
+        },
+        {
+            "id": 2,
+            "title": "John",
+            "url": "http://example.com",
+            "class": "event-special",
+            "start": moment().valueOf(), // Milliseconds
+            "end": moment().valueOf() // Milliseconds
+        }
+    ];
+
     getLeaveRequests() {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(this.leaveRequests);
-            }, 1200);
+            }, 500);
         });
     }
 
@@ -40,5 +61,13 @@ export class LeaveService {
                 });
             }, 500)
         });
+    }
+
+    getApprovedLeaves() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(this.approvedLeaves);
+            }, 1000)
+        })
     }
 }
