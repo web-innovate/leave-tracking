@@ -15,7 +15,7 @@ export class UserService {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(this.user);
-            }, 2000)
+            }, 500)
         });
     }
 }

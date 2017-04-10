@@ -24,7 +24,7 @@ export class LeaveService {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(this.leaveRequests);
-            }, 2000);
+            }, 1200);
         });
     }
 

@@ -9,7 +9,6 @@ export function configure(aurelia) {
       .plugin('aurelia-validation')
       .plugin('aurelia-dialog', config => {
         config.settings.lock = false;
-        config.settings.centerHorizontalOnly = false;
         config.settings.enableEscClose = true;
       })
       .feature('resources');

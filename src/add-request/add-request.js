@@ -1,16 +1,16 @@
 import { bindable, inject } from 'aurelia-framework';
-import { Api } from '../api/api';
+import { LeaveService } from '../services/leave-service';
 import moment from 'moment'
 import business from 'moment-business';
 
 
-@inject(Api)
+@inject(LeaveService)
 export class AddRequest {
     @bindable sPick;
     @bindable ePick;
 
-    constructor(api) {
-        this.api = api;
+    constructor(leaveService) {
+        this.leaveService = leaveService;
     }
 
     start = moment().toDate();
@@ -57,7 +57,7 @@ export class AddRequest {
     submit() {
         if (this.canSave) {
             console.log('adding', this.start, this.end, this.dateDiff)
-            this.api.addLeaveRequest({
+            this.leaveService.addLeaveRequest({
                 start: this.start,
                 end: this.end,
                 workDays: this.dateDiff
