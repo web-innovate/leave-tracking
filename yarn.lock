@@ -367,6 +367,16 @@ aurelia-dependency-injection@^1.0.0, aurelia-dependency-injection@^1.3.0:
     aurelia-metadata "^1.0.0"
     aurelia-pal "^1.0.0"
 
+aurelia-dialog@^1.0.0-beta.3.0.1:
+  version "1.0.0-beta.3.0.1"
+  resolved "https://registry.yarnpkg.com/aurelia-dialog/-/aurelia-dialog-1.0.0-beta.3.0.1.tgz#691780cf86384a85c22994cffeae8e309a44e5c5"
+  dependencies:
+    aurelia-dependency-injection "^1.0.0"
+    aurelia-framework "^1.0.0"
+    aurelia-metadata "^1.0.0"
+    aurelia-pal "^1.0.0"
+    aurelia-templating "^1.0.0"
+
 aurelia-event-aggregator@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/aurelia-event-aggregator/-/aurelia-event-aggregator-1.0.1.tgz#9d7c7c1e1efe1ef3a78785e76abe80601e2d34c8"
@@ -1276,6 +1286,10 @@ boom@2.x.x:
   resolved "https://registry.yarnpkg.com/boom/-/boom-2.10.1.tgz#39c8918ceff5799f83f9492a848f625add0c766f"
   dependencies:
     hoek "2.x.x"
+
+bootstrap-calendar@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/bootstrap-calendar/-/bootstrap-calendar-0.2.4.tgz#4af891a0f20fdf03a86f2ebfbf867f3dc92cee6e"
 
 bootstrap@^3.3, bootstrap@^3.3.7:
   version "3.3.7"
@@ -2501,6 +2515,13 @@ fstream@^1.0.0, fstream@^1.0.10, fstream@^1.0.2, fstream@~1.0.10:
     mkdirp ">=0.5 0"
     rimraf "2"
 
+fullcalendar@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/fullcalendar/-/fullcalendar-3.3.1.tgz#e8d458d64b7dcb5ba70ce890dda2488b8911539a"
+  dependencies:
+    jquery "2 - 3"
+    moment "^2.9.0"
+
 gaia-tsort@*:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/gaia-tsort/-/gaia-tsort-0.1.0.tgz#c9ed461ff096e12b8662dd06c41efa6101d7e840"
@@ -3275,7 +3296,7 @@ jodid25519@^1.0.0:
   dependencies:
     jsbn "~0.1.0"
 
-"jquery@^1.8.3 || ^2.0 || ^3.0", jquery@^3.1.1, jquery@^3.2.1:
+"jquery@2 - 3", "jquery@^1.8.3 || ^2.0 || ^3.0", jquery@^3.1.1, jquery@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
@@ -3857,7 +3878,7 @@ moment-timezone@^0.4.0:
   dependencies:
     moment ">= 2.6.0"
 
-"moment@>= 2.6.0", moment@^2.10, moment@^2.17.1:
+"moment@>= 2.6.0", moment@^2.10, moment@^2.17.1, moment@^2.9.0:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
