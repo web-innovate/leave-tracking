@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm start --prefix ./frontend/"
+    "start": "npm install --prefix ./frontend/ && npm start --prefix ./frontend/"
   },
   "repository": {
     "type": "git",
