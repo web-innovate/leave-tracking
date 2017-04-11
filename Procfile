@@ -1,1 +1,1 @@
-web: cd frontend && npm install && au build --env dev && node server.js
+web: cd frontend && au build --env dev && node server.js
