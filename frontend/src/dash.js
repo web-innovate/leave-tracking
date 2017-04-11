@@ -17,10 +17,7 @@ export class Dash {
     }
 
     activate() {
-        this.http.get('https://be-leave-tracking.herokuapp.com/api/users')
-            .then(data => {
-                console.log('>>>>', JSON.parse(data.response))
-              });
+
      this.leaveRequests();
      this.pendingApprovals();
      console.log('asd', this.allPendingApprovals)
@@ -32,6 +29,7 @@ export class Dash {
 
     async pendingApprovals() {
         const pendings = await this.leaveService.getPendingApprovals();
+        
         const complete = await Promise.all( pendings.map(async item => {
             const user = await this.userService.getUser(item.userId);
 

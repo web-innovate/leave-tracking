@@ -32,7 +32,9 @@ function create(req, res, next) {
     start: req.body.start,
     end: req.body.end,
     leaveType: req.body.leaveType,
-    userId: req.body.userId
+    userId: req.body.userId,
+    status: req.body.status,
+    workDays: req.body.workDays
   });
 
   leave.save()

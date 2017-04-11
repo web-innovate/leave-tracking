@@ -84,13 +84,16 @@ export class AddRequest {
     submit() {
         if (this.canSave) {
             console.log('adding', this.start, this.end, this.dateDiff)
-            this.leaveService.addLeaveRequest({
+            const leave = {
                 userId: this.userService.currentUser.id,
                 leaveType: this.selectedLeave[0],
                 start: this.start,
                 end: this.end,
                 workDays: this.dateDiff
-            });
+            };
+
+            this.leaveService.addLeaveRequest(leave);
+
 
             this.start = moment().toDate();
             this.end = moment().toDate();

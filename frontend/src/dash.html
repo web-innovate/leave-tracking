@@ -11,7 +11,7 @@
 
                     <div class="panel-body">
 
-                        <spinner></spinner>
+                        <spinner show.bind="!allRequests.length"></spinner>
 
                         <ul class="list-group">
                             <li repeat.for="request of allRequests"
@@ -41,7 +41,7 @@
 
                     <div class="panel-body">
 
-                        <spinner></spinner>
+                        <spinner if.bind="!allPendingApprovals.length"></spinner>
 
                         <ul class="list-group">
                             <li repeat.for="request of allPendingApprovals"
