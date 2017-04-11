@@ -9,6 +9,15 @@ export default {
     }
   },
 
+  createLeaveRequest: {
+    body: {
+      start: Joi.date().required(),
+      end: Joi.date().required(),
+      leaveType: Joi.string().required(),
+      userId: Joi.string().required()
+    }
+  },
+
   // UPDATE /api/users/:userId
   updateUser: {
     body: {
