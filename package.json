@@ -2,5 +2,5 @@
     "engines": {
         "node": "7.2.0"
     },
-    "postinstall": "npm install --prefix ./frontend/"
+    "heroku-postbuild": "npm install --prefix ./frontend/"
 }
