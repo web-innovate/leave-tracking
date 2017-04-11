@@ -1,6 +1,7 @@
 import { UserModel } from '../models/user-model';
 
 export class UserService {
+    loggedUser = {};
     user = {
         id: 'unu-doi-trei',
         name: 'my awesome name',
@@ -14,11 +15,16 @@ export class UserService {
         taken: 14
     };
 
-    getUser() {
+    getUser(id) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
+                this.loggedUser = this.user;
                 resolve(new UserModel(this.user));
             }, 500)
         });
+    }
+
+    get currentUser() {
+        return this.loggedUser;
     }
 }

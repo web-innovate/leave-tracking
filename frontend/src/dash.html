@@ -3,10 +3,10 @@
         <h3><i class="glyphicon glyphicon-dashboard"></i> Dashboard</h3>
         <hr>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4>Recent requests</h4>
+                        <h4>My Leave requests</h4>
                     </div>
 
                     <div class="panel-body">
@@ -30,11 +30,13 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4>Recent requests</h4>
+                        <h4>Pending for approval requests, only for approvers </h4>
                     </div>
 
                     <div class="panel-body">
@@ -42,13 +44,40 @@
                         <spinner></spinner>
 
                         <ul class="list-group">
-                            <li repeat.for="request of allRequests"
+                            <li repeat.for="request of allPendingApprovals"
                                 class="list-group-item ${computeBadge(request.status)}">
+                                 <div
+                                    if.bind="request.status == 'pending'"
+                                    class="btn-group">
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Action<span class="caret"></span>
+                                    </button>
+
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Approve</a></li>
+                                        <li><a href="#">Reject</a></li>
+                                    </ul>
+                                </div>
+
+                                ${request.user.name} |
                                 <span>
                                     ${request.workDays} ${request.workDays > 1 ? 'Days' : 'Day'} |
                                 </span>
-                                ${request.start | dateFormat} - ${request.end | dateFormat}
-                                <span class="badge badge-pill">${request.status}</span>
+                                ${request.start | dateFormat}
+                                <span show.bind="showExtra(request)">
+                                    - ${request.end | dateFormat}
+                                    | ${request.leaveType | humanizeLeave}
+                                </span>
+
+                                <span if.bind="request.status != 'pending'" class="badge badge-pill">
+                                    ${request.status}
+                                </span>
                             </li>
                         </ul>
                     </div>

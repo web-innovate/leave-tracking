@@ -50,11 +50,12 @@ export class LeaveService {
     }
 
     addLeaveRequest(request) {
-        const { start, end, workDays, leaveType } = request;
+        const { start, end, workDays, leaveType, userId } = request;
         console.log('saving', request);
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 this.leaveRequests.push({
+                    userId,
                     leaveType,
                     start,
                     end,
@@ -69,7 +70,15 @@ export class LeaveService {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(this.approvedLeaves);
-            }, 5000)
+            }, 500)
+        })
+    }
+
+    getPendingApprovals() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(this.leaveRequests);
+            }, 500)
         })
     }
 }

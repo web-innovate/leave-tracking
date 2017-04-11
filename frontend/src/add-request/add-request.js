@@ -1,18 +1,20 @@
 import { bindable, inject } from 'aurelia-framework';
 import { LeaveService } from '../services/leave-service';
+import { UserService } from '../services/user-service';
 import moment from 'moment'
 import business from 'moment-business';
 import { LEAVE_TYPES, HUMAN_LEAVE_TYPES } from '../util/constants';
 
 const { ANNUAL, SICK, PARENTING, UNPAID, STUDY, HALF_DAY } = LEAVE_TYPES;
 
-@inject(LeaveService)
+@inject(LeaveService, UserService)
 export class AddRequest {
     @bindable sPick;
     @bindable ePick;
 
-    constructor(leaveService) {
+    constructor(leaveService, userService) {
         this.leaveService = leaveService;
+        this.userService = userService;
     }
 
     dateFormat = 'YYYY-MM-DD';
@@ -83,6 +85,7 @@ export class AddRequest {
         if (this.canSave) {
             console.log('adding', this.start, this.end, this.dateDiff)
             this.leaveService.addLeaveRequest({
+                userId: this.userService.currentUser.id,
                 leaveType: this.selectedLeave[0],
                 start: this.start,
                 end: this.end,
