@@ -29,7 +29,6 @@ const { error, value: envVars } = Joi.validate(process.env, envVarsSchema);
 if (error) {
   throw new Error(`Config validation error: ${error.message}`);
 }
-const port = process.env.MONGO_URI ? 57500 : envVars.MONGO_PORT;
 
 const config = {
   env: envVars.NODE_ENV,
@@ -37,9 +36,11 @@ const config = {
   mongooseDebug: envVars.MONGOOSE_DEBUG,
   jwtSecret: envVars.JWT_SECRET,
   mongo: {
-    host: process.env.MONGO_URI || envVars.MONGO_HOST,
-    port: port
+    host: envVars.MONGO_HOST,
+    port: envVars.MONGO_PORT
   }
 };
+
+console.log('my conf', config)
 
 export default config;
