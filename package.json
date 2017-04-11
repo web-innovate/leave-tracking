@@ -3,8 +3,6 @@
         "node": "7.2.0"
     },
     "scripts": {
-        "install" : "echo 'shit'",
-        "heroku-prebuild": "echo This runs before Heroku installs your dependencies.",
-        "heroku-postbuild": "npm install --prefix ./frontend/"
+        "install" : "cd ./frontend && npm install"
     }
 }
