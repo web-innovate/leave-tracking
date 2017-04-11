@@ -2,7 +2,9 @@
     "engines": {
         "node": "7.2.0"
     },
-    "install" : "echo 'shit'",
-    "heroku-prebuild": "echo This runs before Heroku installs your dependencies.",
-    "heroku-postbuild": "npm install --prefix ./frontend/"
+    "scripts": {
+        "install" : "echo 'shit'",
+        "heroku-prebuild": "echo This runs before Heroku installs your dependencies.",
+        "heroku-postbuild": "npm install --prefix ./frontend/"
+    }
 }
