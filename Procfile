@@ -1,1 +1,1 @@
-web: au build --env dev && node server.js
+web: cd frontend && yarn install && au build --env dev && node server.js
