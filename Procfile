@@ -1,1 +1,3 @@
-web: cd frontend && au build --env dev && node server.js
+web: cd frontend \
+        && ./node_modules/aurelia-cli/bin/aurelia-cli.js build --env dev \
+        && node server.js
