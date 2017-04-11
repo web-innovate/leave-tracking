@@ -1,8 +1,11 @@
 {
-    "engines": {
-        "node": "7.2.0"
-    },
-    "scripts": {
-        "install" : "cd ./frontend && yarn install"
-    }
+  "engines": {
+    "node": "7.2.0"
+  },
+  "scripts": {
+    "install": "cd ./frontend && yarn install"
+  },
+  "dependencies": {
+    "yarn": "^0.22.0"
+  }
 }
