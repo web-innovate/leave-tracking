@@ -2,3 +2,4 @@ node_modules
 bootstrap-calendar
 bootstrap
 scripts
+backend/dist
