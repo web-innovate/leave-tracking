@@ -1,11 +1,23 @@
 <template>
-    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-collapse collapse">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <button
+                type="button"
+                class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#nav-container"
+                aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <div id="nav-container" class="navbar-collapse collapse">
                <ul class="nav navbar-nav navbar-left">
                     <li repeat.for="row of router.navigation"
                         class="${row.isActive ? 'active' : ''}">
-                        <a href.bind="row.href">
+                        <a href.bind="row.href" data-toggle="collapse" data-target="#nav-container">
                             <i class="glyphicon glyphicon-${row.settings.icon}"></i>
                             ${row.title}</a>
                     </li>
