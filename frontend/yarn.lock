@@ -1295,6 +1295,10 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
+bootcards@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/bootcards/-/bootcards-1.1.2.tgz#0c26138b6099d1f9f690104d0e28040715e890ad"
+
 bootstrap-calendar@^0.2.4:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/bootstrap-calendar/-/bootstrap-calendar-0.2.4.tgz#4af891a0f20fdf03a86f2ebfbf867f3dc92cee6e"
@@ -2405,6 +2409,10 @@ flat-cache@^1.2.1:
     del "^2.0.2"
     graceful-fs "^4.1.2"
     write "^0.2.1"
+
+font-awesome@^4.7.0:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
 
 for-in@^1.0.1:
   version "1.0.2"
