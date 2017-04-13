@@ -1,9 +1,9 @@
 import moment from 'moment';
 import { inject } from 'aurelia-framework';
 import { REQUEST_STATUS } from '../util/constants';
-import { Api } from '../api/api';
+import { ApiService } from './api- service';
 
-@inject(Api)
+@inject(ApiService)
 export class LeaveService {
     leaveRequests = [
                 {

@@ -1,8 +1,8 @@
 import { inject } from 'aurelia-framework';
 import { UserModel } from '../models/user-model';
-import { Api } from '../api/api';
+import { ApiService } from './api-service';
 
-@inject(Api)
+@inject(ApiService)
 export class UserService {
     loggedUser = {};
     user = {
@@ -36,6 +36,10 @@ export class UserService {
     }
 
     createUser(user) {
-        this.http.post('users', user);
+        return this.http.post('users', user);
+    }
+
+    getUsers() {
+        return this.http.get('users');
     }
 }

@@ -2,7 +2,7 @@ import { singleton } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client';
 
 @singleton()
-export class Api {
+export class ApiService {
     constructor() {
         // const backendURL = 'http://localhost:4040/api/';
         const backendURL = 'https://be-leave-tracking.herokuapp.com/api/';

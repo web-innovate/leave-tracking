@@ -9,12 +9,10 @@ export class Admin {
     constructor(dialogService, _user) {
         this.dialogService = dialogService;
         this._user = _user;
-
-
     }
 
     createUser() {
-        return this.dialogService.open({ viewModel: CreateUser, model: 'Good or Bad?'})
+        return this.dialogService.open({ viewModel: CreateUser })
             .then(response => {
                 if(!response.wasCancelled) {
                     console.log('create user', response.output)
@@ -23,6 +21,11 @@ export class Admin {
                     console.log('do not create user')
                 }
             })
+    }
 
+    attached() {
+         this._user.getUsers().then(users => {
+            this.totalUserCount = JSON.parse(users.response).length
+        });
     }
 }
