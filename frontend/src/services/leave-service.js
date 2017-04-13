@@ -1,8 +1,9 @@
 import moment from 'moment';
-import {HttpClient} from 'aurelia-http-client';
+import { inject } from 'aurelia-framework';
 import { REQUEST_STATUS } from '../util/constants';
+import { Api } from '../api/api';
 
-
+@inject(Api)
 export class LeaveService {
     leaveRequests = [
                 {
@@ -44,16 +45,10 @@ export class LeaveService {
         }
     ];
 
-    constructor() {
-        // const backendURL = 'http://localhost:4040/api/';
-        const backendURL = 'https://be-leave-tracking.herokuapp.com/api/';
-
-        this.http = new HttpClient().configure(x => {
-            x.withHeader('Content-Type', 'application/json');
-            x.withBaseUrl(backendURL);
-          //x.withCredentials(true);
-        });
+    constructor(api) {
+        this.http = api.http;
     }
+
     getLeaveRequests() {
         return this.http.get('leaves')
             .then(res => JSON.parse(res.response));
