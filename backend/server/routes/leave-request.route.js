@@ -12,12 +12,12 @@ router.route('/')
   /** POST /api/users - Create new user */
   .post(validate(paramValidation.createLeaveRequest), leaveCtrl.create);
 
-router.route('/:userId')
+router.route('/:leaveId')
   /** GET /api/users/:userId - Get user */
   .get(leaveCtrl.get)
 
-  /** PUT /api/users/:userId - Update user */
-  .put(validate(paramValidation.updateUser), leaveCtrl.update)
+  /** PUT /api/leaves/:leaveId - Update Leave */
+  .put(leaveCtrl.update)
 
   /** DELETE /api/users/:userId - Delete user */
   .delete(leaveCtrl.remove);

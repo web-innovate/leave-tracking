@@ -5,8 +5,8 @@ import LeaveRequest from '../models/leave-request.model';
  */
 function load(req, res, next, id) {
   LeaveRequest.get(id)
-    .then((user) => {
-      req.user = user; // eslint-disable-line no-param-reassign
+    .then((leaveRequest) => {
+      req.leaveRequest = leaveRequest; // eslint-disable-line no-param-reassign
       return next();
     })
     .catch(e => next(e));
@@ -43,18 +43,16 @@ function create(req, res, next) {
 }
 
 /**
- * Update existing user
- * @property {string} req.body.username - The username of user.
- * @property {string} req.body.mobileNumber - The mobileNumber of user.
- * @returns {User}
+ * Update existing request
+ * @returns {LeaveRequest}
  */
 function update(req, res, next) {
-  const user = req.user;
-  user.username = req.body.username;
-  user.mobileNumber = req.body.mobileNumber;
+  const leave = req.leaveRequest;
 
-  user.save()
-    .then(savedUser => res.json(savedUser))
+  leave.status = req.body.status;
+
+  leave.save()
+    .then(savedRequest => res.json(savedRequest))
     .catch(e => next(e));
 }
 

@@ -29,7 +29,6 @@ export class Dash {
 
     async pendingApprovals() {
         const pendings = await this.leaveService.getPendingApprovals();
-        
         const complete = await Promise.all( pendings.map(async item => {
             const user = await this.userService.getUser(item.userId);
 
@@ -53,5 +52,15 @@ export class Dash {
 
     showExtra(extra) {
         return extra.workDays > 1 ? true : false;
+    }
+
+    async approveRequest(request) {
+        const response = await this.leaveService.updateLeaveRequestStatus(request, REQUEST_STATUS.APPROVED);
+        console.log('approve', response)
+    }
+
+    async rejectRequest(request) {
+        const response = await this.leaveService.updateLeaveRequestStatus(request, REQUEST_STATUS.REJECTED);
+        console.log('reject', response)
     }
 }

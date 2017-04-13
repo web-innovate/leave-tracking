@@ -1,5 +1,6 @@
 import moment from 'moment';
 import {HttpClient} from 'aurelia-http-client';
+import { REQUEST_STATUS } from '../util/constants';
 
 
 export class LeaveService {
@@ -55,16 +56,7 @@ export class LeaveService {
     }
     getLeaveRequests() {
         return this.http.get('leaves')
-            .then(res => {
-                console.log('>>>>>', JSON.parse(res.response))
-                return JSON.parse(res.response)
-            }
-                );
-        // return new Promise((resolve, reject) => {
-        //     setTimeout(() => {
-        //         resolve(this.leaveRequests);
-        //     }, 500);
-        // });
+            .then(res => JSON.parse(res.response));
     }
 
     addLeaveRequest(request) {
@@ -77,14 +69,9 @@ export class LeaveService {
             workDays,
             status: 'pending'
         };
-        this.leaveRequests.push(leave);
+
         return this.http.post('leaves', leave);
         console.log('saving', request);
-        // return new Promise((resolve, reject) => {
-        //     setTimeout(() => {
-        //         this.leaveRequests.push(leave);
-        //     }, 500)
-        // });
     }
 
     getApprovedLeaves() {
@@ -97,11 +84,19 @@ export class LeaveService {
     }
 
     getPendingApprovals() {
-        
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(this.leaveRequests);
-            }, 500)
-        })
+        //todo send filtering params to leaves
+        return this.http.get('leaves')
+            .then(res => {
+                return JSON.parse(res.response)
+                    .filter(item => item.status === REQUEST_STATUS.PENDING)
+            });
+    }
+
+    updateLeaveRequestStatus(request, status) {
+        request.status = status;
+        return this.http.put(`leaves/${request._id}`, request)
+            .then(res => {
+                console.log('the response', JSON.parse(res.response));
+            })
     }
 }
