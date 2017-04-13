@@ -1,5 +1,8 @@
+import { inject } from 'aurelia-framework';
 import { UserModel } from '../models/user-model';
+import { Api } from '../api/api';
 
+@inject(Api)
 export class UserService {
     loggedUser = {};
     user = {
@@ -15,6 +18,10 @@ export class UserService {
         taken: 14
     };
 
+    constructor(api) {
+        this.http = api.http;
+    }
+
     getUser(id) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -26,5 +33,9 @@ export class UserService {
 
     get currentUser() {
         return this.loggedUser;
+    }
+
+    createUser(user) {
+        this.http.post('users', user);
     }
 }

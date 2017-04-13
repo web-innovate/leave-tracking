@@ -43,6 +43,16 @@ export class App {
                     icon: 'plus'
                 }
             },
+            {
+                route: 'admin',
+                name: 'admin',
+                moduleId: './admin/admin',
+                nav: true,
+                title:'ADMIN',
+                settings: {
+                    icon: 'plus'
+                }
+            },
         ]);
 
         this.router = router;

@@ -28,8 +28,12 @@ function get(req, res) {
  */
 function create(req, res, next) {
   const user = new User({
-    username: req.body.username,
-    mobileNumber: req.body.mobileNumber
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    password: req.body.password,
+    holidays: req.body.holidays,
+    position: req.body.position
   });
 
   user.save()
@@ -44,9 +48,14 @@ function create(req, res, next) {
  * @returns {User}
  */
 function update(req, res, next) {
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
   const user = req.user;
-  user.username = req.body.username;
-  user.mobileNumber = req.body.mobileNumber;
+  user.firstName = req.body.firstName;
+  user.lastName = req.body.lastName;
+  user.email = req.body.email;
+  user.password = req.body.password;
+  user.holidays = req.body.holidays;
+  user.position = req.body.position;
 
   user.save()
     .then(savedUser => res.json(savedUser))
