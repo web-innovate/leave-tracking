@@ -21,15 +21,10 @@
                             <i class="glyphicon glyphicon-${row.settings.icon}"></i>
                             ${row.title}</a>
                     </li>
-
-                    <li show.bind="!auth.isLogged" class="dropdown">
-                        <a click.delegate="auth.login()">Login</a>
-                    </li>
                 </ul>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <li show.bind="auth.isLogged"
-                        class="dropdown">
+                <ul if.bind="isAuth" class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
                             <i class="glyphicon glyphicon-user"></i> ${user.name} <span class="caret"></span>
                         </a>
@@ -37,9 +32,6 @@
                                 <li><a click.delegate="openProfile()">My Profile</a></li>
                                 <li><a click.delegate="auth.logout()"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
                             </ul>
-                    </li>
-                    <li show.bind="!auth.isLogged" class="dropdown">
-                        <a click.delegate="auth.login()">Login</a>
                     </li>
                 </ul>
             </div>

@@ -1,26 +1,23 @@
 import { inject, bindable } from 'aurelia-framework';
 import { DialogService } from 'aurelia-dialog';
-import { UserService } from '../services/user-service';
 import { Profile } from '../profile/profile';
+import { AuthService } from '../services/auth-service';
 
-@inject(UserService, DialogService)
+
+@inject(DialogService, AuthService)
 export class TopNav {
     @bindable router;
 
-  constructor(userService, dialogService) {
-    this.user = {};
-    this.userService = userService;
-    this.dialogService = dialogService;
-
-    this.userService.getUser().then(user => this.user = user);
-
-    // mock auth to logged in state
-    this.auth = {
-        isLogged: true
-        }
+    constructor(dialogService, _auth) {
+        this.dialogService = dialogService;
+        this._auth = _auth;
     }
 
     openProfile() {
         return this.dialogService.open({ viewModel: Profile, model: 'Good or Bad?'});
+    }
+
+    get isAuth() {
+        return this._auth.isAuth;
     }
 }

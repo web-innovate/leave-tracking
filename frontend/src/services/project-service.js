@@ -16,7 +16,16 @@ export class ProjectService {
         return this.http.get('projects');
     }
 
+    getProject(id) {
+        return this.http.get(`projects/${id}`)
+            .then(res => this.toJson(res.response));
+    }
+
     updateProject(project) {
         return this.http.put(`projects/${project._id}`, project);
+    }
+
+    toJson(data) {
+        return JSON.parse(data);
     }
 }

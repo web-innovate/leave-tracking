@@ -24,6 +24,10 @@ function login(req, res, next) {
             const token = jwt.sign({ id: user.id }, config.jwtSecret);
 
             return res.json({ token });
+        })
+        .catch(() => {
+            const err = new APIError('Authentication error', httpStatus.UNAUTHORIZED, true);
+                return next(err);
         });
 }
 
@@ -41,6 +45,9 @@ function getRandomNumber(req, res) {
     });
 }
 
+/**
+* Protected route to return the user details based on the jwt token he has.
+**/
 function me(req, res) {
     return User.get(req.user.id).then(user => {
         user = user.toObject();

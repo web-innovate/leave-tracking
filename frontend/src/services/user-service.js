@@ -1,8 +1,9 @@
 import { inject } from 'aurelia-framework';
 import { UserModel } from '../models/user-model';
 import { ApiService } from './api-service';
+import { AuthService } from './auth-service';
 
-@inject(ApiService)
+@inject(ApiService, AuthService)
 export class UserService {
     loggedUser = {};
     user = {
@@ -18,8 +19,9 @@ export class UserService {
         taken: 14
     };
 
-    constructor(api) {
-        this.http = api.http;
+    constructor(_api, _auth) {
+        this.http = _api.http;
+        this._auth = _auth;
     }
 
     getUser(id) {
@@ -31,8 +33,8 @@ export class UserService {
         });
     }
 
-    get currentUser() {
-        return this.loggedUser;
+    async currentUser() {
+        return await this._auth.me();
     }
 
     createUser(user) {

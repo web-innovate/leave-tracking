@@ -1,41 +1,31 @@
 <template>
-  <spinner show.bind="!userLoaded"></spinner>
+    <spinner show.bind="!userLoaded"></spinner>
 
-  <ai-dialog show.bind="userLoaded">
-    <ai-dialog-body>
-      <div  class="panel panel-info">
-        <div class="panel-heading">
-          <h3 class="panel-title">${user.name}</h3>
-        </div>
+    <ai-dialog show.bind="userLoaded">
+        <ai-dialog-body>
+            <div  class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">${user.firstName} ${user.lastName}</h3>
+                </div>
 
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-md-3 col-lg-3 " align="center">
-              <img alt="User Pic" src="${user.avatar}" class="img-circle img-responsive">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 " align="center">
+                            <img alt="User Pic" src="${user.avatar}" class="img-circle img-responsive">
+                        </div>
+
+                        <div class=" col-md-5 col-lg-5 ">
+                            <ul>
+                                <li>Department: ${user.position}</li>
+                                <li>Project: ${user.project}</li>
+                                <li>Total days/year: ${user.holidays}</li>
+                                <li>Remaining days: ${user.remaining}</li>
+                                <li>Taken days: ${user.taken}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class=" col-md-5 col-lg-5 ">
-              <ul>
-                <li>Department: ${user.department}</li>
-                <li>Project: ${user.project}</li>
-                <li>Total days/year: ${user.totalDaysPerYear}</li>
-                <li>Remaining days: ${user.remaining}</li>
-                <li>Taken days: ${user.taken}</li>
-              </ul>
-            </div>
-
-            <div class=" col-md-4 col-lg-4">
-              <ul>
-                <li>Department: ${user.department}</li>
-                <li>Project: ${user.project}</li>
-                <li>Total days/year: ${user.totalDaysPerYear}</li>
-                <li>Remaining days: ${user.remaining}</li>
-                <li>Taken days: ${user.taken}</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ai-dialog-body>
-  </ai-dialog>
+        </ai-dialog-body>
+    </ai-dialog>
 </template>
