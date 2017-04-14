@@ -11,12 +11,4 @@ export class CreateProject {
     constructor(dialogCtrl) {
         this.dialogCtrl = dialogCtrl;
     }
-
-    ok(res) {
-        this.dialogCtrl.ok(res);
-    }
-
-    cancel() {
-        this.dialogCtrl.cancel();
-    }
 }

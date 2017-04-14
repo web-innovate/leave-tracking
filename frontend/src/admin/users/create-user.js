@@ -17,7 +17,6 @@ export class CreateUser {
     constructor(dialogCtrl, _projects) {
         this.dialogCtrl = dialogCtrl;
         this._projects = _projects;
-        console.log(dialogCtrl)
     }
 
     attached() {
@@ -25,13 +24,4 @@ export class CreateUser {
             this.projects = JSON.parse(res.response);
         });
     }
-
-    ok(res) {
-        this.dialogCtrl.ok(res);
-    }
-
-    cancel() {
-        this.dialogCtrl.cancel();
-    }
-
 }

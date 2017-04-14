@@ -7,14 +7,7 @@
         </ai-dialog-body>
 
         <ai-dialog-footer>
-            <button class="btn btn-danger" click.trigger = "cancel()">
-                <i class="fa fa-times"></i>
-                Cancel
-            </button>
-            <button class="btn btn-success" click.trigger = "ok(project)">
-                <i class="fa fa-check"></i>
-                Save
-            </button>
+            <dialog-footer ctrl.bind="dialogCtrl" model.bind="project"></dialog-footer>
         </ai-dialog-footer>
     </ai-dialog>
 </template>

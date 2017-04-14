@@ -49,7 +49,6 @@ function create(req, res, next) {
  * @returns {User}
  */
 function update(req, res, next) {
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
   const user = req.user;
   user.firstName = req.body.firstName;
   user.lastName = req.body.lastName;

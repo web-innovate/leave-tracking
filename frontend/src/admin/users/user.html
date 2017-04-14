@@ -1,0 +1,60 @@
+<template bindable="user, projects">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-xs-3 control-label">First name</label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" value.bind="user.firstName">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Last name</label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" value.bind="user.lastName">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Email</label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" value.bind="user.email">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Password</label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" value.bind="user.password">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Holidays</label>
+            <div class="col-xs-9">
+                <input type="number" class="form-control" value.bind="user.holidays">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Position</label>
+            <div class="col-xs-9">
+                <select class="form-control" value.bind="user.position">
+                    <option selected>None</option>
+                    <option>QA</option>
+                    <option>DEV</option>
+                    <option value="1">LEAD</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Project</label>
+            <div class="col-xs-9">
+                <select class="form-control" value.bind="user.projectId">
+                    <option selected>None</option>
+                    <option repeat.for="project of projects" value.bind="project._id">${project.name}</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</template>

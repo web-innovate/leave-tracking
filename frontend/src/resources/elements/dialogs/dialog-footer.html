@@ -1,0 +1,10 @@
+<template bindable="ctrl, model">
+    <button class="btn btn-default" click.trigger = "ctrl.cancel()">
+        <i class="fa fa-times"></i>
+        Cancel
+    </button>
+    <button class="btn btn-primary" click.trigger = "ctrl.ok(model)">
+        <i class="fa fa-check"></i>
+        Save
+    </button>
+</template>

@@ -19,13 +19,4 @@ export class ManageProjects {
             this.projects = JSON.parse(projects.response);
         });
     }
-
-    ok(res) {
-        console.log('selected', this.selectedProject)
-        this.dialogCtrl.ok(res);
-    }
-
-    cancel() {
-        this.dialogCtrl.cancel();
-    }
 }
