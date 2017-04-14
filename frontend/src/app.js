@@ -53,6 +53,16 @@ export class App {
                     icon: 'plus'
                 }
             },
+            {
+                route: 'login',
+                name: 'login',
+                moduleId: './login/login',
+                nav: true,
+                title:'LOGIN',
+                settings: {
+                    icon: 'plus'
+                }
+            },
         ]);
 
         this.router = router;
