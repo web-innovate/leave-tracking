@@ -48,7 +48,7 @@ export class App {
                 name: 'admin',
                 moduleId: './admin/admin',
                 nav: true,
-                title:'ADMIN',
+                title:'Admin',
                 settings: {
                     icon: 'plus'
                 }
@@ -57,10 +57,9 @@ export class App {
                 route: 'login',
                 name: 'login',
                 moduleId: './login/login',
-                nav: true,
-                title:'LOGIN',
+                nav: false,
+                title:'Login',
                 settings: {
-                    icon: 'plus'
                 }
             },
         ]);
