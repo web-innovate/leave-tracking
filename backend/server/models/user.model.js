@@ -75,6 +75,19 @@ UserSchema.statics = {
       });
   },
 
+  findByEmailAndPassword(email, password) {
+    return this.findOne({email, password})
+      .exec()
+      .then(user => {
+        if(user) {
+          return user;
+        }
+
+        const err = new APIError('Bad credentials', httpStatus.NOT_FOUND);
+        return Promise.reject(err);
+      })
+  },
+
   /**
    * List users in descending order of 'createdAt' timestamp.
    * @param {number} skip - Number of users to be skipped.
