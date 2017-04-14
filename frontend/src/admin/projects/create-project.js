@@ -19,5 +19,4 @@ export class CreateProject {
     cancel() {
         this.dialogCtrl.cancel();
     }
-
 }

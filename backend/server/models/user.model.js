@@ -32,7 +32,7 @@ const UserSchema = new mongoose.Schema({
     required: true
   },
   projectId: {
-    type: Number,
+    type: String,
     required: true
   },
   createdAt: {
