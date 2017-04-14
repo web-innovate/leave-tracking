@@ -2,6 +2,7 @@ import { inject, bindable } from 'aurelia-framework';
 import { DialogService } from 'aurelia-dialog';
 import { CreateUser } from './users/create-user';
 import { CreateProject } from './projects/create-project';
+import { ManageProjects } from './projects/manage-projects';
 import { UserService } from '../services/user-service';
 import { ProjectService } from '../services/project-service';
 
@@ -31,6 +32,17 @@ export class Admin {
             .then(response => {
                 if(!response.wasCancelled) {
                     this._project.createProject(response.output)
+                } else {
+                    console.log('do not create project')
+                }
+            })
+    }
+
+    manageProjects() {
+        return this.dialogService.open({ viewModel: ManageProjects })
+            .then(response => {
+                if(!response.wasCancelled) {
+                    console.log('update project', response.output)
                 } else {
                     console.log('do not create project')
                 }

@@ -1,0 +1,31 @@
+<template>
+    <require from="./project.html"></require>
+
+    <ai-dialog>
+        <ai-dialog-body>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Select project</label>
+                    <div class="col-xs-9">
+                        <select class="form-control" value.bind="selectedProject">
+                            <option selected>None</option>
+                            <option repeat.for="project of projects" model.bind="project">${project.name}</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        <project if.bind="selectedProject.name" project.bind="selectedProject"></project>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <button class="btn btn-danger" click.trigger = "cancel()">
+                <i class="fa fa-times"></i>
+                Cancel
+            </button>
+            <button class="btn btn-success" click.trigger = "ok(selectedProject)">
+                <i class="fa fa-check"></i>
+                Save
+            </button>
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>
