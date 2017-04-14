@@ -14,7 +14,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <!-- Remove "!" from "!isAuth" after login/logout is done -->
-                <ul if.bind="!isAuth" class="nav navbar-nav">
+                <ul if.bind="isAuth" class="nav navbar-nav">
                     <li repeat.for="row of router.navigation"
                         class="${row.isActive ? 'active' : ''}">
                         <a href.bind="row.href" data-toggle="collapse" data-target="#nav-container">

@@ -1,7 +1,11 @@
+import { inject } from 'aurelia-framework';
+import { Redirect } from 'aurelia-router';
+import { AuthService } from './services/auth-service';
+
 export class App {
     configureRouter(config, router){
         config.title = 'Leave tracker';
-
+        config.addPipelineStep('authorize', AuthorizeStep);
         config.map([
             {
                 route: ['','home'],
@@ -11,7 +15,8 @@ export class App {
                 title:'Home',
                 settings: {
                     icon: 'time'
-                }
+                },
+                auth: true
             },
             {
                 route: 'reports',
@@ -21,7 +26,8 @@ export class App {
                 title:'Reports',
                 settings: {
                     icon: 'list-alt'
-                }
+                },
+                auth: true
             },
             {
                 route: 'calendar',
@@ -31,7 +37,9 @@ export class App {
                 title:'Calendar',
                 settings: {
                     icon: 'list-alt'
-                }
+                },
+                auth: true
+
             },
             {
                 route: 'add-request',
@@ -41,7 +49,8 @@ export class App {
                 title:'Add request',
                 settings: {
                     icon: 'plus'
-                }
+                },
+                auth: true
             },
             {
                 route: 'admin',
@@ -51,7 +60,8 @@ export class App {
                 title:'Admin',
                 settings: {
                     icon: 'plus'
-                }
+                },
+                auth: true
             },
             {
                 route: 'login',
@@ -66,4 +76,22 @@ export class App {
 
         this.router = router;
     }
+}
+
+@inject(AuthService)
+class AuthorizeStep {
+    constructor(_auth) {
+        this._auth = _auth;
+    }
+
+  run(navigationInstruction, next) {
+    if (navigationInstruction.getAllInstructions().some(i => i.config.auth)) {
+      var isLoggedIn = this._auth.isAuth;
+      if (!isLoggedIn) {
+        return next.cancel(new Redirect('login'));
+      }
+    }
+
+    return next();
+  }
 }

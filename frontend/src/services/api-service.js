@@ -20,7 +20,6 @@ export class ApiService {
 
     attachToken(token) {
         this.httpClient.configure(config => {
-            console.log('config', config, token)
             config.withHeader('Authorization', `Bearer ${token}`)
         })
     }
