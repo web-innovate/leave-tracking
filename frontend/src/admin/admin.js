@@ -42,6 +42,7 @@ export class Admin {
         return this.dialogService.open({ viewModel: ManageProjects })
             .then(response => {
                 if(!response.wasCancelled) {
+                    this._project.updateProject(response.output)
                     console.log('update project', response.output)
                 } else {
                     console.log('do not create project')
