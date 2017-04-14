@@ -1,40 +1,45 @@
 <template>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <button
-                type="button"
-                class="navbar-toggle collapsed"
-                data-toggle="collapse"
-                data-target="#nav-container"
-                aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-
-            <div id="nav-container" class="navbar-collapse collapse">
-               <ul class="nav navbar-nav navbar-left">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button"
+                        class="navbar-toggle"
+                        data-toggle="collapse"
+                        data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/#/" class="navbar-brand">Leave Tracker</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <!-- Remove "!" from "!isAuth" after login/logout is done -->
+                <ul if.bind="!isAuth" class="nav navbar-nav">
                     <li repeat.for="row of router.navigation"
                         class="${row.isActive ? 'active' : ''}">
                         <a href.bind="row.href" data-toggle="collapse" data-target="#nav-container">
                             <i class="glyphicon glyphicon-${row.settings.icon}"></i>
-                            ${row.title}</a>
+                            ${row.title}
+                        </a>
                     </li>
                 </ul>
-
                 <ul if.bind="isAuth" class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
                             <i class="glyphicon glyphicon-user"></i> ${user.name} <span class="caret"></span>
                         </a>
-                            <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                                <li><a click.delegate="openProfile()">My Profile</a></li>
-                                <li><a click.delegate="auth.logout()"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
-                            </ul>
+                        <ul id="g-account-menu" class="dropdown-menu" role="menu">
+                            <li><a click.delegate="openProfile()">My Profile</a></li>
+                            <li><a click.delegate="auth.logout()"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul if.bind="!isAuth" class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="./#/login">Login</a>
                     </li>
                 </ul>
             </div>
         </div>
-    </nav>
+    </div>
 </template>
