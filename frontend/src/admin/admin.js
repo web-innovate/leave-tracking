@@ -1,14 +1,17 @@
 import { inject, bindable } from 'aurelia-framework';
 import { DialogService } from 'aurelia-dialog';
 import { CreateUser } from './users/create-user';
+import { CreateProject } from './projects/create-project';
 import { UserService } from '../services/user-service';
+import { ProjectService } from '../services/project-service';
 
 
-@inject(DialogService, UserService)
+@inject(DialogService, UserService, ProjectService)
 export class Admin {
-    constructor(dialogService, _user) {
+    constructor(dialogService, _user, _project) {
         this.dialogService = dialogService;
         this._user = _user;
+        this._project = _project;
     }
 
     createUser() {
@@ -23,9 +26,24 @@ export class Admin {
             })
     }
 
+    createProject() {
+        return this.dialogService.open({ viewModel: CreateProject })
+            .then(response => {
+                if(!response.wasCancelled) {
+                    this._project.createProject(response.output)
+                } else {
+                    console.log('do not create project')
+                }
+            })
+    }
+
     attached() {
-         this._user.getUsers().then(users => {
+        this._user.getUsers().then(users => {
             this.totalUserCount = JSON.parse(users.response).length
+        });
+
+        this._project.getProjects().then(projects => {
+            this.totalProjectCount = JSON.parse(projects.response).length
         });
     }
 }
