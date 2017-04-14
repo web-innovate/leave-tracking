@@ -5,8 +5,8 @@ import { ProjectService } from '../../services/project-service';
 @inject(DialogController, ProjectService)
 export class ManageProjects {
     selectedProject ={
-        name: '1',
-        description: '2'
+        name: '',
+        description: ''
     };
 
     constructor(dialogCtrl, _project) {
