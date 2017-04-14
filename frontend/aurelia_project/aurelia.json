@@ -173,14 +173,6 @@
             "main": "index",
             "resources": ["**/*.{css,html}"]
           },
-          {
-            "name": "aurelia-oauth",
-            "path": "../node_modules/aurelia-oauth/dist/amd",
-            "main": "aurelia-oauth",
-            "resources": [
-              "**/*.js"
-            ]
-          },
           "jquery",
           {
             "name": "bootstrap",

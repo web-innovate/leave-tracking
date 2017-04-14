@@ -10,8 +10,13 @@ export class ApiService {
         this.httpClient = new HttpClient().configure(x => {
             x.withHeader('Content-Type', 'application/json');
             x.withBaseUrl(backendURL);
-          //x.withCredentials(true);
         });
+
+        const existingToken = localStorage.getItem('token') || null;
+
+        if (existingToken) {
+            this.attachToken(existingToken);
+        }
     }
 
     get http() {

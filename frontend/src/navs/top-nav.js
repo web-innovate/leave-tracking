@@ -17,6 +17,10 @@ export class TopNav {
         return this.dialogService.open({ viewModel: Profile, model: 'Good or Bad?'});
     }
 
+    logout() {
+        this._auth.logout();
+    }
+
     get isAuth() {
         return this._auth.isAuth;
     }

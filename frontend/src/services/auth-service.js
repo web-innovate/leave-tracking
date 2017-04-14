@@ -2,15 +2,16 @@ import { inject } from 'aurelia-framework';
 import { REQUEST_STATUS } from '../util/constants';
 import { ApiService } from './api-service';
 import { UserModel } from '../models/user-model';
+import { Events } from './events';
 
-@inject(ApiService)
+@inject(ApiService, Events)
 export class AuthService {
-    isAuth = false;
     meData = {};
 
-    constructor(_api){
+    constructor(_api, _events){
      this.http = _api.http;
      this._api = _api;
+     this._events = _events;
     }
 
     /**
@@ -22,15 +23,26 @@ export class AuthService {
     login(email, password) {
         return this.http.post('auth/login', {email, password})
             .then(res => {
-                console.log('succes', res);
                 const { token } = JSON.parse(res.response);
 
                 this._api.attachToken(token);
-                this.isAuth = true;
+                localStorage.setItem('token', token);
 
                 return this.me();
             })
             .catch(res => console.log('failed', res))
+    }
+
+    logout() {
+        localStorage.clear();
+    }
+
+    get isAuth() {
+        const token = localStorage.getItem('token') || false;
+        if (!token) {
+            this._events.ea.publish('no_token', {});
+        }
+        return !!token;
     }
 
     me() {

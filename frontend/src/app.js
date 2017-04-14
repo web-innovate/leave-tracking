@@ -1,6 +1,7 @@
 import { inject } from 'aurelia-framework';
-import { Redirect } from 'aurelia-router';
+import { Redirect, Router } from 'aurelia-router';
 import { AuthService } from './services/auth-service';
+import { Events } from './services/events';
 
 export class App {
     configureRouter(config, router){
@@ -78,10 +79,16 @@ export class App {
     }
 }
 
-@inject(AuthService)
+@inject(AuthService, Events, Router)
 class AuthorizeStep {
-    constructor(_auth) {
+    constructor(_auth, _events, router) {
         this._auth = _auth;
+        this._events = _events;
+        this.router = router;
+
+        this._events.ea.subscribe('no_token', (rr) => {
+            this.router.navigateToRoute('login')
+        })
     }
 
   run(navigationInstruction, next) {
