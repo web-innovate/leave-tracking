@@ -11,16 +11,14 @@ export class Dash {
     allPendingApprovals = [];
 
     constructor(leaveService, userService) {
-      this.leaveService = leaveService;
-      this.userService = userService;
-      this.http = new HttpClient();
+        this.leaveService = leaveService;
+        this.userService = userService;
+        this.http = new HttpClient();
     }
 
     activate() {
-
-     this.leaveRequests();
-     this.pendingApprovals();
-     console.log('asd', this.allPendingApprovals)
+        this.leaveRequests();
+        this.pendingApprovals();
     }
 
     async leaveRequests() {
