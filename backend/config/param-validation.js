@@ -9,7 +9,15 @@ export default {
       email: Joi.string().required(),
       password: Joi.string().required(),
       holidays: Joi.number().required(),
-      position: Joi.string().required()
+      position: Joi.string().required(),
+      projectId: Joi.number().required()
+    }
+  },
+
+  createProject: {
+    body: {
+      name: Joi.string().required(),
+      description: Joi.string().required()
     }
   },
 
@@ -31,10 +39,21 @@ export default {
       email: Joi.string().required(),
       password: Joi.string().required(),
       holidays: Joi.number().required(),
-      position: Joi.string().required()
+      position: Joi.string().required(),
+      projectId: Joi.number().required()
     },
     params: {
       userId: Joi.string().hex().required()
+    }
+  },
+
+  updateProject: {
+     body: {
+      name: Joi.string().required(),
+      description: Joi.string().required()
+    },
+    params: {
+      projectId: Joi.string().hex().required()
     }
   },
 

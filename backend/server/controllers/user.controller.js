@@ -33,7 +33,8 @@ function create(req, res, next) {
     email: req.body.email,
     password: req.body.password,
     holidays: req.body.holidays,
-    position: req.body.position
+    position: req.body.position,
+    projectId: req.body.projectId
   });
 
   user.save()
@@ -56,6 +57,7 @@ function update(req, res, next) {
   user.password = req.body.password;
   user.holidays = req.body.holidays;
   user.position = req.body.position;
+  user.projectId = req.body.projectId;
 
   user.save()
     .then(savedUser => res.json(savedUser))
