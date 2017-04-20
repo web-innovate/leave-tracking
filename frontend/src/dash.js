@@ -1,18 +1,20 @@
 import { inject } from 'aurelia-framework';
 import { LeaveService } from './services/leave-service';
 import { UserService } from './services/user-service';
+import { AuthService } from './services/auth-service';
 import { REQUEST_STATUS } from './util/constants';
 import {HttpClient} from 'aurelia-http-client';
 
 
-@inject(LeaveService, UserService)
+@inject(LeaveService, UserService, AuthService)
 export class Dash {
     allRequests = [];
     allPendingApprovals = [];
 
-    constructor(leaveService, userService) {
+    constructor(leaveService, userService, _auth) {
         this.leaveService = leaveService;
         this.userService = userService;
+        this._auth = _auth;
         this.http = new HttpClient();
     }
 
@@ -22,7 +24,7 @@ export class Dash {
     }
 
     async leaveRequests() {
-        this.allRequests = await this.leaveService.getLeaveRequests();
+        this.allRequests = await this.userService.getLeaves();
     }
 
     async pendingApprovals() {

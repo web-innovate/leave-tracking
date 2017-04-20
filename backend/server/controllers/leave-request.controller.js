@@ -81,4 +81,12 @@ function remove(req, res, next) {
     .catch(e => next(e));
 }
 
-export default { load, get, create, update, list, remove };
+function getForUser(req, res, next) {
+  const { userId } = req.params;
+
+  LeaveRequest.find({ userId })
+    .then(leaves => res.json(leaves))
+    .catch(e => next(e));
+}
+
+export default { load, get, create, update, list, remove, getForUser };

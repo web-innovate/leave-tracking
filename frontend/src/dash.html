@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div if.bind="_auth.isAdmin" class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -65,7 +65,7 @@
                                     </ul>
                                 </div>
 
-                                ${request.user.name} |
+                                ${request.user.fullName} |
                                 <span>
                                     ${request.workDays} ${request.workDays > 1 ? 'Days' : 'Day'} |
                                 </span>

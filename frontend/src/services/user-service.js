@@ -44,6 +44,13 @@ export class UserService {
         return this.http.put(`users/${user._id}`, user);
     }
 
+    async getLeaves() {
+        const me = await this.currentUser();
+
+        return this.http.get(`users/${me._id}/leaves`)
+            .then(res => JSON.parse(res.response));
+    }
+
     getUsers() {
         return this.http.get('users')
             .then(users => {
