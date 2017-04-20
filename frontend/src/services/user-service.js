@@ -40,6 +40,10 @@ export class UserService {
         return this.http.post('users', user);
     }
 
+    saveUser(user) {
+        return this.http.put(`users/${user._id}`, user);
+    }
+
     getUsers() {
         return this.http.get('users')
             .then(users => {

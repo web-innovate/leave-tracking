@@ -20,4 +20,12 @@ export class EditUser {
         console.log(projects)
     }
 
+    get canSave() {
+        return false
+    }
+
+    save() {
+        this._user.saveUser(this.user);
+    }
+
 }
