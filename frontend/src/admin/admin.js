@@ -1,30 +1,18 @@
 import { inject, bindable } from 'aurelia-framework';
 import { DialogService } from 'aurelia-dialog';
-import { CreateUser } from './users/create-user';
 import { CreateProject } from './projects/create-project';
 import { ManageProjects } from './projects/manage-projects';
 import { UserService } from '../services/user-service';
 import { ProjectService } from '../services/project-service';
+import { Router } from 'aurelia-router';
 
 
-@inject(DialogService, UserService, ProjectService)
+@inject(DialogService, UserService, ProjectService, Router)
 export class Admin {
-    constructor(dialogService, _user, _project) {
+    constructor(dialogService, _user, _project, router) {
         this.dialogService = dialogService;
         this._user = _user;
         this._project = _project;
-    }
-
-    createUser() {
-        return this.dialogService.open({ viewModel: CreateUser })
-            .then(response => {
-                if(!response.wasCancelled) {
-                    console.log('create user', response.output)
-                    this._user.createUser(response.output);
-                } else {
-                    console.log('do not create user')
-                }
-            })
     }
 
     createProject() {
@@ -50,13 +38,30 @@ export class Admin {
             })
     }
 
-    attached() {
-        this._user.getUsers().then(users => {
-            this.totalUserCount = JSON.parse(users.response).length
-        });
-
-        this._project.getProjects().then(projects => {
-            this.totalProjectCount = JSON.parse(projects.response).length
-        });
+    configureRouter(config, router) {
+        config.map([
+             {
+                route: [''],
+                name: 'admin',
+                moduleId: './dash',
+                nav: true,
+                title:'Admin',
+                settings: {
+                    icon: 'time'
+                },
+                auth: true
+            },
+           {
+                route: ['users'],
+                name: 'users',
+                moduleId: './manage/manage-users',
+                nav: true,
+                title:'Manage Users',
+                settings: {
+                    icon: 'time'
+                },
+                auth: true
+            }
+        ]);
     }
 }

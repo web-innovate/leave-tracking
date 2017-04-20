@@ -42,6 +42,10 @@ export class UserService {
     }
 
     getUsers() {
-        return this.http.get('users');
+        return this.http.get('users')
+            .then(users => {
+                users = JSON.parse(users.response);
+                return users.map(x => new UserModel(x));
+            });
     }
 }

@@ -1,0 +1,28 @@
+<template>
+    <spinner if.bind="loading"></spinner>
+
+    <div if.bind="!loading" class="bootcards-list">
+        <div class="panel panel-default">
+            <div class="list-group" >
+                <a class="list-group-item" repeat.for="user of users"
+                    href="#/admin/users/${user._id}/edit">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <img class="fa fa-3x pull-left"
+                                  src="${user.avatar}"></img>
+                            <h4 class="list-group-item-heading">
+                                ${user.firstName} ${user.lastName} (${user.holidays})
+                            </h4>
+                            <p class="list-group-item-text">${user.email}</p>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <p class="list-group-item-text">${user.position}</p>
+                            <p class="list-group-item-text">${user.project}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</template>
