@@ -30,8 +30,8 @@ export class LeaveService {
                 title: `${user.fullName} | ${HUMAN_LEAVE_TYPES[leaveType]}`,
                 type: leaveType,
                 class: this.computeEventClass(leaveType),
-                start: moment(leave.start).toDate().valueOf(),
-                end: moment(leave.end).toDate().valueOf()
+                start: moment(leave.start, 'llll').toDate().valueOf(),
+                end: moment(leave.end, 'llll').toDate().valueOf()
             }
             return await leaveEvent;
         });
