@@ -9,11 +9,13 @@ export class ProjectService {
     }
 
     createProject(project) {
-        return this.http.post('projects', project);
+        return this.http.post('projects', project)
+            .then(res => this.toJson(res.response));
     }
 
     getProjects() {
-        return this.http.get('projects');
+        return this.http.get('projects')
+            .then(res => this.toJson(res.response));
     }
 
     getProject(id) {

@@ -26,6 +26,17 @@ export class Users {
                     icon: 'time'
                 },
                 auth: true
+            },
+            {
+                route: ['/:userId/edit'],
+                name: 'edit-user',
+                moduleId: './edit-user',
+                nav: false,
+                title:'Edit user',
+                settings: {
+                    icon: 'time'
+                },
+                auth: true
             }
         ]);
     }

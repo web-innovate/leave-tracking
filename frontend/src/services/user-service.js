@@ -25,12 +25,11 @@ export class UserService {
     }
 
     getUser(id) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                this.loggedUser = this.user;
-                resolve(new UserModel(this.user));
-            }, 500)
-        });
+        return this.http.get(`users/${id}`)
+            .then(users => {
+                users = JSON.parse(users.response);
+                return  new UserModel(users);
+            });
     }
 
     async currentUser() {
