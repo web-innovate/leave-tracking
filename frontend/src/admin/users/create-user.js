@@ -20,8 +20,6 @@ export class CreateUser {
     }
 
     attached() {
-        this._projects.getProjects().then(res => {
-            this.projects = JSON.parse(res.response);
-        });
+        this._projects.getProjects().then(projects => this.projects = projects);
     }
 }
