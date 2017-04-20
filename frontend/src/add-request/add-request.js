@@ -63,18 +63,11 @@ export class AddRequest {
         }
     }
 
-    attached() {
-        // this.computeDiff();
-    }
-
     computeDiff() {
         const fr = moment(this.start);
         const to = moment(this.end);
 
         this.dateDiff = business.weekDays(fr,to) + 1;
-
-        console.log('from', fr)
-        console.log('to', to)
     }
 
     get canSave() {

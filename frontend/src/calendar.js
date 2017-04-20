@@ -1,5 +1,6 @@
-import {inject} from 'aurelia-framework';
-import {LeaveService} from './services/leave-service'
+import { inject } from 'aurelia-framework';
+import { LeaveService } from './services/leave-service'
+import { HUMAN_LEAVE_TYPES } from './util/constants';
 
 @inject(LeaveService)
 export class Calendar {
@@ -24,6 +25,9 @@ export class Calendar {
                 modal_type: 'template',
                 tmpl_cache: true,
                 modal: '#events-modal',
+                modal_title: function(ev) {
+                    return ev.title;
+                },
                 view: 'month',
                 weekbox: false,
                 views: {

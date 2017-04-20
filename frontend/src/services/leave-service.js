@@ -1,51 +1,11 @@
 import moment from 'moment';
 import { inject } from 'aurelia-framework';
-import { REQUEST_STATUS } from '../util/constants';
+import { REQUEST_STATUS, LEAVE_TYPES, HUMAN_LEAVE_TYPES } from '../util/constants';
 import { ApiService } from './api-service';
 import { UserService } from './user-service';
 
 @inject(ApiService, UserService)
 export class LeaveService {
-    leaveRequests = [
-                {
-                    workDays: 1,
-                    start: 'Wed Apr 12 2017 00:00:00 GMT+0300 (EEST)',
-                    end: 'Wed Apr 13 2017 00:00:00 GMT+0300 (EEST)',
-                    status: 'approved'
-                },
-                {
-                    workDays: 2,
-                    start: 'Wed Apr 12 2017 00:00:00 GMT+0300 (EEST)',
-                    end: 'Wed Apr 14 2017 00:00:00 GMT+0300 (EEST)',
-                    status: 'rejected'
-                },
-                {
-                    workDays: 3,
-                    start: 'Wed Apr 12 2017 00:00:00 GMT+0300 (EEST)',
-                    end: 'Wed Apr 15 2017 00:00:00 GMT+0300 (EEST)',
-                    status: 'pending'
-                }
-            ];
-
-    approvedLeaves = [
-        {
-            "id": 1,
-            "title": "Jane",
-            "url": "http://example.com",
-            "class": "event-important",
-            "start": moment().subtract(2, 'days').toDate().valueOf(), // Milliseconds
-            "end": moment().valueOf() // Milliseconds
-        },
-        {
-            "id": 2,
-            "title": "John",
-            "url": "http://example.com",
-            "class": "event-special",
-            "start": moment().valueOf(), // Milliseconds
-            "end": moment().valueOf() // Milliseconds
-        }
-    ];
-
     constructor(api, _user) {
         this.http = api.http;
         this._user = _user;
@@ -63,18 +23,39 @@ export class LeaveService {
 
         const events =  await leaves.map(async leave => {
             const user = await this._user.getUser(leave.userId);
+            const { leaveType } = leave;
 
             const leaveEvent = {
                 id: leave._id,
-                title: user.fullName,
-                
+                title: `${user.fullName} | ${HUMAN_LEAVE_TYPES[leaveType]}`,
+                type: leaveType,
+                class: this.computeEventClass(leaveType),
                 start: moment(leave.start).toDate().valueOf(),
                 end: moment(leave.end).toDate().valueOf()
             }
             return await leaveEvent;
-        })
+        });
 
         return await Promise.all(events)
+    }
+
+    computeEventClass(type) {
+        const { ANNUAL, PARENTING, UNPAID, STUDY, HALF_DAY, SICK } = LEAVE_TYPES;
+
+        switch(type) {
+            case ANNUAL:
+                return 'event-important';
+            case PARENTING:
+                return 'event-success';
+            case UNPAID:
+                return 'event-warning';
+            case STUDY:
+                return 'event-info';
+            case HALF_DAY:
+                return 'event-inverse';
+            case SICK:
+                return 'event-special';
+        }
     }
 
     addLeaveRequest(request) {
@@ -88,7 +69,6 @@ export class LeaveService {
         };
 
         return this.http.post('leaves', leave);
-        console.log('saving', request);
     }
 
     getApprovedLeaves() {
@@ -113,6 +93,6 @@ export class LeaveService {
         return this.http.put(`leaves/${request._id}`, request)
             .then(res => {
                 console.log('the response', JSON.parse(res.response));
-            })
+            });
     }
 }

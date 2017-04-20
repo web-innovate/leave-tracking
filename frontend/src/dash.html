@@ -72,9 +72,8 @@
                                 ${request.start | dateFormat}
                                 <span show.bind="showExtra(request)">
                                     - ${request.end | dateFormat}
-                                    | ${request.leaveType | humanizeLeave}
                                 </span>
-
+                                    | ${request.leaveType | humanizeLeave}
                                 <span if.bind="request.status != 'pending'" class="badge badge-pill">
                                     ${request.status}
                                 </span>
