@@ -15,8 +15,6 @@ export class ManageProjects {
     }
 
     attached() {
-        this._project.getProjects().then(projects => {
-            this.projects = JSON.parse(projects.response);
-        });
+        this._project.getProjects().then(projects => this.projects = projects);
     }
 }
