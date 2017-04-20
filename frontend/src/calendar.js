@@ -1,6 +1,6 @@
 import { inject } from 'aurelia-framework';
-import { LeaveService } from './services/leave-service'
-import { HUMAN_LEAVE_TYPES } from './util/constants';
+import { LeaveService } from '~/services/leave-service'
+import { HUMAN_LEAVE_TYPES } from '~/util/constants';
 
 @inject(LeaveService)
 export class Calendar {

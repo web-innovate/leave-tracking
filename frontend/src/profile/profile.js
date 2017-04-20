@@ -1,6 +1,6 @@
 import { inject } from 'aurelia-framework';
-import { UserService } from '../services/user-service';
-import { ProjectService } from '../services/project-service';
+import { UserService } from '~/services/user-service';
+import { ProjectService } from '~/services/project-service';
 import md5 from 'md5';
 
 @inject(UserService, ProjectService)

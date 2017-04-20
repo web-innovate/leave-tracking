@@ -11,6 +11,9 @@
   "plugins": [
     "syntax-flow",
     "transform-decorators-legacy",
-    "transform-flow-strip-types"
+    "transform-flow-strip-types",
+    ["babel-plugin-root-import",
+      { "rootPathSuffix": "src/" }
+    ]
   ]
 }

@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { inject } from 'aurelia-framework';
-import { REQUEST_STATUS, LEAVE_TYPES, HUMAN_LEAVE_TYPES } from '../util/constants';
+import { REQUEST_STATUS, LEAVE_TYPES, HUMAN_LEAVE_TYPES } from '~/util/constants';
 import { ApiService } from './api-service';
 import { UserService } from './user-service';
 

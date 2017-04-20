@@ -1,7 +1,7 @@
 import { inject } from 'aurelia-framework';
 import { Redirect, Router } from 'aurelia-router';
-import { AuthService } from './services/auth-service';
-import { Events } from './services/events';
+import { AuthService } from '~/services/auth-service';
+import { Events } from '~/services/events';
 
 @inject(AuthService)
 export class App {

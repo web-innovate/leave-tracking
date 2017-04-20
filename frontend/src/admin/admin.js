@@ -1,11 +1,10 @@
 import { inject, bindable } from 'aurelia-framework';
 import { DialogService } from 'aurelia-dialog';
+import { Router } from 'aurelia-router';
 import { CreateProject } from './projects/create-project';
 import { ManageProjects } from './projects/manage-projects';
-import { UserService } from '../services/user-service';
-import { ProjectService } from '../services/project-service';
-import { Router } from 'aurelia-router';
-
+import { UserService } from '~/services/user-service';
+import { ProjectService } from '~/services/project-service';
 
 @inject(DialogService, UserService, ProjectService, Router)
 export class Admin {
@@ -54,7 +53,7 @@ export class Admin {
            {
                 route: ['users'],
                 name: 'users',
-                moduleId: './manage/manage-users',
+                moduleId: './manage/users/manage-users',
                 nav: true,
                 title:'Manage Users',
                 settings: {

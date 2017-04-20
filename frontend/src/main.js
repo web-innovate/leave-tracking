@@ -1,4 +1,4 @@
-import environment from './environment';
+import environment from '~/environment';
 import moment from 'moment'
 export function configure(aurelia) {
 

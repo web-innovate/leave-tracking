@@ -1,10 +1,9 @@
 import { inject } from 'aurelia-framework';
-import { LeaveService } from './services/leave-service';
-import { UserService } from './services/user-service';
-import { AuthService } from './services/auth-service';
-import { REQUEST_STATUS } from './util/constants';
-import {HttpClient} from 'aurelia-http-client';
-
+import { HttpClient } from 'aurelia-http-client';
+import { LeaveService } from '~/services/leave-service';
+import { UserService } from '~/services/user-service';
+import { AuthService } from '~/services/auth-service';
+import { REQUEST_STATUS } from '~/util/constants';
 
 @inject(LeaveService, UserService, AuthService)
 export class Dash {

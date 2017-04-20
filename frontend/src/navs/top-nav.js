@@ -1,7 +1,7 @@
 import { inject, bindable } from 'aurelia-framework';
 import { DialogService } from 'aurelia-dialog';
-import { Profile } from '../profile/profile';
-import { AuthService } from '../services/auth-service';
+import { Profile } from '~/profile/profile';
+import { AuthService } from '~/services/auth-service';
 
 
 @inject(DialogService, AuthService)

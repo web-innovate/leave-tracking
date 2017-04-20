@@ -1,9 +1,9 @@
 import { bindable, inject } from 'aurelia-framework';
-import { LeaveService } from '../services/leave-service';
-import { UserService } from '../services/user-service';
+import { LeaveService } from '~/services/leave-service';
+import { UserService } from '~/services/user-service';
 import moment from 'moment'
 import business from 'moment-business';
-import { LEAVE_TYPES, HUMAN_LEAVE_TYPES } from '../util/constants';
+import { LEAVE_TYPES, HUMAN_LEAVE_TYPES } from '~/util/constants';
 
 const { ANNUAL, SICK, PARENTING, UNPAID, STUDY, HALF_DAY } = LEAVE_TYPES;
 

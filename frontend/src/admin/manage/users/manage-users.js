@@ -1,9 +1,9 @@
 import { inject } from 'aurelia-framework';
-import { UserService } from '../../services/user-service'
-import { ProjectService } from '../../services/project-service'
-import { DialogService } from 'aurelia-dialog';
 import { Router } from 'aurelia-router';
-import { CreateUser } from '../users/create-user';
+import { DialogService } from 'aurelia-dialog';
+import { UserService } from '~/services/user-service'
+import { ProjectService } from '~/services/project-service'
+import { CreateUser } from './create-user';
 
 
 @inject(UserService, ProjectService, DialogService, Router)

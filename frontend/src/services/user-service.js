@@ -1,5 +1,5 @@
 import { inject } from 'aurelia-framework';
-import { UserModel } from '../models/user-model';
+import { UserModel } from '~/models/user-model';
 import { ApiService } from './api-service';
 import { AuthService } from './auth-service';
 

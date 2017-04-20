@@ -1,6 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {DialogController} from 'aurelia-dialog';
-import { ProjectService } from '../../services/project-service';
+import { ProjectService } from '~/services/project-service';
 
 @inject(DialogController, ProjectService)
 export class CreateUser {
