@@ -23,6 +23,11 @@ export class ProjectService {
             .then(res => this.toJson(res.response));
     }
 
+    deleteProject(id) {
+        return this.http.delete(`projects/${id}`)
+            .then(res => this.toJson(res.response));
+    }
+
     updateProject(project) {
         return this.http.put(`projects/${project._id}`, project);
     }
