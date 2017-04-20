@@ -1,12 +1,14 @@
 import { inject } from 'aurelia-framework';
+import { Router } from 'aurelia-router';
 import { UserService } from '../../services/user-service';
 import { ProjectService } from '../../services/project-service';
 
-@inject(UserService, ProjectService)
+@inject(UserService, ProjectService, Router)
 export class EditUser {
-    constructor(_user, _project) {
+    constructor(_user, _project, router) {
         this._user = _user;
         this._project = _project;
+        this.router = router;
     }
 
     async activate(params) {
@@ -24,8 +26,9 @@ export class EditUser {
         return false
     }
 
-    save() {
-        this._user.saveUser(this.user);
+    async save() {
+        await this._user.saveUser(this.user);
+        this.router.navigateBack();
     }
 
 }
