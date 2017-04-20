@@ -27,12 +27,13 @@ function get(req, res) {
  * @returns {User}
  */
 function create(req, res, next) {
+  const user = req.user;
   const leave = new LeaveRequest(
   {
     start: req.body.start,
     end: req.body.end,
     leaveType: req.body.leaveType,
-    userId: req.body.userId,
+    userId: user.id,
     status: req.body.status,
     workDays: req.body.workDays
   });

@@ -2,8 +2,9 @@ import moment from 'moment';
 import { inject } from 'aurelia-framework';
 import { REQUEST_STATUS } from '../util/constants';
 import { ApiService } from './api-service';
+import { UserService } from './user-service';
 
-@inject(ApiService)
+@inject(ApiService, UserService)
 export class LeaveService {
     leaveRequests = [
                 {
@@ -45,8 +46,9 @@ export class LeaveService {
         }
     ];
 
-    constructor(api) {
+    constructor(api, _user) {
         this.http = api.http;
+        this._user = _user;
     }
 
     getLeaveRequests() {
@@ -54,10 +56,30 @@ export class LeaveService {
             .then(res => JSON.parse(res.response));
     }
 
+    async getCalendarEvents() {
+        let leaves = await this.getLeaveRequests();
+        // show just the approved leaves
+        leaves = await leaves.filter(x => x.status === 'approved');
+
+        const events =  await leaves.map(async leave => {
+            const user = await this._user.getUser(leave.userId);
+
+            const leaveEvent = {
+                id: leave._id,
+                title: user.fullName,
+                url: '123',
+                start: moment(leave.start).toDate().valueOf(),
+                end: moment(leave.end).toDate().valueOf()
+            }
+            return await leaveEvent;
+        })
+
+        return await Promise.all(events)
+    }
+
     addLeaveRequest(request) {
-        const { start, end, workDays, leaveType, userId } = request;
+        const { start, end, workDays, leaveType } = request;
         const leave = {
-            userId,
             leaveType,
             start,
             end,
@@ -70,7 +92,6 @@ export class LeaveService {
     }
 
     getApprovedLeaves() {
-
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(this.approvedLeaves);

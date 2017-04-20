@@ -9,11 +9,11 @@ export class Calendar {
         this.leaveService = leaveService;
     }
 
-    attached() {
-        this.leaveService.getApprovedLeaves().then(leaves => {
-            this.isLoading = false;
-            this.displayCalendar(leaves);
-        });
+    async attached() {
+        const events = await this.leaveService.getCalendarEvents()
+
+        this.displayCalendar(events)
+        this.isLoading = false;
     }
 
     displayCalendar(events) {

@@ -9,4 +9,8 @@ export class UserModel {
         const emailHash = md5(this.email.toLowerCase());
         return `https://www.gravatar.com/avatar/${emailHash}?s=300`;
     }
+
+    get fullName() {
+        return `${this.firstName} ${this.lastName}`;
+    }
 }

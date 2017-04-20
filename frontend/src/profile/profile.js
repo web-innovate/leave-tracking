@@ -16,7 +16,7 @@ export class Profile {
 
     async attached() {
         this.user = await this._user.currentUser();
-        const {name : projectName} = await this._project.getProject(this.user.projectId);
+        const { name : projectName } = await this._project.getProject(this.user.projectId);
 
         this.user.project = projectName;
 

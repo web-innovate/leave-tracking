@@ -26,7 +26,6 @@ export default {
       start: Joi.date().required(),
       end: Joi.date().required(),
       leaveType: Joi.string().required(),
-      userId: Joi.string().required(),
       status: Joi.string().required()
     }
   },
