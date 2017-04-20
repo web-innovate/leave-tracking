@@ -47,6 +47,18 @@ export class AuthService {
 
     me() {
         return this.http.get('auth/me')
-            .then(res => new UserModel(JSON.parse(res.response)))
+            .then(res => {
+                const meData = new UserModel(JSON.parse(res.response));
+                localStorage.setItem('me', JSON.stringify(meData))
+                return meData;
+            })
+    }
+
+    localData() {
+        return (localStorage.getItem('me') && JSON.parse(localStorage.getItem('me'))) || null;
+    }
+
+    get isAdmin() {
+        return (this.localData() && this.localData().userType === 'ADMIN') || false
     }
 }

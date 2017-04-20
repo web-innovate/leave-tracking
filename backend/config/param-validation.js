@@ -10,7 +10,8 @@ export default {
       password: Joi.string().required(),
       holidays: Joi.number().required(),
       position: Joi.string().required(),
-      projectId: Joi.string().hex().required()
+      projectId: Joi.string().hex().required(),
+      userType: Joi.string().required()
     }
   },
 
@@ -39,7 +40,8 @@ export default {
       password: Joi.string().required(),
       holidays: Joi.number().required(),
       position: Joi.string().required(),
-      projectId: Joi.string().hex().required()
+      projectId: Joi.string().hex().required(),
+      userType: Joi.string().required()
     },
     params: {
       userId: Joi.string().hex().required()

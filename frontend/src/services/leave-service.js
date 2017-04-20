@@ -67,7 +67,7 @@ export class LeaveService {
             const leaveEvent = {
                 id: leave._id,
                 title: user.fullName,
-                url: '123',
+                
                 start: moment(leave.start).toDate().valueOf(),
                 end: moment(leave.end).toDate().valueOf()
             }

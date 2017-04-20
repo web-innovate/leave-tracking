@@ -3,7 +3,12 @@ import { Redirect, Router } from 'aurelia-router';
 import { AuthService } from './services/auth-service';
 import { Events } from './services/events';
 
+@inject(AuthService)
 export class App {
+    constructor(_auth) {
+        this._auth = _auth;
+    }
+
     configureRouter(config, router){
         config.title = 'Leave tracker';
         config.addPipelineStep('authorize', AuthorizeStep);
@@ -57,12 +62,13 @@ export class App {
                 route: 'admin',
                 name: 'admin',
                 moduleId: './admin/admin',
-                nav: true,
+                nav: false,
                 title:'Admin',
                 settings: {
                     icon: 'plus'
                 },
-                auth: true
+                auth: true,
+                requires: ['ADMIN']
             },
             {
                 route: 'login',
@@ -97,6 +103,15 @@ class AuthorizeStep {
       if (!isLoggedIn) {
         return next.cancel(new Redirect('login'));
       }
+    }
+
+    if (navigationInstruction.config.requires) {
+        const { requires } = navigationInstruction.config;
+        const { userType } = this._auth.localData();
+
+        if (requires.indexOf(userType) === -1) {
+            return next.cancel();
+        }
     }
 
     return next();

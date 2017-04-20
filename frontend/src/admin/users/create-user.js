@@ -11,7 +11,8 @@ export class CreateUser {
             password: '',
             position: '',
             projectId: 0,
-            holidays: 0
+            holidays: 0,
+            userType: ''
         };
 
     constructor(dialogCtrl, _projects) {
