@@ -46,6 +46,17 @@ export class Admin {
                     icon: 'time'
                 },
                 auth: true
+            },
+            {
+                route: ['holidays'],
+                name: 'holidays',
+                moduleId: './manage/legal-holidays/manage-holidays',
+                nav: true,
+                title:'Manage Holidays',
+                settings: {
+                    icon: 'time'
+                },
+                auth: true
             }
         ]);
     }
