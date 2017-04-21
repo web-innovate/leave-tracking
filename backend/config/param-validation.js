@@ -30,6 +30,24 @@ export default {
       status: Joi.string().required()
     }
   },
+  createHoliday: {
+    body: {
+      name: Joi.string().required(),
+      description: Joi.string().required(),
+      date: Joi.date().required()
+    }
+  },
+
+  updateHoliday: {
+    body: {
+      name: Joi.string().required(),
+      description: Joi.string().required(),
+      date: Joi.date().required()
+    },
+    params: {
+      holidayId: Joi.string().hex().required()
+    }
+  },
 
   // UPDATE /api/users/:userId
   updateUser: {

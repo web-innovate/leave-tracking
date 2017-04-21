@@ -1,0 +1,32 @@
+<template>
+    <spinner if.bind="loading"></spinner>
+
+    <div if.bind="!loading" class="bootcards-list">
+        <div class="panel panel-default">
+            <div class="list-group" >
+                <a class="list-group-item" repeat.for="holiday of holidays"
+                    href="#/admin/holidays/${holiday._id}/edit">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h4 class="list-group-item-heading">
+                                ${holiday.name}
+                            </h4>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <p class="list-group-item-text">
+                                ${holiday.description}
+                            </p>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <p class="list-group-item-text">
+                                ${holiday.date}
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</template>

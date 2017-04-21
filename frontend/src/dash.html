@@ -17,7 +17,7 @@
                             <li repeat.for="request of allRequests"
                                 class="list-group-item ${request.status | computeBadge}">
                                 <span>
-                                    ${request.workDays} ${request.workDays > 1 ? 'Days' : 'Day'} |
+                                    ${request.workDays | days}
                                 </span>
                                 ${request.start | dateFormat}
                                 <span show.bind="showExtra(request)">
