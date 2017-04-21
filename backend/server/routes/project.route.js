@@ -22,6 +22,9 @@ router.route('/:projectId')
   /** DELETE /api/projects/:projectId - Delete user */
   .delete(projectCtrl.remove);
 
+router.route('/:projectId/users')
+  .get(projectCtrl.getUsers);
+
 /** Load user when API with projectId route parameter is hit */
 router.param('projectId', projectCtrl.load);
 

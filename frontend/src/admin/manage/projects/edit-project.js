@@ -15,8 +15,10 @@ export class EditProject {
     async activate(params) {
         const { projectId } = params;
         const project = await this._project.getProject(projectId);
+        const users = await this._project.getUsers(projectId);
 
         this.project = project;
+        this.users = users;
         this.loading = false;
     }
     saveProject() {

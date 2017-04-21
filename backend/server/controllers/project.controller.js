@@ -1,4 +1,5 @@
 import Project from '../models/project.model';
+import User from '../models/user.model';
 
 /**
  * Load project and append to req.
@@ -78,4 +79,14 @@ function remove(req, res, next) {
     .catch(e => next(e));
 }
 
-export default { load, get, create, update, list, remove };
+/**
+* Lists all users associated to the provided projectId
+*/
+function getUsers(req, res, next) {
+    const { projectId } = req.params;
+      User.find({projectId})
+        .then(users => res.json(users))
+        .catch(e => next(e));
+}
+
+export default { load, get, create, update, list, remove, getUsers };

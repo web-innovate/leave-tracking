@@ -30,11 +30,13 @@ export class Approvals {
     async approveRequest(request) {
         const response = await this._leave.updateLeaveRequestStatus(request, REQUEST_STATUS.APPROVED);
         console.log('approve', response)
+        return response;
     }
 
     async rejectRequest(request) {
         const response = await this._leave.updateLeaveRequestStatus(request, REQUEST_STATUS.REJECTED);
         console.log('reject', response)
+        return response;
     }
 
     showExtra(extra) {

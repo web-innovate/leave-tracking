@@ -17,7 +17,7 @@
         </div>
 
         <div class="input-group pull-right">
-        <button click.delegate="deleteProject()" class="btn btn-danger">
+            <button click.delegate="deleteProject()" class="btn btn-danger">
                 Delete
             </button>
             <button type="submit" class="btn btn-primary">
@@ -25,4 +25,30 @@
             </button>
         </div>
     </form>
+
+    <div if.bind="users.length">
+        <h2>Users assigned to project</h2>
+        <div if.bind="!loading" class="bootcards-list">
+            <div class="panel panel-default">
+                <div class="list-group" >
+                    <a class="list-group-item" repeat.for="user of users">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <img class="fa fa-3x pull-left"
+                                src="${user.avatar}"></img>
+                                <h4 class="list-group-item-heading">
+                                    ${user.firstName} ${user.lastName} (${user.holidays})
+                                </h4>
+                                <p class="list-group-item-text">${user.email}</p>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <p class="list-group-item-text">${user.position}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
