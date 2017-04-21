@@ -19,7 +19,7 @@ export class LeaveService {
     async getCalendarEvents() {
         let leaves = await this.getLeaveRequests();
         // show just the approved leaves
-        leaves = await leaves.filter(x => x.status === 'approved');
+        leaves = leaves.filter(x => x.status === 'approved');
 
         const events =  await leaves.map(async leave => {
             const user = await this._user.getUser(leave.userId);
@@ -33,10 +33,10 @@ export class LeaveService {
                 start: moment(leave.start, 'llll').toDate().valueOf(),
                 end: moment(leave.end, 'llll').toDate().valueOf()
             }
-            return await leaveEvent;
+            return leaveEvent;
         });
 
-        return await Promise.all(events)
+        return await Promise.all(events);
     }
 
     computeEventClass(type) {

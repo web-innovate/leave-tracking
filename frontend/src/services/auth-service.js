@@ -29,8 +29,7 @@ export class AuthService {
                 localStorage.setItem('token', token);
 
                 return this.me();
-            })
-            .catch(res => console.log('failed', res))
+            });
     }
 
     logout() {

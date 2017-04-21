@@ -2,7 +2,12 @@
     <div class="row">
         <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
             <h2>Login</h2>
+            <spinner if.bind="loading"></spinner>
+
             <form submit.delegate="login()">
+            <div if.bind="loginError" class="alert alert-danger">
+                <strong>Unauthorized!</strong> Invalid credentials
+            </div>
                 <div class="form-group">
                     <input
                         type="text"
@@ -21,7 +26,7 @@
                         value.bind="user.password">
                 </div>
                 <div class="form-group">
-                    <button disabled.bind="!canSave  " type="submit" class="btn btn-primary btn-block">Sign in</button>
+                    <button disabled.bind="!canSave && !loading" type="submit" class="btn btn-primary btn-block">Sign in</button>
                 </div>
             </form>
         </div>

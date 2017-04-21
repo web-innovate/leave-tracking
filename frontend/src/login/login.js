@@ -8,6 +8,8 @@ export class Login {
         email: '',
         password: ''
     }
+    loginError = false;
+    loading = false;
 
     constructor(_authService, router) {
         this._authService = _authService;
@@ -16,9 +18,16 @@ export class Login {
 
     login() {
         const { email, password } = this.user;
-
+        this.loading = true;
         return this._authService.login(email, password)
-            .then(() => this.router.navigateToRoute('home'))
+            .then(() => {
+                this.loading = false;
+                this.router.navigateToRoute('home');
+            })
+            .catch((err) => {
+                this.loginError = true;
+                this.loading = false;
+            })
     }
 
     get canSave() {
