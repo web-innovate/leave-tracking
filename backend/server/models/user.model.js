@@ -80,7 +80,9 @@ UserSchema.statics = {
   },
 
   findByEmailAndPassword(email, password) {
-    return this.findOne({email, password})
+    email = email.toLowerCase();
+
+    return this.findOne({ email, password })
       .exec()
       .then(user => {
         if(user) {

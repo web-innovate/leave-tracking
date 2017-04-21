@@ -30,7 +30,7 @@ function create(req, res, next) {
   const user = new User({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    email: req.body.email,
+    email: req.body.email.toLowerCase(),
     password: req.body.password,
     holidays: req.body.holidays,
     position: req.body.position,
@@ -53,7 +53,7 @@ function update(req, res, next) {
   const user = req.user;
   user.firstName = req.body.firstName;
   user.lastName = req.body.lastName;
-  user.email = req.body.email;
+  user.email = req.body.email.toLowerCase();
   user.password = req.body.password;
   user.holidays = req.body.holidays;
   user.position = req.body.position;
