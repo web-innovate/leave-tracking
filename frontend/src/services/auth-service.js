@@ -60,4 +60,8 @@ export class AuthService {
     get isAdmin() {
         return (this.localData() && this.localData().userType === 'ADMIN') || false
     }
+
+    get isApprover() {
+        return (this.localData() && this.localData().userType === 'APPROVER') || false
+    }
 }

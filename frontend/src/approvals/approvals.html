@@ -1,0 +1,53 @@
+<template>
+<div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Pending for approval requests, only for approvers </h4>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <spinner if.bind="!allPendingApprovals.length"></spinner>
+
+                        <ul class="list-group">
+                            <li repeat.for="request of allPendingApprovals"
+                                class="list-group-item ${request.status | computeBadge}">
+                                 <div
+                                    if.bind="request.status == 'pending'"
+                                    class="btn-group">
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Action<span class="caret"></span>
+                                    </button>
+
+                                    <ul class="dropdown-menu">
+                                        <li><a click.delegate="approveRequest(request)">Approve</a></li>
+                                        <li><a click.delegate="rejectRequest(request)">Reject</a></li>
+                                    </ul>
+                                </div>
+
+                                ${request.user.fullName} |
+                                <span>
+                                    ${request.workDays} ${request.workDays > 1 ? 'Days' : 'Day'} |
+                                </span>
+                                ${request.start | dateFormat}
+                                <span show.bind="showExtra(request)">
+                                    - ${request.end | dateFormat}
+                                </span>
+                                    | ${request.leaveType | humanizeLeave}
+                                <span if.bind="request.status != 'pending'" class="badge badge-pill">
+                                    ${request.status}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+</template>

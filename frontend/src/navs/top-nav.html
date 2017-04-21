@@ -23,7 +23,14 @@
                         </a>
                     </li>
 
-                    <li if.bind="_auth.isAdmin" class="">
+                    <li if.bind="_auth.isAdmin || _auth.isApprover" class="nav navbar-nav">
+                        <a href="#/approvals" data-toggle="collapse" data-target="#nav-container">
+                            <i class="glyphicon"></i>
+                            Approvals
+                        </a>
+                    </li>
+
+                    <li if.bind="_auth.isAdmin" class="nav navbar-nav">
                         <a href="#/admin" data-toggle="collapse" data-target="#nav-container">
                             <i class="glyphicon"></i>
                             Admin

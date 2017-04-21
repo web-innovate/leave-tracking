@@ -71,6 +71,18 @@ export class App {
                 requires: ['ADMIN']
             },
             {
+                route: 'approvals',
+                name: 'approvals',
+                moduleId: './approvals/approvals',
+                nav: false,
+                title:'Approvals',
+                settings: {
+                    icon: 'plus'
+                },
+                auth: true,
+                requires: ['ADMIN', 'APPROVER']
+            },
+            {
                 route: 'login',
                 name: 'login',
                 moduleId: './login/login',
