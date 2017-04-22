@@ -27,7 +27,23 @@ function create(req, res, next) {
   });
 
   leave.save()
-    .then(savedLeave => res.json(savedLeave))
+    .then(savedLeave => {
+      const { leaveType, userId, workDays, status } = savedLeave;
+      console.log('saved', savedLeave);
+
+      if (leaveType === 'annual-leave' && status === 'pending') {
+        console.log('is annual')
+        return User.get(userId)
+          .then(usr => {
+            usr.pending += workDays;
+
+            return usr.save()
+              .then(() => res.json(savedLeave))
+          })
+      } else {
+        return res.json(savedLeave);
+      }
+    })
     .catch(e => next(e));
 }
 
@@ -40,10 +56,18 @@ function update(req, res, next) {
     .then(savedRequest => {
       const { leaveType, status, userId, workDays } = savedRequest;
       // decrease the remaining days only for annual leave
-      if (leaveType === 'annual-leave' && status === 'approved') {
+      if (leaveType === 'annual-leave') {
         return User.get(userId)
           .then(usr => {
-            usr.holidays -= workDays;
+
+            if (status === 'approved') {
+              usr.taken += workDays;
+              usr.pending -= workDays;
+            }
+
+            if (status === 'rejected') {
+              usr.pending -= workDays;
+            }
 
             return usr.save()
               .then(() => res.json(savedRequest))

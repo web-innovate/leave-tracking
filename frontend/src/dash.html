@@ -2,6 +2,28 @@
     <div class="col-md-12">
         <h3><i class="glyphicon glyphicon-dashboard"></i> Dashboard</h3>
         <hr>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Holiday summary</h4>
+                    </div>
+
+                    <div class="panel-body">
+
+                     <chart id="dynamic-doughnut-chart"
+                            style="display: block;"
+                            type="doughnut"
+                            should-update="true"
+                            throttle="10"
+                            data.bind="statusData"></chart>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">

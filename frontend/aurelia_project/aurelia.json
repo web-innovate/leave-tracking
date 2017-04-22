@@ -232,6 +232,20 @@
             "name": "aurelia-dialog",
             "path": "../node_modules/aurelia-dialog/dist/amd",
             "main": "aurelia-dialog"
+          },          {
+            "name": "chart.js",
+            "path": "../node_modules/chart.js/dist",
+            "main": "Chart.js"
+          },
+          {
+            "name": "aurelia-chart",
+            "path": "../node_modules/aurelia-chart/dist/amd",
+            "main": "index",
+            "resources": [
+              "elements/chart-element.js",
+              "elements/chart-element.html",
+              "attributes/chart-attribute.js"
+            ]
           },
           "crypt",
           "charenc",

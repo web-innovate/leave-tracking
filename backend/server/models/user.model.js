@@ -24,6 +24,14 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  taken: {
+    type: Number,
+    default: 0
+  },
+  pending: {
+    type: Number,
+    default: 0
+  },
   position: {
     type: String,
     required: true
