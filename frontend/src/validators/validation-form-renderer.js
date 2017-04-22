@@ -33,11 +33,13 @@ export class ValidationFormRenderer {
     formGroup.classList.add('has-error');
 
     // add help-block
-    const message = document.createElement('p');
+    const message = document.createElement('span');
     message.className = 'help-block validation-message';
     message.textContent = result.message;
     message.id = `validation-message-${result.id}`;
-    formGroup.appendChild(message);
+
+    const closestDiv = element.closest('div');
+    closestDiv.appendChild(message);
   }
 
   remove(element: Element, result: ValidateResult) {
@@ -46,6 +48,7 @@ export class ValidationFormRenderer {
     }
 
     const formGroup = element.closest('.form-group');
+    const closestDiv = element.closest('div');
     if (!formGroup) {
       return;
     }
@@ -53,7 +56,7 @@ export class ValidationFormRenderer {
     // remove help-block
     const message = formGroup.querySelector(`#validation-message-${result.id}`);
     if (message) {
-      formGroup.removeChild(message);
+      closestDiv.removeChild(message);
 
       // remove the has-error class from the enclosing form-group div
       if (formGroup.querySelectorAll('.help-block.validation-message').length === 0) {
