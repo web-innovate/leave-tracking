@@ -26,9 +26,15 @@
             </div>
         </div>
 
-        <button class="btn btn-primary" click.trigger = "save()" disabled.bind="!canSave">
-            <i class="fa fa-check"></i>
-            Save
-        </button>
+        <div class="pull-right">
+            <button click.delegate="delete()" class="btn btn-danger">
+                    Delete
+            </button>
+
+            <button class="btn btn-primary" click.trigger = "save()" disabled.bind="!canSave">
+                <i class="fa fa-check"></i>
+                Save
+            </button>
+        </div>
     </form>
 </template>

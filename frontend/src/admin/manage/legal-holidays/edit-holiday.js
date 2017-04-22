@@ -37,4 +37,9 @@ export class EditHoliday {
         this.router.navigateBack();
     }
 
+    async delete() {
+        await this._holiday.deleteHoliday(this.holiday._id);
+        this.router.navigateBack();
+    }
+
 }
