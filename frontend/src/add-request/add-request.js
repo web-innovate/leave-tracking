@@ -13,9 +13,9 @@ export class AddRequest {
     @bindable sPick;
     @bindable ePick;
 
-   constructor(leaveService, userService, _holiday) {
-        this.leaveService = leaveService;
-        this.userService = userService;
+   constructor(_leave, _user, _holiday) {
+        this._leave = _leave;
+        this._user = _user;
         this._holiday = _holiday;
     }
 
@@ -84,14 +84,14 @@ export class AddRequest {
         if (this.canSave) {
             console.log('adding', this.start, this.end, this.dateDiff)
             const leave = {
-                userId: this.userService.currentUser.id,
+                userId: this._user.currentUser.id,
                 leaveType: this.selectedLeave[0],
                 start: this.start,
                 end: this.end,
                 workDays: this.dateDiff
             };
 
-            this.leaveService.addLeaveRequest(leave);
+            this._leave.addLeaveRequest(leave);
 
             this.start = moment().toDate();
             this.end = moment().toDate();
