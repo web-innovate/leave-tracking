@@ -27,20 +27,7 @@ function create(req, res, next) {
   });
 
   leave.save()
-    .then(savedLeave => {
-      // decrease the remaining days only for annual leave
-      if (savedLeave.leaveType === 'annual-leave') {
-        return User.get(savedLeave.userId)
-          .then(usr => {
-            usr.holidays -= savedLeave.workDays;
-
-            return usr.save()
-              .then(() => res.json(savedLeave))
-          })
-      } else {
-        return res.json(savedLeave);
-      }
-    })
+    .then(savedLeave => res.json(savedLeave))
     .catch(e => next(e));
 }
 
@@ -50,7 +37,22 @@ function update(req, res, next) {
   leave.status = req.body.status;
 
   leave.save()
-    .then(savedRequest => res.json(savedRequest))
+    .then(savedRequest => {
+      const { leaveType, status, userId, workDays } = savedRequest;
+      // decrease the remaining days only for annual leave
+      if (leaveType === 'annual-leave' && status === 'approved') {
+        return User.get(userId)
+          .then(usr => {
+            usr.holidays -= workDays;
+
+            return usr.save()
+              .then(() => res.json(savedRequest))
+          })
+      } else {
+        return res.json(savedRequest);
+      }
+    })
+
     .catch(e => next(e));
 }
 
