@@ -21,7 +21,6 @@ export class EditHoliday {
     }
 
     async activate(params) {
-        console.log('the params', params)
         const holiday = await this._holiday.getHoliday(params.holidayId);
         this.holiday = holiday;
     }
