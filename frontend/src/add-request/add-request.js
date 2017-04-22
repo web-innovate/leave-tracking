@@ -4,6 +4,7 @@ const moment = extendMoment(Moment);
 
 import business from 'moment-business';
 import { bindable, inject } from 'aurelia-framework';
+import { Router} from 'aurelia-router';
 import { LeaveService } from '~/services/leave-service';
 import { UserService } from '~/services/user-service';
 import { HolidayService } from '~/services/holiday-service';
@@ -11,15 +12,16 @@ import { LEAVE_TYPES, HUMAN_LEAVE_TYPES } from '~/util/constants';
 
 const { ANNUAL, SICK, PARENTING, UNPAID, STUDY, HALF_DAY } = LEAVE_TYPES;
 
-@inject(LeaveService, UserService, HolidayService)
+@inject(LeaveService, UserService, HolidayService, Router)
 export class AddRequest {
     @bindable sPick;
     @bindable ePick;
 
-   constructor(_leave, _user, _holiday) {
+   constructor(_leave, _user, _holiday, router) {
         this._leave = _leave;
         this._user = _user;
         this._holiday = _holiday;
+        this.router = router;
     }
 
     attached() {
@@ -113,6 +115,8 @@ export class AddRequest {
             this.start = moment().toDate();
             this.end = moment().toDate();
             this.dateDiff = 0;
+
+            this.router.navigate('home');
         }
     }
 
