@@ -4,7 +4,7 @@ import httpStatus from 'http-status';
 import APIError from '../helpers/APIError';
 
 /**
- * Project Schema
+ * Holiday Schema
  */
 const HolidaySchema = new mongoose.Schema({
   name: {
@@ -43,27 +43,27 @@ HolidaySchema.method({
  */
 HolidaySchema.statics = {
   /**
-   * Get project
-   * @param {ObjectId} id - The objectId of project.
-   * @returns {Promise<Project, APIError>}
+   * Get holiday
+   * @param {ObjectId} id - The objectId of holiday.
+   * @returns {Promise<Holiday, APIError>}
    */
   get(id) {
     return this.findById(id)
       .exec()
-      .then((project) => {
-        if (project) {
-          return project;
+      .then((holiday) => {
+        if (holiday) {
+          return holiday;
         }
-        const err = new APIError('No such project exists!', httpStatus.NOT_FOUND);
+        const err = new APIError('No such Holiday exists!', httpStatus.NOT_FOUND);
         return Promise.reject(err);
       });
   },
 
   /**
-   * List projects in descending order of 'createdAt' timestamp.
-   * @param {number} skip - Number of projects to be skipped.
-   * @param {number} limit - Limit number of projects to be returned.
-   * @returns {Promise<Project[]>}
+   * List holidays in descending order of 'createdAt' timestamp.
+   * @param {number} skip - Number of holidays to be skipped.
+   * @param {number} limit - Limit number of holidays to be returned.
+   * @returns {Promise<Holiday[]>}
    */
   list({ skip = 0, limit = 50 } = {}) {
     return this.find()
@@ -75,6 +75,6 @@ HolidaySchema.statics = {
 };
 
 /**
- * @typedef Project
+ * @typedef Holiday
  */
 export default mongoose.model('Holiday', HolidaySchema);

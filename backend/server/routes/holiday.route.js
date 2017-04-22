@@ -13,11 +13,11 @@ router.route('/')
   .post(validate(paramValidation.createHoliday), holidayCtrl.create);
 
 router.route('/:holidayId')
-  /** GET /api/projects/:projectId - Get user */
+  /** GET /api/holidays/:holidayId - Get user */
   .get(holidayCtrl.get)
 
   /** PUT /api/projects/:projectId - Update user */
-  .put(validate(paramValidation.updateProject), holidayCtrl.update)
+  .put(validate(paramValidation.updateHoliday), holidayCtrl.update)
 
   /** DELETE /api/projects/:projectId - Delete user */
   .delete(holidayCtrl.remove);

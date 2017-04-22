@@ -1,0 +1,34 @@
+<template>
+    <require from="eonasdan-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"></require>
+
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Holiday name</label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" value.bind="holiday.name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Holiday description</label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" value.bind="holiday.description">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Holiday date</label>
+            <div class="col-xs-9">
+                 <abp-datetime-picker
+                    options.bind="pickerOptions"
+                    model.bind="holiday.date">
+                </abp-datetime-picker>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" click.trigger = "save()" disabled.bind="!canSave">
+            <i class="fa fa-check"></i>
+            Save
+        </button>
+    </form>
+</template>
