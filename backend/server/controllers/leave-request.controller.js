@@ -1,4 +1,5 @@
 import LeaveRequest from '../models/leave-request.model';
+import User from '../models/user.model';
 
 function load(req, res, next, id) {
   LeaveRequest.get(id)
@@ -26,7 +27,20 @@ function create(req, res, next) {
   });
 
   leave.save()
-    .then(savedLeave => res.json(savedLeave))
+    .then(savedLeave => {
+      // decrease the remaining days only for annual leave
+      if (savedLeave.leaveType === 'annual-leave') {
+        return User.get(savedLeave.userId)
+          .then(usr => {
+            usr.holidays -= savedLeave.workDays;
+
+            return usr.save()
+              .then(() => res.json(savedLeave))
+          })
+      } else {
+        return res.json(savedLeave);
+      }
+    })
     .catch(e => next(e));
 }
 
