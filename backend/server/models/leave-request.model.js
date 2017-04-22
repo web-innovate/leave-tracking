@@ -8,11 +8,11 @@ import APIError from '../helpers/APIError';
  */
 const LeaveRequestSchema = new mongoose.Schema({
   start: {
-    type: String,
+    type: Date,
     required: true
   },
   end: {
-    type: String,
+    type: Date,
     required: true
   },
   leaveType: {
