@@ -18,10 +18,10 @@ export class CreateHoliday {
         format: 'YYYY-MM-DD',
         widgetPositioning: {
             horizontal: 'left'
-        }
+        },
     };
+
     createHoliday() {
         this._holiday.createHoliday(this.holiday)
-        console.log('create ho', moment(this.holiday.date).toDate())
     }
 }
