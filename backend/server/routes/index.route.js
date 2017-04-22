@@ -5,17 +5,14 @@ import authRoutes from './auth.route';
 import projectRoutes from './project.route';
 import holidayRoutes from './holiday.route';
 
-const router = express.Router(); // eslint-disable-line new-cap
+const router = express.Router();
 
-/** GET /health-check - Check service health */
 router.get('/health-check', (req, res) =>
   res.send('OK')
 );
 
-// mount user routes at /users
 router.use('/users', userRoutes);
 
-// mount auth routes at /auth
 router.use('/auth', authRoutes);
 router.use('/leaves', leaveRoutes);
 router.use('/projects', projectRoutes);
