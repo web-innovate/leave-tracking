@@ -101,7 +101,7 @@ export class AddRequest {
 
     async disableDates() {
         const holidays = await this._holiday.getHolidays();
-        const disabledDates = this.holidays.map(h => moment(h.date).toDate());
+        const disabledDates = holidays.map(h => moment(h.date).toDate());
 
         this.ePick.methods.disabledDates(disabledDates);
         this.sPick.methods.disabledDates(disabledDates);
