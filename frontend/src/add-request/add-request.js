@@ -1,20 +1,26 @@
+import moment from 'moment'
+import business from 'moment-business';
 import { bindable, inject } from 'aurelia-framework';
 import { LeaveService } from '~/services/leave-service';
 import { UserService } from '~/services/user-service';
-import moment from 'moment'
-import business from 'moment-business';
+import { HolidayService } from '~/services/holiday-service';
 import { LEAVE_TYPES, HUMAN_LEAVE_TYPES } from '~/util/constants';
 
 const { ANNUAL, SICK, PARENTING, UNPAID, STUDY, HALF_DAY } = LEAVE_TYPES;
 
-@inject(LeaveService, UserService)
+@inject(LeaveService, UserService, HolidayService)
 export class AddRequest {
     @bindable sPick;
     @bindable ePick;
 
-    constructor(leaveService, userService) {
+   constructor(leaveService, userService, _holiday) {
         this.leaveService = leaveService;
         this.userService = userService;
+        this._holiday = _holiday;
+    }
+
+    attached() {
+        this.disableDates();
     }
 
     dateFormat = 'YYYY-MM-DD';
@@ -87,10 +93,17 @@ export class AddRequest {
 
             this.leaveService.addLeaveRequest(leave);
 
-
             this.start = moment().toDate();
             this.end = moment().toDate();
             this.dateDiff = 0;
         }
+    }
+
+    async disableDates() {
+        const holidays = await this._holiday.getHolidays();
+        const disabledDates = this.holidays.map(h => moment(h.date).toDate());
+
+        this.ePick.methods.disabledDates(disabledDates);
+        this.sPick.methods.disabledDates(disabledDates);
     }
 }
