@@ -1,11 +1,8 @@
 import { inject } from 'aurelia-framework';
-import {
-  ValidationControllerFactory,
-  ValidationController,
-  ValidationRules
-} from 'aurelia-validation';import { AuthService } from '~/services/auth-service';
 import { Router } from 'aurelia-router';
-import {BootstrapFormRenderer} from './boot'
+import { ValidationControllerFactory, ValidationRules } from 'aurelia-validation';
+import { AuthService } from '~/services/auth-service';
+import { ValidationFormRenderer } from '~/validators/validation-form-renderer'
 
 @inject(AuthService, Router, ValidationControllerFactory)
 export class Login {
@@ -19,7 +16,7 @@ export class Login {
     rules = ValidationRules
         .ensure('email')
         .required()
-        .email()
+        // .email()
         .ensure('password')
         .required()
         .rules;
@@ -28,7 +25,7 @@ export class Login {
         this._authService = _authService;
         this.router = router;
         this.vCtrl = vCtrl.createForCurrentScope();
-        this.vCtrl.addRenderer(new BootstrapFormRenderer());
+        this.vCtrl.addRenderer(new ValidationFormRenderer());
     }
 
 
@@ -43,12 +40,15 @@ export class Login {
                     return Promise.reject();
                 }
             })
-            .then(() => {
+            .then((me) => {
+                if ( me.userType === 'ADMIN' ) {
+                    this.router.navigateToRoute('admin');
+                } else {
+                    this.router.navigateToRoute('home');
+                }
                 this.loading = false;
-                this.router.navigateToRoute('home');
             })
             .catch((err) => {
-                console.log('>>>>', err)
                 this.loginError = true;
                 this.loading = false;
             })
