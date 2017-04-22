@@ -5,14 +5,14 @@
         <div class="form-group">
             <label class="col-xs-3 control-label">Holiday name</label>
             <div class="col-xs-9">
-                <input type="text" class="form-control" value.bind="holiday.name">
+                <input type="text" class="form-control" value.bind="holiday.name & validate:rules">
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-xs-3 control-label">Holiday description</label>
             <div class="col-xs-9">
-                <input type="text" class="form-control" value.bind="holiday.description">
+                <input type="text" class="form-control" value.bind="holiday.description & validate:rules">
             </div>
         </div>
 
