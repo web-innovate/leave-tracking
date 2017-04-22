@@ -1,9 +1,12 @@
-import { inject } from 'aurelia-framework';
+import moment from 'moment';
+import { inject, bindable } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { HolidayService } from '~/services/holiday-service';
 
 @inject(HolidayService, Router)
 export class EditHoliday {
+    @bindable date;
+
     pickerOptions = {
         calendarWeeks: true,
         showTodayButton: true,
@@ -21,8 +24,11 @@ export class EditHoliday {
     }
 
     async activate(params) {
-        const holiday = await this._holiday.getHoliday(params.holidayId);
-        this.holiday = holiday;
+        this.holiday = await this._holiday.getHoliday(params.holidayId);
+    }
+
+    dateChanged() {
+        this.date.methods.date(this.holiday.date);
     }
 
     get canSave() {
@@ -41,5 +47,4 @@ export class EditHoliday {
         await this._holiday.deleteHoliday(this.holiday._id);
         this.router.navigateBack();
     }
-
 }
