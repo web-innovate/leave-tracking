@@ -9,7 +9,6 @@ export class ViewHolidays {
     }
 
     async attached() {
-        console.log('>>>>')
         const holidays = await this._holiday.getHolidays();
 
         this.holidays = holidays;

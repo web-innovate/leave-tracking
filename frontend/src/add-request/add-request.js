@@ -1,4 +1,7 @@
-import moment from 'moment'
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
+const moment = extendMoment(Moment);
+
 import business from 'moment-business';
 import { bindable, inject } from 'aurelia-framework';
 import { LeaveService } from '~/services/leave-service';
@@ -72,8 +75,21 @@ export class AddRequest {
     computeDiff() {
         const fr = moment(this.start);
         const to = moment(this.end);
+        const range = moment.range(fr, to);
+        let dateDiff = business.weekDays(fr,to) + 1;
 
-        this.dateDiff = business.weekDays(fr,to) + 1;
+        // go over each holiday and see if the range contains any
+        // if it does we do not count that holiday :)
+        // it is that easy
+        this.holidays.forEach(holiday => {
+            const hDate = moment(holiday.date).toDate();
+
+            if(range.contains(hDate)) {
+                dateDiff--;
+            }
+        });
+
+        this.dateDiff = dateDiff;
     }
 
     get canSave() {
@@ -105,5 +121,6 @@ export class AddRequest {
 
         this.ePick.methods.disabledDates(disabledDates);
         this.sPick.methods.disabledDates(disabledDates);
+        this.holidays = holidays;
     }
 }

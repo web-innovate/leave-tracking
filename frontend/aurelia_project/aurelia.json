@@ -100,6 +100,7 @@
         "dependencies": [
           "underscore",
           "moment-business",
+          "moment-range",
           "nearest-periodic-value",
           "contained-periodic-values",
           "aurelia-binding",
