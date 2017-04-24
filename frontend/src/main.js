@@ -13,6 +13,9 @@ export function configure(aurelia) {
             config.settings.lock = false;
             config.settings.enableEscClose = true;
         })
+        .plugin('aurelia-notify', settings => {
+          settings.timeout = 4000;
+        })
         .feature('resources');
 
     if (environment.debug) {

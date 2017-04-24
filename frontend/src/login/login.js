@@ -3,14 +3,15 @@ import { Router } from 'aurelia-router';
 import { ValidationControllerFactory, ValidationRules } from 'aurelia-validation';
 import { AuthService } from '~/services/auth-service';
 import { ValidationFormRenderer } from '~/validators/validation-form-renderer'
+import {NotificationService} from 'aurelia-notify';
 
-@inject(AuthService, Router, ValidationControllerFactory)
+
+@inject(AuthService, Router, ValidationControllerFactory, NotificationService)
 export class Login {
     user = {
         email: '',
         password: ''
     }
-    loginError = false;
     loading = false;
 
     rules = ValidationRules
@@ -21,13 +22,14 @@ export class Login {
         .required()
         .rules;
 
-    constructor(_authService, router, vCtrl) {
-        this._authService = _authService;
+    constructor(_auth, router, vCtrl, _notify) {
+        this._auth = _auth;
         this.router = router;
+        this._notify = _notify;
+
         this.vCtrl = vCtrl.createForCurrentScope();
         this.vCtrl.addRenderer(new ValidationFormRenderer());
     }
-
 
     login() {
         const { email, password } = this.user;
@@ -35,9 +37,9 @@ export class Login {
         return this.vCtrl.validate()
             .then(re => {
                 if (re.valid) {
-                    return this._authService.login(email, password);
+                    return this._auth.login(email, password);
                 } else {
-                    return Promise.reject();
+                    return Promise.reject('invalid form');
                 }
             })
             .then((me) => {
@@ -49,8 +51,9 @@ export class Login {
                 this.loading = false;
             })
             .catch((err) => {
-                this.loginError = true;
                 this.loading = false;
+                this._notify.danger('Invalid credentials, be more carefull next time',
+                    { containerSelector: '#loginForm', limit: 1 })
             })
     }
 

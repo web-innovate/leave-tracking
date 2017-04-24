@@ -144,7 +144,7 @@
           },
           "velocity-animate",
           "tether",
-                    {
+          {
             "name": "aurelia-validation",
             "path": "../node_modules/aurelia-validation/dist/amd",
             "main": "aurelia-validation.js",
@@ -172,7 +172,9 @@
             "name": "aurelia-bootstrap-select",
             "path": "../node_modules/aurelia-bootstrap-select/dist/amd",
             "main": "index",
-            "resources": ["**/*.{css,html}"]
+            "resources": [
+              "**/*.{css,html}"
+            ]
           },
           "jquery",
           {
@@ -232,7 +234,8 @@
             "name": "aurelia-dialog",
             "path": "../node_modules/aurelia-dialog/dist/amd",
             "main": "aurelia-dialog"
-          },          {
+          },
+          {
             "name": "chart.js",
             "path": "../node_modules/chart.js/dist",
             "main": "Chart.js"
@@ -250,7 +253,15 @@
           "crypt",
           "charenc",
           "is-buffer",
-          "md5"
+          "md5",
+          {
+            "name": "aurelia-notify",
+            "main": "index",
+            "path": "../node_modules/aurelia-notify/dist/amd",
+            "resources": [
+              "*"
+            ]
+          }
         ]
       }
     ],

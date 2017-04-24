@@ -4,10 +4,7 @@
             <h2>Login</h2>
             <spinner if.bind="loading"></spinner>
 
-            <form submit.delegate="login()">
-            <div if.bind="loginError" class="alert alert-danger">
-                <strong>Unauthorized!</strong> Invalid credentials
-            </div>
+            <form id="loginForm" submit.delegate="login()">
                 <div class="form-group">
                     <input
                         type="text"
