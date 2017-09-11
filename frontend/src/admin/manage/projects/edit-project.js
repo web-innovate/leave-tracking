@@ -21,8 +21,13 @@ export class EditProject {
         this.users = users;
         this.loading = false;
     }
+
     saveProject() {
-        this._project.updateProject(this.project)
+        const project = JSON.parse(JSON.stringify(this.project));
+
+        project.approvers = project.approvers.split(',')
+
+        this._project.updateProject(project)
             .then(() => this.redirect());
     }
 
