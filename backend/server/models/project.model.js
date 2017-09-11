@@ -8,6 +8,10 @@ const ProjectSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  approvers: {
+    type: [ String ],
+    required: true
+  },
   description: {
     type: String,
     required: true
