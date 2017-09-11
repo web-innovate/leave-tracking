@@ -101,6 +101,8 @@ export class AddRequest {
 
     submit() {
         if (this.canSave) {
+            this.start = moment(this.start).startOf('day').toDate();
+            this.end = moment(this.end).endOf('day').toDate();
             console.log('adding', this.start, this.end, this.dateDiff)
             const leave = {
                 userId: this._user.currentUser.id,
