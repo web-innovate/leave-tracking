@@ -17,6 +17,9 @@ router.route('/:projectId')
 router.route('/:projectId/users')
   .get(projectCtrl.getUsers);
 
+router.route('/:projectId/approvers')
+  .get(projectCtrl.getApprovers);
+
 router.param('projectId', projectCtrl.load);
 
 export default router;
