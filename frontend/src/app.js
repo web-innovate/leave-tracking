@@ -91,6 +91,15 @@ export class App {
                 settings: {
                 }
             },
+            {
+                route: 'profile',
+                name: 'profile',
+                moduleId: './profile/profile',
+                nav: false,
+                title:'Profile',
+                settings: {
+                }
+            },
         ]);
 
         this.router = router;
