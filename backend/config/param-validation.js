@@ -49,7 +49,7 @@ export default {
   },
 
   updateUser: {
-     body: {
+    body: {
       firstName: Joi.string().required(),
       lastName: Joi.string().required(),
       email: Joi.string().required(),
@@ -65,7 +65,7 @@ export default {
   },
 
   updateProject: {
-     body: {
+    body: {
       name: Joi.string().required(),
       description: Joi.string().required()
     },
