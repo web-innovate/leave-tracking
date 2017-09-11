@@ -16,6 +16,7 @@ function get(req, res) {
 
 function create(req, res, next) {
   const project = new Project({
+    approvers: req.body.approvers,
     name: req.body.name,
     description: req.body.description,
   });
@@ -27,6 +28,7 @@ function create(req, res, next) {
 
 function update(req, res, next) {
   const project = req.project;
+  project.approvers = req.body.approvers;
   project.name = req.body.name;
   project.description = req.body.description;
 
@@ -51,10 +53,10 @@ function remove(req, res, next) {
 }
 
 function getUsers(req, res, next) {
-    const { projectId } = req.params;
-      User.find({projectId})
-        .then(users => res.json(users))
-        .catch(e => next(e));
+  const { projectId } = req.params;
+  User.find({projectId})
+    .then(users => res.json(users))
+    .catch(e => next(e));
 }
 
 export default { load, get, create, update, list, remove, getUsers };
