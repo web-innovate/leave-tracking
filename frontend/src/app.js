@@ -98,7 +98,8 @@ export class App {
                 nav: false,
                 title:'Profile',
                 settings: {
-                }
+                },
+                auth: true
             },
         ]);
 
