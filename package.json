@@ -3,7 +3,8 @@
     "node": "7.2.0"
   },
   "scripts": {
-    "install": "cd ./frontend && yarn install && cd ../backend && yarn install"
+    "install": "cd ./frontend && yarn install && cd ../backend && yarn install",
+    "build": "cd ./frontend && au build --env dev && cd ../backend && gulp"
   },
   "dependencies": {
     "yarn": "^0.22.0"
