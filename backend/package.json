@@ -57,6 +57,7 @@
     "jsonwebtoken": "7.1.9",
     "method-override": "^2.3.5",
     "mongoose": "4.7.4",
+    "monq": "^0.3.7",
     "morgan": "1.7.0",
     "winston": "2.3.0"
   },
