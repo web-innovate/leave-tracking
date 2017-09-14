@@ -28,7 +28,7 @@ function create(req, res, next) {
 
     user.save()
       .then(user => {
-          worker.queueNewUser(stripSensitiveFields(user));
+          worker.queueNewUser(user.toObject());
           return user;
       })
       .then(savedUser => res.json(savedUser))

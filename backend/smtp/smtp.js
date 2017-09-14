@@ -1,20 +1,29 @@
 import config from './config';
 import nodemailer from'nodemailer';
+import expressTemplates from 'nodemailer-express-handlebars';
+import path from 'path';
 
 class Smtp {
     constructor() {
         if (!this.transporter) {
             this.transporter = nodemailer.createTransport(config);
+
+            const templatePlugin = new expressTemplates({
+                viewPath: path.resolve(__dirname, './templates'),
+                extName: '.hbs'
+            });
+
+            this.transporter.use('compile', templatePlugin);
         }
     }
 
-    sendMail(to, subject, html, text = '') {
+    sendMail(to, subject, template, context) {
         const message = {
             from: config.senderEmail,
             to,
             subject,
-            text,
-            html
+            template,
+            context
         };
 
         return new Promise((resolve, reject) => {

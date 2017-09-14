@@ -8,7 +8,7 @@ const plugins = gulpLoadPlugins();
 
 const paths = {
   js: ['./**/*.js', '!dist/**', '!node_modules/**', '!coverage/**'],
-  nonJs: ['./package.json', './.gitignore', './.env'],
+  nonJs: ['./package.json', './.gitignore', './.env', './**/*.hbs'],
   tests: './server/tests/*.js'
 };
 
@@ -43,7 +43,7 @@ gulp.task('babel', () =>
 gulp.task('nodemon', ['copy', 'babel'], () =>
   plugins.nodemon({
     script: path.join('dist', 'index.js'),
-    ext: 'js',
+    ext: ['js', 'hbs'],
     ignore: ['node_modules/**/*.js', 'dist/**/*.js'],
     tasks: ['copy', 'babel']
   })
