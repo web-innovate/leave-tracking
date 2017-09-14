@@ -28,7 +28,6 @@ function create(req, res, next) {
 
     user.save()
       .then(user => {
-
           worker.queueNewUser(stripSensitiveFields(user));
           return user;
       })

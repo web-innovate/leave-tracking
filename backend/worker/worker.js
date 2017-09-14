@@ -36,7 +36,6 @@ class Worker {
     }
 
     registerWorkers() {
-        console.log('register workers');
         this.registerUserWorkers();
     }
 
@@ -51,7 +50,6 @@ class Worker {
     }
 
     startWorkers() {
-        console.log('starting workers');
         this.workers.forEach(worker => worker.start());
     }
 }

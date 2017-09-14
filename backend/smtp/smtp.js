@@ -17,17 +17,16 @@ class Smtp {
             html
         };
 
-        this.transporter.sendMail(message, (err, info) => {
-            if (err) {
-                console.log('Error occurred. ' + err.message);
-                return;
-            }
+        return new Promise((resolve, reject) => {
+            this.transporter.sendMail(message, (err, info) => {
+                if (err) {
+                    reject(err);
+                }
 
-            console.log('Message sent: %s', info.messageId);
+                return resolve(info);
+            });
         });
-
     }
-
 }
 
 export default new Smtp;
