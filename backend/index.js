@@ -4,6 +4,7 @@ import util from 'util';
 // config should be imported before importing any other file
 import config from './config/config';
 import app from './config/express';
+import worker from './worker/worker';
 
 const debug = require('debug')('express-mongoose-es6-rest-api:index');
 
@@ -32,6 +33,7 @@ if (config.MONGOOSE_DEBUG) {
 if (!module.parent) {
   // listen on port config.port
   app.listen(process.env.PORT || config.port, () => {
+    worker.start();
     console.info(`server started on port ${config.port} (${config.env})`); // eslint-disable-line no-console
   });
 }
