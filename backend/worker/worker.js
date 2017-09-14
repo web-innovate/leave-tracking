@@ -30,9 +30,7 @@ class Worker {
     queueNewUser(data) {
         const queue = this.client.queue(this.QUEUE_EVENTS.USER);
 
-        queue.enqueue(this.PROCESS_EVENTS.USER, data, (err, job) => {
-            console.log('queued: ', job.data);
-        });
+        queue.enqueue(this.PROCESS_EVENTS.USER, data, () => {});
     }
 
     registerWorkers() {
