@@ -5,6 +5,7 @@ import util from 'util';
 import config from './config/config';
 import app from './config/express';
 import worker from './worker/worker';
+import smtp from './smtp/smtp';
 
 const debug = require('debug')('express-mongoose-es6-rest-api:index');
 

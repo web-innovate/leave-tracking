@@ -1,7 +1,16 @@
+import smtp from '../../smtp/smtp';
+
 function handleNewUsers(params, callback) {
-    console.log('123123')
     try {
-        var result = 'sent emails for the created user';
+        const result = 'sent emails for the created user';
+        const { email, firstName } = params;
+
+        smtp.sendMail(
+            email,
+            `${firstName} your account has been created`,
+            `<b>html: ${JSON.stringify(params)}</b>`
+        );
+
         console.log('processed', result, params);
         callback(null, result);
     } catch (err) {

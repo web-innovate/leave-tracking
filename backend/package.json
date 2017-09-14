@@ -59,6 +59,7 @@
     "mongoose": "4.7.4",
     "monq": "^0.3.7",
     "morgan": "1.7.0",
+    "nodemailer": "^4.1.0",
     "winston": "2.3.0"
   },
   "devDependencies": {
