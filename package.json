@@ -4,7 +4,8 @@
   },
   "scripts": {
     "install": "cd ./frontend && yarn install && cd ../backend && yarn install",
-    "build": "cd ./frontend && au build --env dev && cd ../backend && gulp"
+    "build": "cd ./frontend && au build --env dev && cd ../backend && gulp",
+    "lint": "cd ./backend && yarn lint"
   },
   "dependencies": {
     "yarn": "^0.22.0"

@@ -66,12 +66,4 @@ function remove(req, res, next) {
       .catch(e => next(e));
 }
 
-function stripSensitiveFields(user) {
-    const stripped = user.toObject();
-
-    delete stripped.password;
-
-    return stripped;
-}
-
 export default { load, get, create, update, list, remove };

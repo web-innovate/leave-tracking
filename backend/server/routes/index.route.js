@@ -7,9 +7,7 @@ import holidayRoutes from './holiday.route';
 
 const router = express.Router();
 
-router.get('/health-check', (req, res) =>
-  res.send('OK')
-);
+router.get('/health-check', (req, res) => res.send('OK'));
 
 router.use('/users', userRoutes);
 
