@@ -51,6 +51,7 @@ function create(req, res, next) {
 }
 
 function update(req, res, next) {
+    const user = req.user;
     const leave = req.leaveRequest;
 
     leave.status = req.body.status;
@@ -58,18 +59,24 @@ function update(req, res, next) {
     leave.save()
         .then(savedRequest => {
             const { leaveType, status, userId, workDays } = savedRequest;
+
+            // we attach the id of the user that updated the request
+            savedRequest.approverId = user.id;
             // decrease the remaining days only for annual leave
             if (leaveType === 'annual-leave') {
                 return User.get(userId)
                     .then(usr => {
-
                         if (status === 'approved') {
                             usr.taken += workDays;
                             usr.pending -= workDays;
+
+                            worker.queueApprovedLeaveRequest(savedRequest.toObject());
                         }
 
                         if (status === 'rejected') {
                             usr.pending -= workDays;
+
+                            worker.queueRejectedLeaveRequest(savedRequest.toObject());
                         }
 
                         return usr.save()

@@ -3,21 +3,9 @@ import User from '../../server/models/user.model';
 import Project from '../../server/models/project.model';
 
 async function handleNewLeaveRequest(params, callback) {
-    const { userId, leaveType } = params;
-
-    const user = await getUserDetails(userId);
-    const { email, projectId, firstName, lastName } = user;
-
-    const project = await getProjectDetails(projectId);
-    const { approvers } = project;
-
-    const approversData =
-        await Promise.all(approvers.map(async (approverUserId) => {
-            return await getUserDetails(approverUserId);
-        }));
-
-    const approversEmails = approversData.map(approver => approver.email);
-
+    const { leaveType } = params;
+    const { user, project, approversData, approversEmails } = await getAndAgredateLeaveRequestData(params);
+    const { email, firstName, lastName } = user;
 
     params.projectName = project.name;
     params.approvers = approversData;
@@ -26,12 +14,55 @@ async function handleNewLeaveRequest(params, callback) {
     const userEmailSubject = `[${leaveType}] Hi ${firstName}, here is your leave request`;
     const approverEmailSubject = `[${leaveType}] Leave request pending for: ${firstName} ${lastName}`;
 
-
-    smtp.sendMail(email, userEmailSubject, 'newUserLeaveRequest', params)
+    Promise.all(
+        [
+            smtp.sendMail(email, userEmailSubject, 'newUserLeaveRequest', params),
+            smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', params)
+        ])
         .then(info => callback(null, info))
         .catch(err => callback(err));
+}
 
-    smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', params)
+async function handleApprovedLeaveRequest(params, callback) {
+    const { leaveType } = params;
+    const { user, project, approver, approversData, approversEmails } = await getAndAgredateLeaveRequestData(params);
+    const { email, firstName, lastName } = user;
+
+    params.projectName = project.name;
+    params.approvers = approversData;
+    params.employee = user;
+    params.approver = approver;
+
+    const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been APPROVED`;
+    const approverEmailSubject = `[${leaveType}] APPROVED Leave request for: ${firstName} ${lastName}`;
+
+    Promise.all(
+        [
+            smtp.sendMail(email, userEmailSubject, 'approvedLeaveRequest', params),
+            smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'approvedLeaveRequest', params)
+        ])
+        .then(info => callback(null, info))
+        .catch(err => callback(err));
+}
+
+async function handleRejectedLeaveRequest(params, callback) {
+    const { leaveType } = params;
+    const { user, project, approver, approversData, approversEmails } = await getAndAgredateLeaveRequestData(params);
+    const { email, firstName, lastName } = user;
+
+    params.projectName = project.name;
+    params.approvers = approversData;
+    params.employee = user;
+    params.approver = approver;
+
+    const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been DECLINED`;
+    const approverEmailSubject = `[${leaveType}] DECLINED Leave request for: ${firstName} ${lastName}`;
+
+    Promise.all(
+        [
+            smtp.sendMail(email, userEmailSubject, 'declinedLeaveRequest', params),
+            smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'declinedLeaveRequest', params)
+        ])
         .then(info => callback(null, info))
         .catch(err => callback(err));
 }
@@ -45,6 +76,10 @@ function getProjectDetails(_id) {
 }
 
 function stripSensitiveData(bson) {
+    if (!bson) {
+        return;
+    }
+
     const noSensitive = bson.toObject();
 
     delete noSensitive.password;
@@ -52,4 +87,31 @@ function stripSensitiveData(bson) {
     return noSensitive;
 }
 
-export default { handleNewLeaveRequest };
+async function getAndAgredateLeaveRequestData(params) {
+    const { userId, approverId } = params;
+
+    const user = await getUserDetails(userId);
+    const { projectId } = user;
+
+    const project = await getProjectDetails(projectId);
+    const { approvers } = project;
+
+    const approver = await getUserDetails(approverId);
+
+    const approversData =
+        await Promise.all(approvers.map(async (approverUserId) => {
+            return await getUserDetails(approverUserId);
+        }));
+
+    const approversEmails = approversData.map(approver => approver.email);
+
+    return {
+        user,
+        project,
+        approver,
+        approversData,
+        approversEmails
+    };
+}
+
+export default { handleNewLeaveRequest, handleApprovedLeaveRequest, handleRejectedLeaveRequest };

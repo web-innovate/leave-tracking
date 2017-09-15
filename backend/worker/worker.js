@@ -14,7 +14,9 @@ class Worker {
     get PROCESS_EVENTS() {
         return {
             USER: 'process_new_user',
-            LEAVE: 'process_new_leave_request'
+            NEW_LEAVE: 'process_new_leave_request',
+            APPROVED_LEAVE: 'process_approved_leave_request',
+            REJECTED_LEAVE: 'process_rejected_leave_request'
         };
     }
 
@@ -39,7 +41,19 @@ class Worker {
     queueNewLeaveRequest(data) {
         const queue = this.client.queue(this.QUEUE_EVENTS.LEAVE);
 
-        queue.enqueue(this.PROCESS_EVENTS.LEAVE, data, () => {});
+        queue.enqueue(this.PROCESS_EVENTS.NEW_LEAVE, data, () => {});
+    }
+
+    queueApprovedLeaveRequest(data) {
+        const queue = this.client.queue(this.QUEUE_EVENTS.LEAVE);
+
+        queue.enqueue(this.PROCESS_EVENTS.APPROVED_LEAVE, data, () => {});
+    }
+
+    queueRejectedLeaveRequest(data) {
+        const queue = this.client.queue(this.QUEUE_EVENTS.LEAVE);
+
+        queue.enqueue(this.PROCESS_EVENTS.REJECTED_LEAVE, data, () => {});
     }
 
     registerWorkers() {
@@ -61,7 +75,9 @@ class Worker {
         const worker = this.client.worker([this.QUEUE_EVENTS.LEAVE]);
 
         worker.register({
-            process_new_leave_request: leaveWorkers.handleNewLeaveRequest
+            process_new_leave_request: leaveWorkers.handleNewLeaveRequest,
+            process_approved_leave_request: leaveWorkers.handleApprovedLeaveRequest,
+            process_rejected_leave_request: leaveWorkers.handleRejectedLeaveRequest
         });
 
         this.workers.push(worker);
