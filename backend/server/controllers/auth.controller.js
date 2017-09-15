@@ -15,7 +15,7 @@ function login(req, res, next) {
                 return next(err);
             }
 
-            const token = jwt.sign({ id: user.id }, config.jwtSecret);
+            const token = jwt.sign({ id: user.id, userType: user.userType }, config.jwtSecret);
 
             return res.json({ token });
         })
