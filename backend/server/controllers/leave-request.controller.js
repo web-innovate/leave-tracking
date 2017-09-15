@@ -1,5 +1,6 @@
 import LeaveRequest from '../models/leave-request.model';
 import User from '../models/user.model';
+import worker from '../../worker/worker';
 
 function load(req, res, next, id) {
     LeaveRequest.get(id)
@@ -27,6 +28,10 @@ function create(req, res, next) {
         });
 
     leave.save()
+        .then(savedLeave => {
+            worker.queueNewLeaveRequest(savedLeave.toObject());
+            return savedLeave;
+        })
         .then(savedLeave => {
             const { leaveType, userId, workDays, status } = savedLeave;
 
