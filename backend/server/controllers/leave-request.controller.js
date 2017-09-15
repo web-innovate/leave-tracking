@@ -62,6 +62,15 @@ function update(req, res, next) {
 
             // we attach the id of the user that updated the request
             savedRequest.approverId = user.id;
+
+            if (status == 'approved') {
+                worker.queueApprovedLeaveRequest(savedRequest.toObject());
+            }
+
+            if (status == 'rejected') {
+                worker.queueRejectedLeaveRequest(savedRequest.toObject());
+            }
+
             // decrease the remaining days only for annual leave
             if (leaveType === 'annual-leave') {
                 return User.get(userId)
@@ -69,14 +78,10 @@ function update(req, res, next) {
                         if (status === 'approved') {
                             usr.taken += workDays;
                             usr.pending -= workDays;
-
-                            worker.queueApprovedLeaveRequest(savedRequest.toObject());
                         }
 
                         if (status === 'rejected') {
                             usr.pending -= workDays;
-
-                            worker.queueRejectedLeaveRequest(savedRequest.toObject());
                         }
 
                         return usr.save()

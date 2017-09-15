@@ -15,13 +15,13 @@ function login(req, res, next) {
                 return next(err);
             }
 
-            const token = jwt.sign({ id: user.id }, config.jwtSecret);
+            const token = jwt.sign({ id: user.id, userType: user.userType }, config.jwtSecret);
 
             return res.json({ token });
         })
         .catch(() => {
             const err = new APIError('Authentication error', httpStatus.UNAUTHORIZED, true);
-                return next(err);
+            return next(err);
         });
 }
 
@@ -38,7 +38,7 @@ function me(req, res) {
         user = user.toObject();
         delete user.password;
 
-        return res.json(user)
+        return res.json(user);
     });
 }
 

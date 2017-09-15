@@ -9,16 +9,16 @@ import config from '../../config/config';
 const router = express.Router(); // eslint-disable-line new-cap
 
 router.route('/')
-  .get(userCtrl.list)
-  .post(validate(paramValidation.createUser), userCtrl.create);
+    .get(userCtrl.list)
+    .post(validate(paramValidation.createUser), userCtrl.create);
 
 router.route('/:userId')
-  .get(userCtrl.get)
-  .put(validate(paramValidation.updateUser), userCtrl.update)
-  .delete(userCtrl.remove);
+    .get(userCtrl.get)
+    .put(validate(paramValidation.updateUser), userCtrl.update)
+    .delete(userCtrl.remove);
 
 router.route('/:userId/leaves')
-  .get(expressJwt({ secret: config.jwtSecret }), leaveCtrl.getForUser)
+    .get(expressJwt({ secret: config.jwtSecret }), leaveCtrl.getForUser);
 
 router.param('userId', userCtrl.load);
 
