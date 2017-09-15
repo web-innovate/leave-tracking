@@ -11,14 +11,21 @@ async function handleNewLeaveRequest(params, callback) {
     const project = await getProjectDetails(projectId);
     const { approvers } = project;
 
-    const approversEmails = await Promise.all(approvers.map(async (approverUserId) => {
-        const approverDetails = await getUserDetails(approverUserId);
+    const approversData =
+        await Promise.all(approvers.map(async (approverUserId) => {
+            return await getUserDetails(approverUserId);
+        }));
 
-        return approverDetails.email;
-    }));
+    const approversEmails = approversData.map(approver => approver.email);
+
+
+    params.projectName = project.name;
+    params.approvers = approversData;
+    params.employee = user;
 
     const userEmailSubject = `[${leaveType}] Hi ${firstName}, here is your leave request`;
     const approverEmailSubject = `[${leaveType}] Leave request pending for: ${firstName} ${lastName}`;
+
 
     smtp.sendMail(email, userEmailSubject, 'newUserLeaveRequest', params)
         .then(info => callback(null, info))
@@ -30,11 +37,19 @@ async function handleNewLeaveRequest(params, callback) {
 }
 
 function getUserDetails(_id) {
-    return User.findOne({ _id });
+    return User.findOne({ _id }).then(result => stripSensitiveData(result));
 }
 
 function getProjectDetails(_id) {
-    return Project.findOne({ _id });
+    return Project.findOne({ _id }).then(result => result.toObject());
+}
+
+function stripSensitiveData(bson) {
+    const noSensitive = bson.toObject();
+
+    delete noSensitive.password;
+
+    return noSensitive;
 }
 
 export default { handleNewLeaveRequest };

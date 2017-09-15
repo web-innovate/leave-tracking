@@ -1,1 +1,33 @@
-<h1>Your leave request details</h1>
+<h3>Here are the details of your {{ leaveType }} request:</h3>
+
+<p>
+    Start Date: <strong>{{ start }}</strong>
+</p>
+
+<p>
+    End Date: <strong>{{ end }}</strong>
+</p>
+
+<p>
+    Status <strong>{{ status }}</strong>
+</p>
+
+<p>
+    No. of working days: <strong>{{ workDays }}</strong>
+</p>
+
+<p>
+    Created at: <strong>{{ createdAt }}</strong>
+</p>
+
+
+<p>
+    Project: <strong>{{ projectName }}</strong>
+</p>
+
+<h3>
+    Approvers:
+</h3>
+{{#each approvers }}
+    <p>{{ firstName }} {{ lastName }} : {{ email }}</p>
+{{/each}}
