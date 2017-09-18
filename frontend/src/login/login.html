@@ -23,7 +23,13 @@
                         value.bind="user.password & validate:rules">
                 </div>
                 <div class="form-group">
-                    <button disabled.bind="!loading && !canSave" type="submit" class="btn btn-primary btn-block">Sign in</button>
+                    <button disabled.bind="!loading && !canSave" type="submit" class="btn btn-primary btn-block">
+                        Sign in
+                    </button>
+
+                    <button click.delegate="forgotPassword()" class="btn btn-primary btn-block">
+                        Forgot password ?
+                    </button>
                 </div>
             </form>
         </div>

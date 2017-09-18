@@ -57,6 +57,10 @@ export class Login {
             })
     }
 
+    forgotPassword() {
+        this.router.navigateToRoute('recover')
+    }
+
     get canSave() {
         return this.user.email !== ''
             && this.user.password !== ''
