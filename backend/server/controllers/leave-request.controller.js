@@ -78,6 +78,7 @@ function update(req, res, next) {
                         if (status === 'approved') {
                             usr.taken += workDays;
                             usr.pending -= workDays;
+                            usr.holidays -= workDays;
                         }
 
                         if (status === 'rejected') {
