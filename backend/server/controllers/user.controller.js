@@ -23,6 +23,7 @@ function create(req, res, next) {
         holidays: req.body.holidays,
         position: req.body.position,
         projectId: req.body.projectId,
+        daysPerYear: req.body.daysPerYear,
         userType: req.body.userType
     });
 
@@ -42,6 +43,7 @@ function update(req, res, next) {
     user.lastName = req.body.lastName;
     user.email = req.body.email.toLowerCase();
     user.password = req.body.password;
+    user.daysPerYear = req.body.daysPerYear;
     user.holidays = req.body.holidays;
     user.position = req.body.position;
     user.projectId = req.body.projectId;

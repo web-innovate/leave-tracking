@@ -32,6 +32,10 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    daysPerYear: {
+        type: Number,
+        default: 0
+    },
     position: {
         type: String,
         required: true

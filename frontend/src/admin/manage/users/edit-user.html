@@ -29,7 +29,14 @@
         </div>
 
         <div class="form-group">
-            <label class="col-xs-3 control-label">Holidays</label>
+            <label class="col-xs-3 control-label">Total days/year</label>
+            <div class="col-xs-9">
+                <input type="number" class="form-control" value.bind="user.daysPerYear">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Available days</label>
             <div class="col-xs-9">
                 <input type="number" class="form-control" value.bind="user.holidays">
             </div>
