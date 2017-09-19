@@ -10,7 +10,9 @@ export const LEAVE_TYPES = {
     PARENTING: 'parenting-leave',
     UNPAID: 'unpaid-leave',
     STUDY: 'study-leave',
-    HALF_DAY: 'half-day-leave'
+    HALF_DAY: 'half-day-leave',
+    BEREAVEMENT_LEAVE: 'bereavement-leave',
+    MARRIAGE_LEAVE: 'marriage-leave'
 }
 
 export const HUMAN_LEAVE_TYPES = {
@@ -19,5 +21,7 @@ export const HUMAN_LEAVE_TYPES = {
     'parenting-leave': 'Parenting Leave',
     'unpaid-leave': 'Unpaid Leave',
     'study-leave': 'Study Leave',
-    'half-day-leave': 'Half Day Off'
+    'half-day-leave': 'Half Day Off',
+    'bereavement-leave': 'Bereavement Leave',
+    'marriage-leave': 'Marriage Leave'
 }
