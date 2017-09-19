@@ -10,7 +10,15 @@ import { UserService } from '~/services/user-service';
 import { HolidayService } from '~/services/holiday-service';
 import { LEAVE_TYPES, HUMAN_LEAVE_TYPES } from '~/util/constants';
 
-const { ANNUAL, SICK, PARENTING, UNPAID, STUDY, HALF_DAY } = LEAVE_TYPES;
+const {
+    ANNUAL,
+    SICK,
+    PARENTING,
+    UNPAID,
+    STUDY,
+    HALF_DAY,
+    BEREAVEMENT_LEAVE,
+    MARRIAGE_LEAVE } = LEAVE_TYPES;
 
 @inject(LeaveService, UserService, HolidayService, Router)
 export class AddRequest {
@@ -52,7 +60,9 @@ export class AddRequest {
         { value: PARENTING, option: HUMAN_LEAVE_TYPES[PARENTING] },
         { value: STUDY, option: HUMAN_LEAVE_TYPES[STUDY] },
         { value: UNPAID, option: HUMAN_LEAVE_TYPES[UNPAID] },
-        { value: HALF_DAY, option: HUMAN_LEAVE_TYPES[HALF_DAY] }
+        { value: HALF_DAY, option: HUMAN_LEAVE_TYPES[HALF_DAY] },
+        { value: BEREAVEMENT_LEAVE, option: HUMAN_LEAVE_TYPES[BEREAVEMENT_LEAVE] },
+        { value: MARRIAGE_LEAVE, option: HUMAN_LEAVE_TYPES[MARRIAGE_LEAVE] }
     ];
 
     sPickChanged() {
