@@ -11,6 +11,7 @@
                 <label class="control-label">Leave type</label>
 
                 <abp-select
+                    element.bind="leaveType"
                     selected-value.bind="selectedLeave"
                     collection.bind="leaveTypes"
                     object-key="value">

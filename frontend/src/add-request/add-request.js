@@ -24,6 +24,7 @@ const {
 export class AddRequest {
     @bindable sPick;
     @bindable ePick;
+    @bindable leaveType;
 
    constructor(_leave, _user, _holiday, router) {
         this._leave = _leave;
@@ -34,12 +35,14 @@ export class AddRequest {
 
     attached() {
         this.disableDates();
+        this.computeDiff();
     }
 
     dateFormat = 'YYYY-MM-DD';
     allowedDate = moment().subtract(1, "days").toDate();
     start = moment().toDate();
     end = moment().toDate();
+    holidays = [];
 
     pickerOptions = {
         calendarWeeks: true,
@@ -65,10 +68,33 @@ export class AddRequest {
         { value: MARRIAGE_LEAVE, option: HUMAN_LEAVE_TYPES[MARRIAGE_LEAVE] }
     ];
 
+    leaveTypeChanged() {
+            this.leaveType.events.onChanged = (e) => {
+                if(this.isHalfDaySelected()) {
+                    this.ePick.methods.date(this.sPick.methods.date().toDate());
+                    this.ePick.methods.disable();
+                } else {
+                    this.ePick.methods.minDate(this.sPick.methods.date().toDate());
+                    this.ePick.methods.enable();
+                }
+            };
+
+    }
+
+    isHalfDaySelected() {
+        return this.leaveType.methods.val() === 'half-day-leave'
+    }
+
     sPickChanged() {
         this.sPick.events.onChange = (e) => {
-            this.ePick.methods.minDate(e.date);
-            this.start = e.date.toDate();
+            if (this.isHalfDaySelected()) {
+                this.ePick.methods.date(this.sPick.methods.date().toDate());
+            } else {
+                this.ePick.methods.minDate(this.sPick.methods.date().toDate());
+            }
+
+            this.start = this.sPick.methods.date().toDate();
+
             this.computeDiff();
         }
 
@@ -78,9 +104,8 @@ export class AddRequest {
     }
 
     ePickChanged() {
-        const that = this;
         this.ePick.events.onChange = (e) => {
-            this.end = e.date.toDate();
+            this.end = this.ePick.methods.date().toDate();
             this.computeDiff();
         }
     }
@@ -113,7 +138,6 @@ export class AddRequest {
         if (this.canSave) {
             this.start = moment(this.start).startOf('day').toDate();
             this.end = moment(this.end).endOf('day').toDate();
-            console.log('adding', this.start, this.end, this.dateDiff)
             const leave = {
                 userId: this._user.currentUser.id,
                 leaveType: this.selectedLeave[0],
