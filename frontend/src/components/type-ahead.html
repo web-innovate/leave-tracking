@@ -1,0 +1,27 @@
+<template bindable="data-source,model,results,field,display-name,placeholder">
+    <require from="./type-ahead.css"></require>
+
+    <div class="form-group">
+        <aubs-typeahead
+            data.call="_dataSource(filter, limit)"
+            value.bind="state"
+            debounce.bind="350"
+            placeholder="${placeholder}"
+            open-on-focus.bind="true"
+            key="${displayName}"
+            results-limit.bind="10"
+            on-select.call="onSelect(item)">
+        </aubs-typeahead>
+    </div>
+
+
+    <div class="form-group">
+            <span repeat.for="data of selectedData" class="tag label label-info">
+                <span>${data[displayName]}</span>
+                <a click.delegate="removeTag(data)">
+                    <i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i>
+                </a>
+            </span>
+    </div>
+
+</template>
