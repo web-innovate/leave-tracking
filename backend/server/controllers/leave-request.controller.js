@@ -102,13 +102,6 @@ function list(req, res, next) {
         .catch(e => next(e));
 }
 
-function remove(req, res, next) {
-    const user = req.user;
-    user.remove()
-        .then(deletedUser => res.json(deletedUser))
-        .catch(e => next(e));
-}
-
 function getForUser(req, res, next) {
     const { userId } = req.params;
 
@@ -117,4 +110,4 @@ function getForUser(req, res, next) {
         .catch(e => next(e));
 }
 
-export default { load, get, create, update, list, remove, getForUser };
+export default { load, get, create, update, list, getForUser };
