@@ -64,7 +64,7 @@ function list(req, res, next) {
         skip
     };
 
-    if (name) {
+    if (name && fields) {
         queryOptions.extra = {
             $or: computeFilterFields(name, fields)
         };
@@ -82,17 +82,12 @@ function computeFilterFields(name, fields) {
     let reqFields;
     if (fields) {
         reqFields = fields.split(',').map(field => {
-            let obj = {};
+            const obj = {};
 
             obj[field] = reg;
 
             return obj;
         });
-    } else {
-        reqFields = [
-            { firstName: reg },
-            { lastName: reg }
-        ];
     }
 
     return reqFields;
