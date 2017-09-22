@@ -10,6 +10,14 @@ export class ApiService {
         this.httpClient = new HttpClient().configure(x => {
             x.withHeader('Content-Type', 'application/json');
             x.withBaseUrl(backendURL);
+            x.withInterceptor({
+                requestError(error) {
+                    return Promise.reject(new Error(error));
+                },
+                responseError(error) {
+                    return Promise.reject(new Error(error));
+                }
+            });
         });
 
         const existingToken = localStorage.getItem('token') || null;
