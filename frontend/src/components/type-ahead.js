@@ -9,8 +9,9 @@ export class TypeAhead {
     @bindable results;
     @bindable displayName;
     @bindable placeholder;
+    @bindable resultsResolver
 
-    @observable selectedData = [];
+    @bindable selectedData = [];
 
     state = null;
 
@@ -20,6 +21,15 @@ export class TypeAhead {
 
     selectedDataChanged(newVal, oldVal) {
         this.results = newVal.map(x => x[this.field]);
+    }
+
+    async attached() {
+        if (this.results) {
+            await Promise.all(this.results.map(async (result) => {
+               const data = await this.resultsResolver(result);
+               this.selectedData.push(data);
+            }));
+        }
     }
 
     async _dataSource(query, limit) {

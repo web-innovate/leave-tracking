@@ -1,4 +1,6 @@
 <template>
+    <require from="../../../components/type-ahead"></require>
+
     <spinner if.bind="loading"></spinner>
 
     <form if.bind="!loading" submit.delegate="saveProject()" class="form-horizontal">
@@ -18,8 +20,15 @@
 
         <div class="form-group">
             <label class="col-xs-3 control-label">Project Approvers</label>
-            <div class="col-xs-9">
-                <input type="text" class="form-control" value.bind="project.approvers">
+            <div class="col-xs-3">
+                <type-ahead
+                    field="_id"
+                    placeholder="Search for users ..."
+                    display-name="fullName"
+                    results.two-way="project.approvers"
+                    results-resolver.bind="getUser"
+                    data-source.bind="userSource">
+                </type-ahead>
             </div>
         </div>
 
