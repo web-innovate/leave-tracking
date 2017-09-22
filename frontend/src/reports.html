@@ -1,6 +1,20 @@
 <template>
+  <require from="./components/type-ahead"></require>
+
     <div class="col-sm-9">
         <h3><i class="glyphicon glyphicon-list-alt"></i> Reports could be built here :)</h3>
+
+        <type-ahead
+            field="_id"
+            placeholder="Search for users ..."
+            display-name="fullName"
+            results.two-way="results"
+            data-source.bind="userSource"
+            model.bind="model">
+        </type-ahead>
+
+        <hr>
+        <span>User IDs: ${results}</span>
         <hr>
     </div>
 </template>
