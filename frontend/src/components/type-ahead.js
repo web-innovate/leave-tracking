@@ -5,7 +5,6 @@ import { UserService } from '~/services/user-service';
 export class TypeAhead {
     @bindable tagsInput;
     @bindable dataSource
-    @bindable model
     @bindable field;
     @bindable results;
     @bindable displayName;
@@ -26,7 +25,7 @@ export class TypeAhead {
     async _dataSource(query, limit) {
         this.state = null;
         try {
-            return await this.dataSource.call(this.model || this, query, limit);
+            return await this.dataSource(query, limit);
         } catch(e) {
             return [];
         }

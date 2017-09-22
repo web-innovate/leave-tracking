@@ -13,7 +13,7 @@ export class Reports {
     }
 
 
-    userSource(query, limit) {
+    userSource = function(query, limit) {
         return this._userService.searchUserByName(query, limit);
-    }
+    }.bind(this);
 }
