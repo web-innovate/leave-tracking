@@ -65,33 +65,37 @@ function list(req, res, next) {
     };
 
     if (name) {
-        const escapedName = _.escapeRegExp(name);
-        const reg = new RegExp(`${escapedName}`,'i');
-
-        let reqFields;
-        if (fields) {
-            reqFields = fields.split(',').map(field => {
-                let obj = {};
-
-                obj[field] = reg;
-
-                return obj;
-            });
-        } else {
-            reqFields = [
-                { firstName: reg },
-                { lastName: reg }
-            ];
-        }
-
         queryOptions.extra = {
-            $or: reqFields
+            $or: computeFilterFields(name, fields)
         };
     }
 
     User.list(queryOptions)
         .then(users => res.json(users))
         .catch(e => next(e));
+}
+
+function computeFilterFields(name, fields) {
+    const escapedName = _.escapeRegExp(name);
+    const reg = new RegExp(`${escapedName}`,'i');
+
+    let reqFields;
+    if (fields) {
+        reqFields = fields.split(',').map(field => {
+            let obj = {};
+
+            obj[field] = reg;
+
+            return obj;
+        });
+    } else {
+        reqFields = [
+            { firstName: reg },
+            { lastName: reg }
+        ];
+    }
+
+    return reqFields;
 }
 
 function remove(req, res, next) {
