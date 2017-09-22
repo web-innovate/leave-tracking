@@ -58,4 +58,12 @@ export class UserService {
                 return users.map(x => new UserModel(x));
             });
     }
+
+    searchUserByName(name, limit = 10) {
+        return this.http.get(`users?limit=${limit}&name=${name}&fields=firstName,lastName,email`)
+            .then(users => {
+                users = JSON.parse(users.response);
+                return users.map(x => new UserModel(x));
+            });
+    }
 }

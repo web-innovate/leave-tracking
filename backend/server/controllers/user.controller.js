@@ -1,5 +1,6 @@
 import User from '../models/user.model';
 import worker from '../../worker/worker';
+import _ from 'lodash';
 
 function load(req, res, next, id) {
     User.get(id)
@@ -55,10 +56,41 @@ function update(req, res, next) {
 }
 
 function list(req, res, next) {
-    const { limit = 50, skip = 0 } = req.query;
-    User.list({ limit, skip })
+
+    const { limit = 50, skip = 0, name, fields } = req.query;
+
+    const queryOptions = {
+        limit,
+        skip
+    };
+
+    if (name && fields) {
+        queryOptions.extra = {
+            $or: computeFilterFields(name, fields)
+        };
+    }
+
+    User.list(queryOptions)
         .then(users => res.json(users))
         .catch(e => next(e));
+}
+
+function computeFilterFields(name, fields) {
+    const escapedName = _.escapeRegExp(name);
+    const reg = new RegExp(`${escapedName}`,'i');
+
+    let reqFields;
+    if (fields) {
+        reqFields = fields.split(',').map(field => {
+            const obj = {};
+
+            obj[field] = reg;
+
+            return obj;
+        });
+    }
+
+    return reqFields;
 }
 
 function remove(req, res, next) {

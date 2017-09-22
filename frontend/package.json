@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "aurelia-animator-css": "^1.0.1",
-    "aurelia-bootstrap": "^0.1.17",
+    "aurelia-bootstrap": "0.1.20",
     "aurelia-bootstrap-datetimepicker": "^1.0.2",
     "aurelia-bootstrap-select": "^0.1.1",
     "aurelia-bootstrapper": "^2.1.0",
@@ -30,6 +30,7 @@
     "express": "^4.12.3",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
     "md5": "^2.2.1",
     "moment-business": "^3.0.1",
     "moment-range": "^3.0.3",

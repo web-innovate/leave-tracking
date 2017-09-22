@@ -98,6 +98,7 @@
           "node_modules/requirejs/require.js"
         ],
         "dependencies": [
+          "lodash",
           "underscore",
           "moment-business",
           "moment-range",
