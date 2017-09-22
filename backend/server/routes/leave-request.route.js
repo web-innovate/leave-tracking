@@ -13,8 +13,7 @@ router.route('/')
 
 router.route('/:leaveId')
     .get(expressJwt({ secret: config.jwtSecret }), leaveCtrl.get)
-    .put(expressJwt({ secret: config.jwtSecret }), leaveCtrl.update)
-    .delete(expressJwt({ secret: config.jwtSecret }), leaveCtrl.remove);
+    .put(expressJwt({ secret: config.jwtSecret }), leaveCtrl.update);
 
 router.param('leaveId', leaveCtrl.load);
 
