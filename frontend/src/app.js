@@ -125,7 +125,13 @@ class AuthorizeStep {
         this.router = router;
 
         this._events.ea.subscribe('no_token', (rr) => {
-            if (['login', 'recover'].indexOf(this.router.currentInstruction.config.name) == -1) {
+            const { currentInstruction } = this.router;
+
+            if (!currentInstruction) {
+                return;
+            }
+
+            if (['login', 'recover'].indexOf(currentInstruction.config.name) === -1) {
                 this.router.navigateToRoute('login')
             }
         })
@@ -133,7 +139,7 @@ class AuthorizeStep {
 
   run(navigationInstruction, next) {
     if (navigationInstruction.getAllInstructions().some(i => i.config.auth)) {
-      var isLoggedIn = this._auth.isAuth;
+      const isLoggedIn = this._auth.isAuth;
 
       if (!isLoggedIn) {
         return next.cancel(new Redirect('login'));
