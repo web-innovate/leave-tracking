@@ -113,6 +113,8 @@ export class App {
             },
         ]);
 
+        config.mapUnknownRoutes('404.html');
+
         this.router = router;
     }
 }
