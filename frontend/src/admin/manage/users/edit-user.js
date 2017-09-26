@@ -32,7 +32,7 @@ export class EditUser {
     }
 
     async delete() {
-        await this._user.deleteUser(this.user);
+        await this._user.deleteUser(this.user._id);
         this.router.navigateBack();
     }
 

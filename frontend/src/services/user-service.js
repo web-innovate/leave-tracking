@@ -44,8 +44,8 @@ export class UserService {
         return this.http.put(`users/${user._id}`, user);
     }
 
-    deleteUser(user) {
-        return this.http.delete(`users/${user._id}`, user);
+    deleteUser(userID) {
+        return this.http.delete(`users/${userID}`, userID);
     }
 
     async getLeaves() {
