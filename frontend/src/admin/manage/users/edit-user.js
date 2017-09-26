@@ -31,4 +31,9 @@ export class EditUser {
         this.router.navigateBack();
     }
 
+    async delete() {
+        await this._user.deleteUser(this.user);
+        this.router.navigateBack();
+    }
+
 }
