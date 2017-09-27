@@ -1,17 +1,12 @@
 import { inject } from 'aurelia-framework';
-import { Router } from 'aurelia-router';
-import { DialogService } from 'aurelia-dialog';
 import { UserService } from '~/services/user-service'
 import { ProjectService } from '~/services/project-service'
-import { CreateUser } from './create-user';
 
-
-@inject(UserService, ProjectService, DialogService, Router)
+@inject(UserService, ProjectService)
 export class Users {
-    constructor(_user, _project, _dialog, router) {
+    constructor(_user, _project) {
         this._user = _user;
         this._project = _project;
-        this._dialog = _dialog;
     }
 
     configureRouter(config, router){
@@ -37,19 +32,18 @@ export class Users {
                     icon: 'time'
                 },
                 auth: true
+            },
+            {
+                route: ['/create-user'],
+                name: 'create-user',
+                moduleId: './create-user',
+                nav: false,
+                title:'Create user',
+                settings: {
+                    icon: 'time'
+                },
+                auth: true
             }
         ]);
-    }
-
-    createUser() {
-        return this._dialog.open({ viewModel: CreateUser })
-            .then(response => {
-                if(!response.wasCancelled) {
-                    console.log('create user', response.output)
-                    this._user.createUser(response.output);
-                } else {
-                    console.log('do not create user')
-                }
-            })
     }
 }

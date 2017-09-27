@@ -1,13 +1,5 @@
 <template>
-    <require from="./user.html"></require>
-
-    <ai-dialog>
-        <ai-dialog-body>
-            <user user.bind="user" projects.bind="projects"></user>
-        </ai-dialog-body>
-
-        <ai-dialog-footer>
-            <dialog-footer ctrl.bind="dialogCtrl" model.bind="user"></dialog-footer>
-        </ai-dialog-footer>
-    </ai-dialog>
+    <compose
+            model.bind="user"
+            view-model="./base-user"></compose>
 </template>

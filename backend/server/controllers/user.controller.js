@@ -57,17 +57,24 @@ function update(req, res, next) {
 
 function list(req, res, next) {
 
-    const { limit = 50, skip = 0, name, fields } = req.query;
+    const { limit = 50, skip = 0, name, fields, userType } = req.query;
 
     const queryOptions = {
         limit,
-        skip
+        skip,
+        extra: {}
     };
 
     if (name && fields) {
-        queryOptions.extra = {
-            $or: computeFilterFields(name, fields)
-        };
+        queryOptions.extra.$or = computeFilterFields(name, fields);
+    }
+
+    if (userType) {
+        queryOptions.extra.$and = [
+            {
+                userType: userType
+            }
+        ];
     }
 
     User.list(queryOptions)

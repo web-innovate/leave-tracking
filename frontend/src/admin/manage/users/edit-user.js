@@ -1,34 +1,31 @@
-import { inject } from 'aurelia-framework';
-import { Router } from 'aurelia-router';
 import { UserService } from '~/services/user-service';
 import { ProjectService } from '~/services/project-service';
+import BaseUser from './base-user';
 
-@inject(UserService, ProjectService, Router)
-export class EditUser {
-    constructor(_user, _project, router) {
-        this._user = _user;
-        this._project = _project;
-        this.router = router;
-    }
+export class EditUser extends BaseUser {
 
     async activate(params) {
-        console.log('the params', params)
-        const user = await this._user.getUser(params.userId);
-        const projects = await this._project.getProjects();
+        this.setTemplateParams();
+        await this.fetchData(params);
+    }
 
-        console.log('the user', user);
+    setTemplateParams() {
+        this.ctaButtonLabel = 'Save';
+        this.isEdit = true;
+    }
+
+    async fetchData(params) {
+        const user = await this._user.getUser(params.userId);
         this.user = user;
-        this.projects = projects;
-        console.log(projects)
+        super.user = user;
     }
 
     get canSave() {
         return false
     }
 
-    async save() {
-        await this._user.saveUser(this.user);
-        this.router.navigateBack();
+    submit() {
+        this.save();
     }
 
 }

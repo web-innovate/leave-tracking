@@ -44,6 +44,10 @@ export class UserService {
         return this.http.put(`users/${user._id}`, user);
     }
 
+    deleteUser(userId) {
+        return this.http.delete(`users/${userId}`);
+    }
+
     async getLeaves() {
         const me = await this.currentUser();
 
@@ -61,6 +65,14 @@ export class UserService {
 
     searchUserByName(name, limit = 10) {
         return this.http.get(`users?limit=${limit}&name=${name}&fields=firstName,lastName,email`)
+            .then(users => {
+                users = JSON.parse(users.response);
+                return users.map(x => new UserModel(x));
+            });
+    }
+
+    searchApproverUserByName(name, limit = 10) {
+        return this.http.get(`users?limit=${limit}&name=${name}&fields=firstName,lastName,email&userType=APPROVER`)
             .then(users => {
                 users = JSON.parse(users.response);
                 return users.map(x => new UserModel(x));

@@ -14,6 +14,6 @@ export class Reports {
 
 
     userSource = function(query, limit) {
-        return this._userService.searchUserByName(query, limit);
+        return this._userService.searchApproverUserByName(query, limit, 'APPROVER');
     }.bind(this);
 }
