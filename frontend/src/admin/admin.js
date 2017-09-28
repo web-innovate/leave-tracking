@@ -59,5 +59,7 @@ export class Admin {
                 auth: true
             }
         ]);
+
+        config.mapUnknownRoutes('./404.html');
     }
 }

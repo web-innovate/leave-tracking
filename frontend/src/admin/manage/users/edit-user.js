@@ -28,4 +28,9 @@ export class EditUser extends BaseUser {
         this.save();
     }
 
+    async delete() {
+        await this._user.deleteUser(this.user._id);
+        this.router.navigateBack();
+    }
+
 }
