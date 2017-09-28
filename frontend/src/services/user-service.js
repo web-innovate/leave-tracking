@@ -63,19 +63,23 @@ export class UserService {
             });
     }
 
-    searchUserByName(name, limit = 10) {
-        return this.http.get(`users?limit=${limit}&name=${name}&fields=firstName,lastName,email`)
+    getQueryParams(name, type, limit) {
+        return `limit=${limit}&name=${name}&fields=firstName,lastName,email&userType=${_.isUndefined(type) ? '' : type}`;
+    }
+
+    searchUser(name, type, limit = 10) {
+        return this.http.get(`users?${this.getQueryParams(name, limit, type)}`)
             .then(users => {
                 users = JSON.parse(users.response);
                 return users.map(x => new UserModel(x));
             });
     }
 
-    searchApproverUserByName(name, limit = 10) {
-        return this.http.get(`users?limit=${limit}&name=${name}&fields=firstName,lastName,email&userType=APPROVER`)
-            .then(users => {
-                users = JSON.parse(users.response);
-                return users.map(x => new UserModel(x));
-            });
+    searchUserByName(name) {
+        return this.searchUser(name);
+    }
+
+    searchApproverUserByName(name) {
+        return this.searchUser(name, 'APPROVER');
     }
 }

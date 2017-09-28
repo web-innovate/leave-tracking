@@ -1,13 +1,11 @@
-import { inject, bindable } from 'aurelia-framework';
-import { DialogService } from 'aurelia-dialog';
+import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { UserService } from '~/services/user-service';
 import { ProjectService } from '~/services/project-service';
 
-@inject(DialogService, UserService, ProjectService, Router)
+@inject(UserService, ProjectService, Router)
 export class Admin {
-    constructor(dialogService, _user, _project, router) {
-        this.dialogService = dialogService;
+    constructor(_user, _project, router) {
         this._user = _user;
         this._project = _project;
     }
