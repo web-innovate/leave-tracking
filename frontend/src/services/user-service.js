@@ -64,11 +64,11 @@ export class UserService {
     }
 
     getQueryParams(name, type, limit) {
-        return `limit=${limit}&name=${name}&fields=firstName,lastName,email&userType=${_.isUndefined(type) ? '' : type}`;
+        return `limit=${limit}&name=${name}&fields=firstName,lastName,email${_.isUndefined(type) ? '' : '&userType='+type}`;
     }
 
     searchUser(name, type, limit = 10) {
-        return this.http.get(`users?${this.getQueryParams(name, limit, type)}`)
+        return this.http.get(`users?${this.getQueryParams(name, type, limit)}`)
             .then(users => {
                 users = JSON.parse(users.response);
                 return users.map(x => new UserModel(x));
