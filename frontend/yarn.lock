@@ -328,10 +328,11 @@ aurelia-bootstrap-select@^0.1.1:
     bootstrap-select "^1.12.2"
     jquery "^3.1.1"
 
-aurelia-bootstrap@^0.1.17:
-  version "0.1.17"
-  resolved "https://registry.yarnpkg.com/aurelia-bootstrap/-/aurelia-bootstrap-0.1.17.tgz#754fd830bb7294a83f62e92bcc2fb5bd7bcfc5ac"
+aurelia-bootstrap@0.1.20:
+  version "0.1.20"
+  resolved "https://registry.yarnpkg.com/aurelia-bootstrap/-/aurelia-bootstrap-0.1.20.tgz#f33904f858bf7f8fbf62c1e0ce4de7485f95386a"
   dependencies:
+    aurelia-pal "^1.3.0"
     aurelia-templating-resources "^1.1.1"
     tether "^1.3.7"
     velocity-animate "^1.3.1"
@@ -388,16 +389,6 @@ aurelia-dependency-injection@^1.3.1:
   dependencies:
     aurelia-metadata "^1.0.0"
     aurelia-pal "^1.0.0"
-
-aurelia-dialog@^1.0.0-beta.3.0.1:
-  version "1.0.0-beta.3.0.1"
-  resolved "https://registry.yarnpkg.com/aurelia-dialog/-/aurelia-dialog-1.0.0-beta.3.0.1.tgz#691780cf86384a85c22994cffeae8e309a44e5c5"
-  dependencies:
-    aurelia-dependency-injection "^1.0.0"
-    aurelia-framework "^1.0.0"
-    aurelia-metadata "^1.0.0"
-    aurelia-pal "^1.0.0"
-    aurelia-templating "^1.0.0"
 
 aurelia-event-aggregator@^1.0.0:
   version "1.0.1"
@@ -3802,7 +3793,7 @@ lodash@^3.10.1, lodash@^3.8.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.0.0, lodash@^4.13.1, lodash@^4.2.0, lodash@^4.3.0:
+lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.3.0:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 

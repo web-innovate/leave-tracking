@@ -9,10 +9,6 @@ export function configure(aurelia) {
         .plugin('aurelia-validation')
         .plugin('aurelia-bootstrap-select')
         .plugin("aurelia-chart")
-        .plugin('aurelia-dialog', config => {
-            config.settings.lock = false;
-            config.settings.enableEscClose = true;
-        })
         .plugin('aurelia-notify', settings => {
           settings.timeout = 4000;
         })

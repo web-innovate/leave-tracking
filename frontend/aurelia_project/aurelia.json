@@ -232,11 +232,6 @@
             ]
           },
           {
-            "name": "aurelia-dialog",
-            "path": "../node_modules/aurelia-dialog/dist/amd",
-            "main": "aurelia-dialog"
-          },
-          {
             "name": "chart.js",
             "path": "../node_modules/chart.js/dist",
             "main": "Chart.js"

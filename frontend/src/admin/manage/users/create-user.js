@@ -1,9 +1,6 @@
-import {inject} from 'aurelia-framework';
-import { DialogController } from 'aurelia-dialog';
-import { ProjectService } from '~/services/project-service';
+import BaseUser from './base-user';
 
-@inject(DialogController, ProjectService)
-export class CreateUser {
+export class CreateUser extends BaseUser {
     user = {
             firstName: '',
             lastName: '',
@@ -15,12 +12,15 @@ export class CreateUser {
             userType: ''
         };
 
-    constructor(dialogCtrl, _projects) {
-        this.dialogCtrl = dialogCtrl;
-        this._projects = _projects;
+    activate() {
+        this.setTemplateParams();
     }
 
-    attached() {
-        this._projects.getProjects().then(projects => this.projects = projects);
+    setTemplateParams() {
+        this.ctaButtonLabel = 'Create user';
+    }
+
+    submit() {
+        this.create();
     }
 }
