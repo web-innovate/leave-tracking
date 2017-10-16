@@ -31,7 +31,6 @@ export default class BaseUser {
             .ensure('userType').required().satisfiesRule('otherThan', 'None')
             .ensure('projectId').required().satisfiesRule('otherThan', 'None')
             .on(this.user);
-        console.log(this.controller);
     }
 
     setupValidationController(controllerFactory) {
