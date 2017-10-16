@@ -1,5 +1,7 @@
 import environment from '~/environment';
 import moment from 'moment'
+import { setupCustomValidationRules } from './components/validation/custom-rules';
+
 export function configure(aurelia) {
 
     aurelia.use
@@ -22,5 +24,6 @@ export function configure(aurelia) {
         aurelia.use.plugin('aurelia-testing');
     }
 
+    setupCustomValidationRules();
     aurelia.start().then(() => aurelia.setRoot());
 }

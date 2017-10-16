@@ -17,15 +17,11 @@ export class EditUser extends BaseUser {
     async fetchData(params) {
         const user = await this._user.getUser(params.userId);
         this.user = user;
-        super.user = user;
+        this.user.submit = this.save.bind(this);
     }
 
     get canSave() {
-        return false
-    }
-
-    submit() {
-        this.save();
+        return false;
     }
 
     async delete() {
