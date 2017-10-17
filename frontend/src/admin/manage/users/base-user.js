@@ -15,6 +15,7 @@ export default class BaseUser {
         this._user = _user;
         this._project = _project;
         this.router = router;
+        this.originalUser = {};
 
         this.setupValidationController(controllerFactory);
     }
@@ -39,8 +40,19 @@ export default class BaseUser {
         this.controller.addRenderer(new BootstrapFormRenderer());
     }
 
+    get canSave() {
+        for (let p in this.user) {
+            if (this.user[p] !== this.originalUser[p]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     async activate(model, extra) {
         this.user = model;
+        Object.assign(this.originalUser, this.user);
+
         await this.fetchProjectsData();
     }
 

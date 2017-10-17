@@ -20,10 +20,6 @@ export class EditUser extends BaseUser {
         this.user.submit = this.save.bind(this);
     }
 
-    get canSave() {
-        return false;
-    }
-
     async delete() {
         await this._user.deleteUser(this.user._id);
         this.router.navigateBack();
