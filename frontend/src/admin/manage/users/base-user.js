@@ -69,11 +69,7 @@ export default class BaseUser {
     }
 
     validate() {
-        this.controller.validate()
-            .then(result => {
-                if (result.valid) {
-                    this.user.submit();
-                }
-            });
+        return this.controller.validate()
+            .then(result => result.valid && this.user.submit());
     }
 }
