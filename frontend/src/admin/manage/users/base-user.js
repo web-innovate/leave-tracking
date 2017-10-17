@@ -7,7 +7,7 @@ import {
     ValidationControllerFactory,
     validateTrigger
 } from 'aurelia-validation';
-import { BootstrapFormRenderer } from '../../../components/validation/bootstrap-form-renderer';
+import { BootstrapFormRenderer } from '~/components/validation/bootstrap-form-renderer';
 
 @inject(UserService, ProjectService, Router, ValidationControllerFactory)
 export default class BaseUser {

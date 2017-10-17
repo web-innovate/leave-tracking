@@ -1,6 +1,6 @@
 import environment from '~/environment';
 import moment from 'moment'
-import { setupCustomValidationRules } from './components/validation/custom-rules';
+import { setupCustomValidationRules } from '~/components/validation/custom-rules';
 
 export function configure(aurelia) {
 

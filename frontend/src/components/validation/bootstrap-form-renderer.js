@@ -6,16 +6,13 @@ import {
 
 export class BootstrapFormRenderer {
     render(instruction: RenderInstruction) {
-        for (let { result, elements } of instruction.unrender) {
-            for (let element of elements) {
-                this.remove(element, result);
-            }
-        }
+        this.update(instruction.unrender, this.remove);
+        this.update(instruction.render, this.add);
+    }
 
-        for (let { result, elements } of instruction.render) {
-            for (let element of elements) {
-                this.add(element, result);
-            }
+    update(instruction, action) {
+        for (let { result, elements} of instruction) {
+            elements.forEach(e => action(e, result));
         }
     }
 
