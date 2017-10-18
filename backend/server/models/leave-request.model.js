@@ -47,9 +47,9 @@ LeaveRequestSchema.statics = {
     get(id) {
         return this.findById(id)
         .exec()
-        .then((user) => {
-            if (user) {
-                return user;
+        .then((leaveRequest) => {
+            if (leaveRequest) {
+                return leaveRequest;
             }
             const err = new APIError('No such LeaveRequest', httpStatus.NOT_FOUND, true);
             return Promise.reject(err);
