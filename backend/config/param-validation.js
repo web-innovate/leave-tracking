@@ -17,7 +17,8 @@ export default {
     createProject: {
         body: {
             name: Joi.string().required(),
-            description: Joi.string().required()
+            description: Joi.string().required(),
+            approvers: Joi.array().items(Joi.string()).required()
         }
     },
 
