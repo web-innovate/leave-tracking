@@ -51,7 +51,7 @@ LeaveRequestSchema.statics = {
             if (user) {
                 return user;
             }
-            const err = new APIError('No such user exists!', httpStatus.NOT_FOUND, true);
+            const err = new APIError('No such LeaveRequest', httpStatus.NOT_FOUND, true);
             return Promise.reject(err);
         });
     },
