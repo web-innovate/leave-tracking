@@ -9,6 +9,8 @@ export class CreateProject extends BaseProject {
     constructor(_project, router, _user) {
         super();
         this.router = router;
+        this._project = _project;
+        this._user = _user;
         this.project = {};
     }
 

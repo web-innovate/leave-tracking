@@ -14,6 +14,6 @@ export class BaseProject {
     }.bind(this);
 
     userSource = function(query, limit) {
-        return this._user.searchUserByName(query, limit);
+        return this._user.searchApproverUserByName(query);
     }.bind(this);
 }
