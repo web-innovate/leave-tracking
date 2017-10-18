@@ -6,7 +6,8 @@ import APIError from '../helpers/APIError';
 const HolidaySchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        index: { unique: true }
     },
     description: {
         type: String,
@@ -33,7 +34,7 @@ HolidaySchema.statics = {
             if (holiday) {
                 return holiday;
             }
-            const err = new APIError('No such Holiday exists!', httpStatus.NOT_FOUND);
+            const err = new APIError('No such Holiday exists!', httpStatus.NOT_FOUND, true);
             return Promise.reject(err);
         });
     },

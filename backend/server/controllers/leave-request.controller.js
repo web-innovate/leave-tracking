@@ -12,7 +12,7 @@ function load(req, res, next, id) {
 }
 
 function get(req, res) {
-    return res.json(req.user);
+    return res.json(req.leaveRequest);
 }
 
 function create(req, res, next) {

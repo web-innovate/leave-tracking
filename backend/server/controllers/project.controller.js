@@ -14,7 +14,7 @@ function get(req, res) {
     return res.json(req.project);
 }
 
-function create(req, res, next) {
+async function create(req, res, next) {
     const project = new Project({
         approvers: req.body.approvers,
         name: req.body.name,
@@ -22,8 +22,8 @@ function create(req, res, next) {
     });
 
     project.save()
-    .then(savedProject => res.json(savedProject))
-    .catch(e => next(e));
+        .then(savedProject => res.json(savedProject))
+        .catch(e => next(e));
 }
 
 function update(req, res, next) {
