@@ -6,7 +6,8 @@ import APIError from '../helpers/APIError';
 const HolidaySchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        index: { unique: true }
     },
     description: {
         type: String,
