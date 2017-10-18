@@ -1,6 +1,5 @@
 import Project from '../models/project.model';
 import User from '../models/user.model';
-import APIError from '../helpers/APIError';
 
 function load(req, res, next, id) {
     Project.get(id)
