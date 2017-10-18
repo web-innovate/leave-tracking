@@ -12,6 +12,7 @@ export class CreateProject extends BaseProject {
         this._project = _project;
         this._user = _user;
         this.project = {};
+        this.project.approvers = [];
     }
 
     createProject() {

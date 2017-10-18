@@ -22,12 +22,6 @@ async function create(req, res, next) {
         description: req.body.description,
     });
 
-    let exists = await Project.findOne({name: req.body.name});
-
-    if (exists) {
-        next(new APIError(`Project with name "${req.body.name}" already exists`, 400, true));
-    }
-
     project.save()
         .then(savedProject => res.json(savedProject))
         .catch(e => next(e));
