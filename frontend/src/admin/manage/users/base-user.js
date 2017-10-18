@@ -8,6 +8,7 @@ import {
     validateTrigger
 } from 'aurelia-validation';
 import { BootstrapFormRenderer } from '~/components/validation/bootstrap-form-renderer';
+import { compareObjects } from '~/util/utils';
 
 @inject(UserService, ProjectService, Router, ValidationControllerFactory)
 export default class BaseUser {
@@ -41,15 +42,10 @@ export default class BaseUser {
     }
 
     get canSave() {
-        for (let p in this.user) {
-            if (this.user[p] !== this.originalUser[p]) {
-                return false;
-            }
-        }
-        return true;
+        return compareObjects(this.user, this.originalUser);
     }
 
-    async activate(model, extra) {
+    async activate(model) {
         this.user = model;
         Object.assign(this.originalUser, this.user);
 
