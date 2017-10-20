@@ -14,7 +14,8 @@ const UserSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        index: { unique: true }
     },
     password: {
         type: String,
@@ -66,7 +67,7 @@ UserSchema.statics = {
             if (user) {
                 return user;
             }
-            const err = new APIError('No such user exists!', httpStatus.NOT_FOUND);
+            const err = new APIError('No such user exists!', httpStatus.NOT_FOUND, true);
             return Promise.reject(err);
         });
     },
@@ -81,7 +82,7 @@ UserSchema.statics = {
                 return user;
             }
 
-            const err = new APIError('Bad credentials', httpStatus.NOT_FOUND);
+            const err = new APIError('Bad credentials', httpStatus.NOT_FOUND, true);
             return Promise.reject(err);
         });
     },

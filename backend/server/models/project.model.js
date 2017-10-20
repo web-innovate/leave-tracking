@@ -6,7 +6,8 @@ import APIError from '../helpers/APIError';
 const ProjectSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        index: { unique: true }
     },
     approvers: {
         type: [ String ],
@@ -33,7 +34,7 @@ ProjectSchema.statics = {
             if (project) {
                 return project;
             }
-            const err = new APIError('No such project exists!', httpStatus.NOT_FOUND);
+            const err = new APIError('No such project exists!', httpStatus.NOT_FOUND, true);
             return Promise.reject(err);
         });
     },

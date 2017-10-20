@@ -25,14 +25,6 @@ function login(req, res, next) {
         });
 }
 
-function getRandomNumber(req, res) {
-    // req.user is assigned by jwt middleware if valid token is provided
-    return res.json({
-        user: req.user,
-        num: Math.random() * 100
-    });
-}
-
 function me(req, res) {
     return User.get(req.user.id).then(user => {
         user = user.toObject();
@@ -42,4 +34,4 @@ function me(req, res) {
     });
 }
 
-export default { login, getRandomNumber, me };
+export default { login, me };
