@@ -1,3 +1,4 @@
+
 import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { UserService } from '~/services/user-service';
@@ -8,7 +9,7 @@ import {
     validateTrigger
 } from 'aurelia-validation';
 import { BootstrapFormRenderer } from '~/components/validation/bootstrap-form-renderer';
-import { compareObjects } from '~/util/utils';
+import { compareObjects, setupValidationControllers } from '~/util/utils';
 
 @inject(UserService, ProjectService, Router, ValidationControllerFactory)
 export default class BaseUser {
@@ -18,7 +19,7 @@ export default class BaseUser {
         this.router = router;
         this.originalUser = {};
 
-        this.setupValidationController(controllerFactory);
+        setupValidationControllers(controllerFactory, BootstrapFormRenderer, this, validateTrigger);
     }
 
     attached() {
@@ -33,12 +34,6 @@ export default class BaseUser {
             .ensure('userType').required().satisfiesRule('otherThan', 'None')
             .ensure('projectId').required().satisfiesRule('otherThan', 'None')
             .on(this.user);
-    }
-
-    setupValidationController(controllerFactory) {
-        this.controller = controllerFactory.createForCurrentScope();
-        this.controller.validateTrigger = validateTrigger.changeOrBlur;
-        this.controller.addRenderer(new BootstrapFormRenderer());
     }
 
     get canSave() {
@@ -76,7 +71,7 @@ export default class BaseUser {
         this.router.navigateBack();
     }
 
-    validate() {
+    submit() {
         return this.controller.validate()
             .then(result => result.valid && this.user.submit());
     }

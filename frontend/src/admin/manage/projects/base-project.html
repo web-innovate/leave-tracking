@@ -3,7 +3,7 @@
 
     <spinner if.bind="loading"></spinner>
 
-    <form if.bind="!loading" submit.delegate="validate()" class="form-horizontal">
+    <form if.bind="!loading" submit.delegate="submit()" class="form-horizontal">
         <div class="form-group">
             <label class="col-xs-3 control-label">Project name</label>
             <div class="col-xs-9">

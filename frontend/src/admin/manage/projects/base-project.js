@@ -8,7 +8,7 @@ import {
     validateTrigger
 } from 'aurelia-validation';
 import { BootstrapFormRenderer } from '~/components/validation/bootstrap-form-renderer';
-import { compareObjects } from '~/util/utils';
+import { compareObjects, setupValidationControllers } from '~/util/utils';
 
 @inject(ProjectService, UserService, Router, ValidationControllerFactory)
 export default class BaseProject {
@@ -18,7 +18,7 @@ export default class BaseProject {
         this.router = router;
         this.originalProject = {};
 
-        this.setupValidationController(controllerFactory);
+        setupValidationControllers(controllerFactory, BootstrapFormRenderer, this, validateTrigger);
     }
 
     attached() {
@@ -41,12 +41,6 @@ export default class BaseProject {
         this.project = model;
 
         Object.assign(this.originalProject, this.project);
-    }
-
-    setupValidationController(controllerFactory) {
-        this.controller = controllerFactory.createForCurrentScope();
-        this.controller.validateTrigger = validateTrigger.changeOrBlur;
-        this.controller.addRenderer(new BootstrapFormRenderer());
     }
 
     createProject() {
@@ -76,7 +70,7 @@ export default class BaseProject {
         this.router.navigateToRoute('projects');
     }
 
-    validate() {
+    submit() {
         return this.controller.validate()
             .then(result => result.valid && this.project.submit());
     }

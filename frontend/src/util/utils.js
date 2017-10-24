@@ -6,3 +6,9 @@ export const compareObjects = (objA, objB) => {
     }
     return true;
 };
+
+export const setupValidationControllers = (cFactory, renderer, scope, validateTrigger) => {
+    scope.controller = cFactory.createForCurrentScope();
+    scope.controller.validateTrigger = validateTrigger.changeOrBlur;
+    scope.controller.addRenderer(new renderer());
+};
