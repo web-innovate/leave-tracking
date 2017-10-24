@@ -1,5 +1,3 @@
-import { UserService } from '~/services/user-service';
-import { ProjectService } from '~/services/project-service';
 import BaseUser from './base-user';
 
 export class EditUser extends BaseUser {
