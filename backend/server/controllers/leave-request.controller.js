@@ -1,6 +1,8 @@
+import moment from 'moment';
 import LeaveRequest from '../models/leave-request.model';
 import User from '../models/user.model';
 import worker from '../../worker/worker';
+import APIError from '../helpers/APIError';
 
 function load(req, res, next, id) {
     LeaveRequest.get(id)
@@ -15,7 +17,7 @@ function get(req, res) {
     return res.json(req.leaveRequest);
 }
 
-function create(req, res, next) {
+async function create(req, res, next) {
     const user = req.user;
     const leave = new LeaveRequest(
         {
@@ -27,26 +29,22 @@ function create(req, res, next) {
             workDays: req.body.workDays
         });
 
+    const pendingAndApproved = await LeaveRequest
+        .find({ $or: [{ status: 'approved' }, { status: 'pending' }] });
+
+    const overlapFound = pendingAndApproved.some(item => checkForOverlap(item, leave, next));
+
+    //stop from saving the request
+    if (overlapFound) {
+        return;
+    }
+
     leave.save()
         .then(savedLeave => {
             worker.queueNewLeaveRequest(savedLeave.toObject());
             return savedLeave;
         })
-        .then(savedLeave => {
-            const { leaveType, userId, workDays, status } = savedLeave;
-
-            if (leaveType === 'annual-leave' && status === 'pending') {
-                return User.get(userId)
-                    .then(usr => {
-                        usr.pending += workDays;
-
-                        return usr.save()
-                            .then(() => res.json(savedLeave));
-                    });
-            } else {
-                return res.json(savedLeave);
-            }
-        })
+        .then(savedLeave => updateUserData(savedLeave, res))
         .catch(e => next(e));
 }
 
@@ -108,6 +106,46 @@ function getForUser(req, res, next) {
     LeaveRequest.find({ userId })
         .then(leaves => res.json(leaves))
         .catch(e => next(e));
+}
+
+function updateUserData(savedLeave, res) {
+    const { leaveType, userId, workDays, status } = savedLeave;
+
+    if (leaveType === 'annual-leave' && status === 'pending') {
+        return User.get(userId)
+            .then(usr => {
+                usr.pending += workDays;
+
+                return usr.save()
+                    .then(() => res.json(savedLeave));
+            });
+    } else {
+        return res.json(savedLeave);
+    }
+}
+
+function checkForOverlap(item, leave, next) {
+    const currentStart = moment(leave.start);
+    const currentEnd = moment(leave.end);
+    let { start, end } = item;
+
+    start = moment(start);
+    end = moment(end);
+
+    const overlaps = currentStart.isBefore(end) && start.isBefore(currentEnd);
+
+
+    if (overlaps) {
+        const existing = {
+            message: 'There is a leave-request already created that overlaps with your dates',
+            start,
+            end,
+            status: item.status
+        };
+
+        next(new APIError(JSON.stringify(existing), 400, true));
+        return overlaps;
+    }
 }
 
 export default { load, get, create, update, list, getForUser };
