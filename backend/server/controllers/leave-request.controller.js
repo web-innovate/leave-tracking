@@ -1,6 +1,8 @@
+import moment from 'moment';
 import LeaveRequest from '../models/leave-request.model';
 import User from '../models/user.model';
 import worker from '../../worker/worker';
+import APIError from '../helpers/APIError';
 
 function load(req, res, next, id) {
     LeaveRequest.get(id)
@@ -15,7 +17,7 @@ function get(req, res) {
     return res.json(req.leaveRequest);
 }
 
-function create(req, res, next) {
+async function create(req, res, next) {
     const user = req.user;
     const leave = new LeaveRequest(
         {
@@ -26,6 +28,37 @@ function create(req, res, next) {
             status: req.body.status,
             workDays: req.body.workDays
         });
+
+    const currentStart = moment(leave.start);
+    const currentEnd = moment(leave.end);
+
+    const pendingAndApproved = await LeaveRequest.find({$or: [{status: 'approved'}, {status: 'pending'}]});
+
+    const overlapFound = pendingAndApproved.some(item => {
+        let { start, end } = item;
+        start = moment(start);
+        end = moment(end);
+
+        const overlaps = currentStart.isBefore(end) && start.isBefore(currentEnd);
+
+
+        if (overlaps) {
+            const existing = {
+                message: 'There is a leave-request already created that overlaps with your dates',
+                start,
+                end,
+                status: item.status
+            };
+
+            next(new APIError(JSON.stringify(existing), 400, true));
+            return overlaps;
+        }
+    });
+
+    //stop from saving the request
+    if (overlapFound) {
+        return;
+    }
 
     leave.save()
         .then(savedLeave => {
