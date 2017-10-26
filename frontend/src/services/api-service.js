@@ -6,8 +6,8 @@ import { NotificationService } from 'aurelia-notify';
 @inject(NotificationService)
 export class ApiService {
     constructor(_notify) {
-        // const backendURL = 'http://localhost:4040/api/';
-        const backendURL = 'https://be-leave-tracking.herokuapp.com/api/';
+        const backendURL = 'http://localhost:4040/api/';
+        // const backendURL = 'https://be-leave-tracking.herokuapp.com/api/';
         const that = this;
         this._notify = _notify;
 
@@ -38,7 +38,11 @@ export class ApiService {
     }
 
     handleError(error) {
-        this._notify.danger(`${error.statusCode} | ${error.statusText}`, { timeout: 0 });
+        const response = JSON.parse(error.response);
+
+        const message = response && response.message || '';
+
+        this._notify.danger(`${error.statusCode} | ${error.statusText} | ${message}`, { timeout: 0 });
         return Promise.reject(new Error(error.statusText));
     }
 }
