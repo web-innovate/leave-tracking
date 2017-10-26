@@ -146,13 +146,14 @@ export class AddRequest {
                 workDays: this.dateDiff
             };
 
-            this._leave.addLeaveRequest(leave);
+            this._leave.addLeaveRequest(leave)
+                .then(() => {
+                    this.start = moment().toDate();
+                    this.end = moment().toDate();
+                    this.dateDiff = 0;
 
-            this.start = moment().toDate();
-            this.end = moment().toDate();
-            this.dateDiff = 0;
-
-            this.router.navigate('home');
+                    this.router.navigate('home')
+                });
         }
     }
 
