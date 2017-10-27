@@ -30,7 +30,10 @@ async function create(req, res, next) {
         });
 
     const pendingAndApproved = await LeaveRequest
-        .find({ $or: [{ status: 'approved' }, { status: 'pending' }] });
+        .find({
+            userId: user.id ,
+            $or: [{ status: 'approved' }, { status: 'pending' }]
+        });
 
     const overlapFound = pendingAndApproved.some(item => checkForOverlap(item, leave, next));
 
