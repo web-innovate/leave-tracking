@@ -42,7 +42,7 @@ export default class BaseUser {
 
     async activate(model) {
         this.user = model;
-        Object.assign(this.originalUser, this.user);
+        this.originalUser = JSON.parse(JSON.stringify(this.user));
 
         await this.fetchProjectsData();
     }

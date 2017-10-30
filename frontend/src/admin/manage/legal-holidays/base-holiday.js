@@ -42,8 +42,7 @@ export default class BaseHoliday {
 
     activate(model) {
         this.holiday = model;
-
-        Object.assign(this.originalHoliday, this.holiday);
+        this.originalHoliday = JSON.parse(JSON.stringify(this.holiday));
     }
 
     get canSave() {
