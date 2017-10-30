@@ -1,4 +1,5 @@
 <template>
+    <require from="./view-projects.css"></require>
     <spinner if.bind="loading"></spinner>
 
     <div if.bind="!loading" class="bootcards-list">
@@ -13,7 +14,7 @@
                             </h4>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-8">
                             <p class="list-group-item-text">
                                 ${project.description}
                             </p>
