@@ -1,5 +1,4 @@
 import { inject } from 'aurelia-framework';
-import _ from 'lodash';
 import { ProjectService } from '~/services/project-service';
 import { UserService } from '~/services/user-service';
 import { Router } from 'aurelia-router';
