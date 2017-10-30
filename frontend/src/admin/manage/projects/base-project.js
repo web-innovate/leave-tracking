@@ -39,8 +39,7 @@ export default class BaseProject {
 
     activate(model) {
         this.project = model;
-
-        Object.assign(this.originalProject, this.project);
+        this.originalProject = JSON.parse(JSON.stringify(this.project));
     }
 
     createProject() {
