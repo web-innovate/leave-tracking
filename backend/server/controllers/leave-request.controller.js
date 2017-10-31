@@ -1,6 +1,8 @@
+import _ from 'lodash';
 import moment from 'moment';
 import LeaveRequest from '../models/leave-request.model';
 import User from '../models/user.model';
+import Project from '../models/project.model';
 import worker from '../../worker/worker';
 import APIError from '../helpers/APIError';
 
@@ -151,4 +153,44 @@ function checkForOverlap(item, leave, next) {
     }
 }
 
-export default { load, get, create, update, list, getForUser };
+function pending(req, res, next) {
+    const { user } = req;
+
+    fetchLeaves(user, 'pending')
+        .then(pendingLeaves => res.json(pendingLeaves))
+        .catch(e => next(e));
+}
+
+function approved(req, res, next) {
+    const { user } = req;
+
+    fetchLeaves(user, 'approved')
+        .then(approvedLeaves => res.json(approvedLeaves))
+        .catch(e => next(e));
+}
+
+function rejected(req, res, next) {
+    const { user } = req;
+
+    fetchLeaves(user, 'rejected')
+        .then(rejectedLeaves => res.json(rejectedLeaves))
+        .catch(e => next(e));
+}
+
+async function fetchLeaves(user, status) {
+    const projectsICanApprove = await Project.find({ approvers: { $in: [user.id] } })
+        .then(projects => projects.map(p => p._id));
+
+    let usersICanApprove = await Promise.all(projectsICanApprove.map(async projectId => {
+        const users = await User.find({ projectId })
+            .then(users => users.map(u => u._id));
+
+        return await Promise.all(users);
+    }));
+
+    usersICanApprove = _.flatten(usersICanApprove);
+
+    return LeaveRequest.find({ status, userId: { $in: usersICanApprove } })
+}
+
+export default { load, get, create, update, list, getForUser, pending, approved, rejected };
