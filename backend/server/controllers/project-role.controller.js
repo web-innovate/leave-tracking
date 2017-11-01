@@ -7,7 +7,8 @@ function load(req, res, next, id) {
     ProjectRole.get(id)
         .then((projectRole) => {
             req.projectRole = projectRole;
-            return next();
+            next();
+            return null;
         })
         .catch(e => next(e));
 }

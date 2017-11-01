@@ -6,7 +6,8 @@ function load(req, res, next, id) {
     Project.get(id)
     .then((project) => {
         req.project = project;
-        return next();
+        next();
+        return null;
     })
     .catch(e => next(e));
 }
@@ -64,8 +65,8 @@ async function remove(req, res, next) {
 function getUsers(req, res, next) {
     const { projectId } = req.params;
     User.find({projectId})
-    .then(users => res.json(users))
-    .catch(e => next(e));
+        .then(users => res.json(users))
+        .catch(e => next(e));
 }
 
 async function getApprovers(req, res, next) {

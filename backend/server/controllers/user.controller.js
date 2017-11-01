@@ -6,7 +6,8 @@ function load(req, res, next, id) {
     User.get(id)
     .then((user) => {
         req.user = user;
-        return next();
+        next();
+        return null;
     })
     .catch(e => next(e));
 }

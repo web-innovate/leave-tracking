@@ -4,7 +4,8 @@ function load(req, res, next, id) {
     Holiday.get(id)
     .then((holiday) => {
         req.holiday = holiday;
-        return next();
+        next();
+        return null;
     })
     .catch(e => next(e));
 }
