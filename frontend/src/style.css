@@ -10,6 +10,6 @@ ai-dialog-overlay.active {
     cursor:pointer
 }
 
-.spinner {
+.spinner-wrapper {
     border: none;
 }

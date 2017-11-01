@@ -1,7 +1,7 @@
 <template bindable="requests,loading">
 
     <ul if.bind="loading || !requests.length" class="list-group">
-        <li class="list-group-item spinner">
+        <li class="list-group-item spinner-wrapper">
             <spinner show.bind="loading"></spinner>
             <span show.bind="!loading">You have no requests here !</span>
         </li>
