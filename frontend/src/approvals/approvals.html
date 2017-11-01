@@ -1,53 +1,42 @@
 <template>
-<div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4>Pending for approval requests, only for approvers </h4>
-                    </div>
+    <require from="./requests"></require>
 
-                    <div class="panel-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Your approvals:</h4>
+                </div>
 
-                        <spinner if.bind="!allPendingApprovals.length"></spinner>
+                <div class="panel-body">
+                    <ul  class="nav nav-pills">
+                        <li class="active">
+                            <a  href="#pending" data-toggle="tab">Pending</a>
+                        </li>
+                        <li>
+                            <a href="#approved" data-toggle="tab">Approved</a>
+                        </li>
+                        <li>
+                            <a href="#rejected" data-toggle="tab">Rejected</a>
+                        </li>
+                    </ul>
+                    <hr></hr>
 
-                        <ul class="list-group">
-                            <li repeat.for="request of allPendingApprovals"
-                                class="list-group-item ${request.status | computeBadge}">
-                                 <div
-                                    if.bind="request.status == 'pending'"
-                                    class="btn-group">
+                    <div class="tab-content clearfix">
+                        <div class="tab-pane active" id="pending">
+                            <requests requests.bind="allPendingRequests" loading.bind="pendingLoading"></requests>
+                        </div>
 
-                                    <button
-                                        type="button"
-                                        class="btn btn-default dropdown-toggle"
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false">
-                                        Action<span class="caret"></span>
-                                    </button>
+                        <div class="tab-pane" id="approved">
+                            <requests requests.bind="allApprovedRequests" loading.bind="approvedLoading"></requests>
+                        </div>
 
-                                    <ul class="dropdown-menu">
-                                        <li><a click.delegate="approveRequest(request)">Approve</a></li>
-                                        <li><a click.delegate="rejectRequest(request)">Reject</a></li>
-                                    </ul>
-                                </div>
-
-                                ${request.user.fullName} |
-                                <span>
-                                    ${request.workDays} ${request.workDays > 1 ? 'Days' : 'Day'} |
-                                </span>
-                                ${request.start | dateFormat}
-                                <span show.bind="showExtra(request)">
-                                    - ${request.end | dateFormat}
-                                </span>
-                                    | ${request.leaveType | humanizeLeave}
-                                <span if.bind="request.status != 'pending'" class="badge badge-pill">
-                                    ${request.status}
-                                </span>
-                            </li>
-                        </ul>
+                        <div class="tab-pane" id="rejected">
+                            <requests requests.bind="allRejectedRequests" loading.bind="rejectedLoading"></requests>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </template>
