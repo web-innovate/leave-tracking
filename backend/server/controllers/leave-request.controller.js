@@ -178,19 +178,28 @@ function rejected(req, res, next) {
 }
 
 async function fetchLeaves(user, status) {
-    const projectsICanApprove = await Project.find({ approvers: { $in: [user.id] } })
-        .then(projects => projects.map(p => p._id));
+    const projectsQuery = { approvers: { $in: [user.id] } };
+    const projectsICanApprove = await fetchProjects(projectsQuery);
 
     let usersICanApprove = await Promise.all(projectsICanApprove.map(async projectId => {
-        const users = await User.find({ projectId })
-            .then(users => users.map(u => u._id));
-
-        return await Promise.all(users);
+        return await Promise.all(fetchUsers(projectId));
     }));
 
     usersICanApprove = _.flatten(usersICanApprove);
 
-    return LeaveRequest.find({ status, userId: { $in: usersICanApprove } })
+    const leaveQuery = { status, userId: { $in: usersICanApprove } };
+
+    return LeaveRequest.find(leaveQuery);
+}
+
+function fetchUsers(projectId) {
+    return User.find({ projectId })
+        .then(users => users.map(u => u._id));
+}
+
+function fetchProjects(query) {
+    return Project.find(query)
+        .then(projects => projects.map(p => p._id));
 }
 
 export default { load, get, create, update, list, getForUser, pending, approved, rejected };
