@@ -3,6 +3,7 @@ import userRoutes from './user.route';
 import leaveRoutes from './leave-request.route';
 import authRoutes from './auth.route';
 import projectRoutes from './project.route';
+import projectRoleRoutes from './project-role.route';
 import holidayRoutes from './holiday.route';
 
 const router = express.Router();
@@ -14,6 +15,7 @@ router.use('/users', userRoutes);
 router.use('/auth', authRoutes);
 router.use('/leaves', leaveRoutes);
 router.use('/projects', projectRoutes);
+router.use('/project-role', projectRoleRoutes);
 router.use('/holidays', holidayRoutes);
 
 export default router;

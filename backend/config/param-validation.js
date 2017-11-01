@@ -22,6 +22,13 @@ export default {
         }
     },
 
+    createProjectRole: {
+        body: {
+            name: Joi.string().required(),
+            description: Joi.string().required()
+        }
+    },
+
     createLeaveRequest: {
         body: {
             start: Joi.date().required(),
@@ -72,6 +79,13 @@ export default {
         },
         params: {
             projectId: Joi.string().hex().required()
+        }
+    },
+
+    updateProjectRole: {
+        body: {
+            name: Joi.string().required(),
+            description: Joi.string().required()
         }
     },
 
