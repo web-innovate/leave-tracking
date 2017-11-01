@@ -9,3 +9,7 @@ ai-dialog-overlay.active {
 .admin-card {
     cursor:pointer
 }
+
+.spinner-wrapper {
+    border: none;
+}

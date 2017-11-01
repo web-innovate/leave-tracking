@@ -72,21 +72,16 @@ export class LeaveService {
         return this.http.post('leaves', leave);
     }
 
-    getApprovedLeaves() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(this.approvedLeaves);
-            }, 500)
-        })
+    getPendingRequests() {
+        return this.fetch('leaves/pending');
     }
 
-    getPendingApprovals() {
-        //todo send filtering params to leaves
-        return this.http.get('leaves')
-            .then(res => {
-                return JSON.parse(res.response)
-                    .filter(item => item.status === REQUEST_STATUS.PENDING)
-            });
+    getApprovedRequests() {
+        return this.fetch('leaves/approved');
+    }
+
+    getRejectedRequests() {
+        return this.fetch('leaves/rejected');
     }
 
     updateLeaveRequestStatus(request, status) {
@@ -95,5 +90,10 @@ export class LeaveService {
             .then(res => {
                 console.log('the response', JSON.parse(res.response));
             });
+    }
+
+    fetch(endpoint) {
+        return this.http.get(endpoint)
+            .then(res => JSON.parse(res.response));
     }
 }
