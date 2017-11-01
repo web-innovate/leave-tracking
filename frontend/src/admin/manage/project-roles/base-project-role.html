@@ -5,16 +5,16 @@
 
     <form if.bind="!loading" submit.delegate="submit()" class="form-horizontal">
         <div class="form-group">
-            <label class="col-xs-3 control-label">Project name</label>
+            <label class="col-xs-3 control-label">Project role name</label>
             <div class="col-xs-9">
-                <input type="text" class="form-control" value.bind="project.name & validate">
+                <input type="text" class="form-control" value.bind="projectRole.name & validate">
             </div>
         </div>
 
         <div class="form-group">
-            <label class="col-xs-3 control-label">Project description</label>
+            <label class="col-xs-3 control-label">Project role description</label>
             <div class="col-xs-9">
-                <input type="text" class="form-control" value.bind="project.description & validate">
+                <input type="text" class="form-control" value.bind="projectRole.description & validate">
             </div>
         </div>
 
@@ -22,7 +22,7 @@
             <button type="submit" disabled.bind="canSave" class="btn btn-primary">
                 ${ctaButtonLabel}
             </button>
-            <button if.bind="isEdit" click.delegate="deleteProject()" class="btn btn-danger">
+            <button if.bind="isEdit" click.delegate="deleteProjectRole()" class="btn btn-danger">
                 Delete
             </button>
         </div>

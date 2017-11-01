@@ -1,6 +1,5 @@
 import { inject } from 'aurelia-framework';
 import { ProjectRoleService } from '~/services/project-role-service';
-import { UserService } from '~/services/user-service';
 import { Router } from 'aurelia-router';
 import {
     ValidationRules,
@@ -10,12 +9,12 @@ import {
 import { BootstrapFormRenderer } from '~/components/validation/bootstrap-form-renderer';
 import { compareObjects, setupValidationControllers } from '~/util/utils';
 
-@inject(ProjectRoleService, UserService, Router, ValidationControllerFactory)
+@inject(ProjectRoleService, Router, ValidationControllerFactory)
 export default class BaseProjectRole {
-    constructor(_project, _user, router, controllerFactory) {
-        this._project = _project;
+    constructor(_projectRole, router, controllerFactory) {
+        this._projectRole = _projectRole;
         this.router = router;
-        this.originalProject = {};
+        this.originalProjectRole = {};
 
         setupValidationControllers(controllerFactory, BootstrapFormRenderer, this, validateTrigger);
     }
@@ -26,31 +25,31 @@ export default class BaseProjectRole {
                 .required()
             .ensure('description')
                 .required()
-            .on(this.project);
+            .on(this.projectRole);
     }
 
     get canSave() {
-        return compareObjects(this.project, this.originalProject);
+        return compareObjects(this.projectRole, this.originalProjectRole);
     }
 
     activate(model) {
-        this.project = model;
-        this.originalProject = JSON.parse(JSON.stringify(this.project));
+        this.projectRole = model;
+        this.originalProjectRole = JSON.parse(JSON.stringify(this.projectRole));
     }
 
-    createProject() {
-        this._project.createProject(this.project)
+    createProjectRole() {
+        this._projectRole.createProjectRole(this.projectRole)
             .then(() => this.redirect());
     }
 
 
-    saveProject() {
-        this._project.updateProject(this.project)
+    saveProjectRole() {
+        this._projectRole.updateProjectRole(this.projectRole)
             .then(() => this.redirect());
     }
 
-    deleteProject() {
-        this._project.deleteProject(this.project._id)
+    deleteProjectRole() {
+        this._projectRole.deleteProjectRole(this.projectRole._id)
             .then(() => this.redirect());
     }
 
@@ -60,6 +59,6 @@ export default class BaseProjectRole {
 
     submit() {
         return this.controller.validate()
-            .then(result => result.valid && this.project.submit());
+            .then(result => result.valid && this.projectRole.submit());
     }
 }

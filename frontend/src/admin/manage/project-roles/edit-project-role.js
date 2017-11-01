@@ -5,10 +5,9 @@ export class EditProjectRole extends BaseProjectRole {
 
     async activate(params) {
         const { projectRoleId } = params;
-        const project = await this._project.getProject(projectRoleId);
+        this.projectRole = await this._projectRole.getProjectRole(projectRoleId);
 
-        this.project = project;
-        this.project.submit = this.saveProject.bind(this);
+        this.projectRole.submit = this.saveProjectRole.bind(this);
 
         this.setTemplateParams();
     }

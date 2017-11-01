@@ -1,14 +1,14 @@
 import BaseProjectRole from './base-project-role';
 
 export class CreateProjectRole extends BaseProjectRole {
-    project = {
+    projectRole = {
         name: '',
         description: ''
     };
 
     activate() {
         this.setTemplateParams();
-        this.project.submit = this.createProject.bind(this);
+        this.projectRole.submit = this.createProjectRole.bind(this);
     }
 
     setTemplateParams() {
