@@ -4,12 +4,12 @@ import { REQUEST_STATUS } from '~/util/constants';
 
 @inject(LeaveService)
 export class Requests {
-  @bindable requests = [];
-  @bindable loading = false;
+    @bindable requests = [];
+    @bindable loading = false;
 
-  constructor(_leave){
-    this._leave = _leave;
-  }
+    constructor(_leave){
+        this._leave = _leave;
+    }
 
     approveRequest(request) {
         return this._leave.updateLeaveRequestStatus(request, REQUEST_STATUS.APPROVED);
