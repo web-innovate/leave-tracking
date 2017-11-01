@@ -1,0 +1,30 @@
+<template>
+    <require from="../../../components/type-ahead"></require>
+
+    <spinner if.bind="loading"></spinner>
+
+    <form if.bind="!loading" submit.delegate="submit()" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Project name</label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" value.bind="project.name & validate">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Project description</label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" value.bind="project.description & validate">
+            </div>
+        </div>
+
+        <div class="input-group pull-right">
+            <button type="submit" disabled.bind="canSave" class="btn btn-primary">
+                ${ctaButtonLabel}
+            </button>
+            <button if.bind="isEdit" click.delegate="deleteProject()" class="btn btn-danger">
+                Delete
+            </button>
+        </div>
+    </form>
+</template>

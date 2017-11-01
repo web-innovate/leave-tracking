@@ -28,7 +28,7 @@ async function create(req, res, next) {
 }
 
 function update(req, res, next) {
-    const projectRole = req.project;
+    const projectRole = req.projectRole;
     projectRole.name = req.body.name;
     projectRole.description = req.body.description;
 

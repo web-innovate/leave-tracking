@@ -15,7 +15,7 @@ router.use('/users', userRoutes);
 router.use('/auth', authRoutes);
 router.use('/leaves', leaveRoutes);
 router.use('/projects', projectRoutes);
-router.use('/project-role', projectRoleRoutes);
+router.use('/project-roles', projectRoleRoutes);
 router.use('/holidays', holidayRoutes);
 
 export default router;

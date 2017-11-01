@@ -46,6 +46,17 @@ export class Admin {
                 auth: true
             },
             {
+                route: ['project-roles'],
+                name: 'project-roles',
+                moduleId: './manage/project-roles/manage-project-roles',
+                nav: true,
+                title:'Manage Project Roles',
+                settings: {
+                    icon: 'time'
+                },
+                auth: true
+            },
+            {
                 route: ['holidays'],
                 name: 'holidays',
                 moduleId: './manage/legal-holidays/manage-holidays',

@@ -1,0 +1,10 @@
+.list-group-item-heading {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list-group-item-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 20px;
+}

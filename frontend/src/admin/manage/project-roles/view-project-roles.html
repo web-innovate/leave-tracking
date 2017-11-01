@@ -1,0 +1,27 @@
+<template>
+    <require from="./view-project-roles.css"></require>
+    <spinner if.bind="loading"></spinner>
+
+    <div if.bind="!loading" class="bootcards-list">
+        <div class="panel panel-default">
+            <div class="list-group" >
+                <a class="list-group-item" repeat.for="project of projects"
+                    href="#/admin/project-roles/${project._id}/edit">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h4 class="list-group-item-heading">
+                                ${project.name}
+                            </h4>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <p class="list-group-item-text">
+                                ${project.description}
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</template>
