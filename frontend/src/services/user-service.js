@@ -26,10 +26,7 @@ export class UserService {
 
     getUser(id) {
         return this.http.get(`users/${id}`)
-            .then(users => {
-                users = JSON.parse(users.response);
-                return  new UserModel(users);
-            });
+            .then(user => new UserModel(user));
     }
 
     async currentUser() {
@@ -51,16 +48,12 @@ export class UserService {
     async getLeaves() {
         const me = await this.currentUser();
 
-        return this.http.get(`users/${me._id}/leaves`)
-            .then(res => JSON.parse(res.response));
+        return this.http.get(`users/${me._id}/leaves`);
     }
 
     getUsers() {
         return this.http.get('users')
-            .then(users => {
-                users = JSON.parse(users.response);
-                return users.map(x => new UserModel(x));
-            });
+            .then(users => users.map(x => new UserModel(x)));
     }
 
     getQueryParams(name, type, limit) {
@@ -69,10 +62,7 @@ export class UserService {
 
     searchUser(name, type, limit = 10) {
         return this.http.get(`users?${this.getQueryParams(name, type, limit)}`)
-            .then(users => {
-                users = JSON.parse(users.response);
-                return users.map(x => new UserModel(x));
-            });
+            .then(users => users.map(x => new UserModel(x)));
     }
 
     searchUserByName(name) {

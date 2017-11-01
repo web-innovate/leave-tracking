@@ -22,8 +22,8 @@ export class AuthService {
     **/
     login(email, password) {
         return this.http.post('auth/login', {email, password})
-            .then(res => {
-                const { token } = JSON.parse(res.response);
+            .then(response => {
+                const { token } = response;
 
                 this._api.attachToken(token);
                 localStorage.setItem('token', token);
@@ -47,8 +47,8 @@ export class AuthService {
 
     me() {
         return this.http.get('auth/me')
-            .then(res => {
-                const meData = new UserModel(JSON.parse(res.response));
+            .then(response => {
+                const meData = new UserModel(response);
                 localStorage.setItem('me', JSON.stringify(meData))
                 return meData;
             })

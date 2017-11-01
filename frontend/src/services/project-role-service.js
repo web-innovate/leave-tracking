@@ -10,30 +10,22 @@ export class ProjectRoleService {
     }
 
     createProjectRole(projectRole) {
-        return this.http.post('project-roles', projectRole)
-            .then(res => this.toJson(res.response));
+        return this.http.post('project-roles', projectRole);
     }
 
     getProjectRoles() {
-        return this.http.get('project-roles')
-            .then(res => this.toJson(res.response));
+        return this.http.get('project-roles');
     }
 
     getProjectRole(id) {
-        return this.http.get(`project-roles/${id}`)
-            .then(res => this.toJson(res.response));
+        return this.http.get(`project-roles/${id}`);
     }
 
     deleteProjectRole(id) {
-        return this.http.delete(`project-roles/${id}`)
-            .then(res => this.toJson(res.response));
+        return this.http.delete(`project-roles/${id}`);
     }
 
     updateProjectRole(projectRole) {
         return this.http.put(`project-roles/${projectRole._id}`, projectRole);
-    }
-
-    toJson(data) {
-        return JSON.parse(data);
     }
 }

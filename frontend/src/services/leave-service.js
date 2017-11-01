@@ -12,8 +12,7 @@ export class LeaveService {
     }
 
     getLeaveRequests() {
-        return this.http.get('leaves')
-            .then(res => JSON.parse(res.response));
+        return this.http.get('leaves');
     }
 
     async getCalendarEvents() {
@@ -86,14 +85,10 @@ export class LeaveService {
 
     updateLeaveRequestStatus(request, status) {
         request.status = status;
-        return this.http.put(`leaves/${request._id}`, request)
-            .then(res => {
-                console.log('the response', JSON.parse(res.response));
-            });
+        return this.http.put(`leaves/${request._id}`, request);
     }
 
     fetch(endpoint) {
-        return this.http.get(endpoint)
-            .then(res => JSON.parse(res.response));
+        return this.http.get(endpoint);
     }
 }
