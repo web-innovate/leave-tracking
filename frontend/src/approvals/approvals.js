@@ -13,13 +13,18 @@ export class Approvals {
         this._leave = _leave;
         this._user = _user;
     }
+
     activate() {
-        this.pendingRequests();
-        this.approvedRequests();
-        this.rejectedRequests();
+        this.fetchRequests();
     }
 
-    async pendingRequests() {
+    fetchRequests() {
+        this.fetchPendingRequests();
+        this.fetchApprovedRequests();
+        this.fetchRejectedRequests();
+    }
+
+    async fetchPendingRequests() {
         let pendingsRequests = await this._leave.getPendingRequests();
 
         pendingsRequests = await this.agregateUserData(pendingsRequests);
@@ -29,7 +34,7 @@ export class Approvals {
     }
 
 
-    async approvedRequests() {
+    async fetchApprovedRequests() {
         let approvedRequests = await this._leave.getApprovedRequests();
 
         approvedRequests = await this.agregateUserData(approvedRequests);
@@ -38,7 +43,7 @@ export class Approvals {
         this.approvedLoading = false;
     }
 
-    async rejectedRequests() {
+    async fetchRejectedRequests() {
         let rejectedRequests = await this._leave.getRejectedRequests();
 
         rejectedRequests = await this.agregateUserData(rejectedRequests);
