@@ -1,5 +1,6 @@
 import Project from '../models/project.model';
 import User from '../models/user.model';
+import APIError from '../helpers/APIError';
 
 function load(req, res, next, id) {
     Project.get(id)
@@ -45,11 +46,19 @@ function list(req, res, next) {
     .catch(e => next(e));
 }
 
-function remove(req, res, next) {
+async function remove(req, res, next) {
     const project = req.project;
-    project.remove()
-    .then(deletedProject => res.json(deletedProject))
-    .catch(e => next(e));
+    const { _id: projectId } = project;
+
+    const assignedUsers = await User.find({ projectId });
+
+    if(assignedUsers && assignedUsers.length > 0) {
+        next(new APIError(`Project is assigned to ${assignedUsers.length} users`, 403, true));
+    } else {
+        project.remove()
+            .then(deletedProject => res.json(deletedProject))
+            .catch(e => next(e));
+    }
 }
 
 function getUsers(req, res, next) {

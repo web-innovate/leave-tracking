@@ -7,7 +7,7 @@
     "url": "???"
   },
   "scripts": {
-    "start": "au build --env dev && node server.js",
+    "start": "au build --env prod && node server.js",
     "dev": "au run --env dev --watch"
   },
   "license": "MIT",

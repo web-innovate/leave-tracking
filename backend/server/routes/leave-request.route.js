@@ -14,6 +14,15 @@ router.route('/')
     .get(leaveCtrl.list)
     .post(validate(paramValidation.createLeaveRequest), leaveCtrl.create);
 
+router.route('/pending')
+    .get(leaveCtrl.pending);
+
+router.route('/approved')
+    .get(leaveCtrl.approved);
+
+router.route('/rejected')
+    .get(leaveCtrl.rejected);
+
 router.route('/:leaveId')
     .get(leaveCtrl.get)
     .put(leaveCtrl.update);
