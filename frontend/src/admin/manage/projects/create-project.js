@@ -3,6 +3,7 @@ import BaseProject from './base-project';
 export class CreateProject extends BaseProject {
     project = {
         approvers: [],
+        roles: [],
         description: '',
         name: ''
     };

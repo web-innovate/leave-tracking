@@ -1,6 +1,5 @@
 import { inject } from 'aurelia-framework';
 import { ApiService } from './api-service';
-import { UserModel } from '~/models/user-model';
 
 @inject(ApiService)
 export class ProjectRoleService {
@@ -23,6 +22,10 @@ export class ProjectRoleService {
 
     deleteProjectRole(id) {
         return this.http.delete(`project-roles/${id}`);
+    }
+
+    searchProjectRoleByName(projectRoleName) {
+        return this.http.get(`project-roles?name=${projectRoleName}`);
     }
 
     updateProjectRole(projectRole) {
