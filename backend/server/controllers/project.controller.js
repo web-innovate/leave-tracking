@@ -4,12 +4,12 @@ import APIError from '../helpers/APIError';
 
 function load(req, res, next, id) {
     Project.get(id)
-    .then((project) => {
-        req.project = project;
-        next();
-        return null;
-    })
-    .catch(e => next(e));
+        .then((project) => {
+            req.project = project;
+            next();
+            return null;
+        })
+        .catch(e => next(e));
 }
 
 function get(req, res) {
@@ -19,6 +19,7 @@ function get(req, res) {
 async function create(req, res, next) {
     const project = new Project({
         approvers: req.body.approvers,
+        roles: req.body.roles,
         name: req.body.name,
         description: req.body.description,
     });
@@ -32,19 +33,20 @@ function update(req, res, next) {
     const project = req.project;
     project.approvers = req.body.approvers;
     project.name = req.body.name;
+    project.roles = req.body.roles;
     project.description = req.body.description;
 
 
     project.save()
-    .then(savedProject => res.json(savedProject))
-    .catch(e => next(e));
+        .then(savedProject => res.json(savedProject))
+        .catch(e => next(e));
 }
 
 function list(req, res, next) {
     const { limit = 50, skip = 0 } = req.query;
     Project.list({ limit, skip })
-    .then(projects => res.json(projects))
-    .catch(e => next(e));
+        .then(projects => res.json(projects))
+        .catch(e => next(e));
 }
 
 async function remove(req, res, next) {
