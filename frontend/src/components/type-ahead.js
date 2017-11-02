@@ -43,6 +43,9 @@ export class TypeAhead {
 
     onSelect(item) {
         const obj = {};
+        if (item == null) {
+            return;
+        }
         obj[this.field] = item[this.field];
         const indx = _.findIndex(this.selectedData, obj);
 

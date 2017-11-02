@@ -32,6 +32,20 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Project Roles</label>
+            <div class="col-xs-3">
+                <type-ahead
+                        field="_id"
+                        placeholder="Search for roles ..."
+                        display-name="name"
+                        results.two-way="project.roles & validate"
+                        results-resolver.bind="getProjectRole"
+                        data-source.bind="projectRoleSource">
+                </type-ahead>
+            </div>
+        </div>
+
         <div class="input-group pull-right">
             <button type="submit" disabled.bind="canSave" class="btn btn-primary">
                 ${ctaButtonLabel}

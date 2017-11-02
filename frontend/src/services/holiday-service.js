@@ -9,30 +9,22 @@ export class HolidayService {
     }
 
     createHoliday(holiday) {
-        return this.http.post('holidays', holiday)
-            .then(res => this.toJson(res.response));
+        return this.http.post('holidays', holiday);
     }
 
     getHolidays() {
-        return this.http.get('holidays')
-            .then(res => this.toJson(res.response));
+        return this.http.get('holidays');
     }
 
     getHoliday(id) {
-        return this.http.get(`holidays/${id}`)
-            .then(res => this.toJson(res.response));
+        return this.http.get(`holidays/${id}`);
     }
 
     deleteHoliday(id) {
-        return this.http.delete(`holidays/${id}`)
-            .then(res => this.toJson(res.response));
+        return this.http.delete(`holidays/${id}`);
     }
 
     updateHoliday(holiday) {
         return this.http.put(`holidays/${holiday._id}`, holiday);
-    }
-
-    toJson(data) {
-        return JSON.parse(data);
     }
 }

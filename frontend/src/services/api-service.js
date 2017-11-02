@@ -15,6 +15,7 @@ export class ApiService {
             x.withHeader('Content-Type', 'application/json');
             x.withBaseUrl(backendURL);
             x.withInterceptor({
+                response(httpResponse) { return that.handleResponse(httpResponse); },
                 requestError(error) { return that.handleError(error); },
                 responseError(error) { return that.handleError(error); }
             });
@@ -44,5 +45,15 @@ export class ApiService {
 
         this._notify.danger(`${error.statusCode} | ${error.statusText} | ${message}`, { timeout: 0 });
         return Promise.reject(new Error(error.statusText));
+    }
+
+    handleResponse(httpResponse) {
+        const { response } = httpResponse;
+
+        if (response) {
+            return JSON.parse(response)
+        }
+
+        return httpResponse;
     }
 }

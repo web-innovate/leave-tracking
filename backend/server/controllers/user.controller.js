@@ -4,11 +4,12 @@ import _ from 'lodash';
 
 function load(req, res, next, id) {
     User.get(id)
-    .then((user) => {
-        req.user = user;
-        return next();
-    })
-    .catch(e => next(e));
+        .then((user) => {
+            req.user = user;
+            next();
+            return null;
+        })
+        .catch(e => next(e));
 }
 
 function get(req, res) {
@@ -29,12 +30,12 @@ function create(req, res, next) {
     });
 
     user.save()
-      .then(user => {
-          worker.queueNewUser(user.toObject());
-          return user;
-      })
-      .then(savedUser => res.json(savedUser))
-      .catch(e => next(e));
+        .then(user => {
+            worker.queueNewUser(user.toObject());
+            return user;
+        })
+        .then(savedUser => res.json(savedUser))
+        .catch(e => next(e));
 }
 
 function update(req, res, next) {
@@ -103,8 +104,8 @@ function computeFilterFields(name, fields) {
 function remove(req, res, next) {
     const user = req.user;
     user.remove()
-      .then(deletedUser => res.json(deletedUser))
-      .catch(e => next(e));
+        .then(deletedUser => res.json(deletedUser))
+        .catch(e => next(e));
 }
 
 export default { load, get, create, update, list, remove };

@@ -16,6 +16,8 @@ export class EditUser extends BaseUser {
         const user = await this._user.getUser(params.userId);
         this.user = user;
         this.user.submit = this.save.bind(this);
+
+        await this.fetchProjectRoles(this.user.projectId);
     }
 
     async delete() {

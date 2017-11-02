@@ -3,22 +3,14 @@ import mongoose from 'mongoose';
 import httpStatus from 'http-status';
 import APIError from '../helpers/APIError';
 
-const ProjectSchema = new mongoose.Schema({
+const ProjectRoleSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
         index: { unique: true }
     },
-    approvers: {
-        type: [ String ],
-        required: true
-    },
     description: {
         type: String,
-        required: true
-    },
-    roles: {
-        type: [ String ],
         required: true
     },
     createdAt: {
@@ -27,24 +19,24 @@ const ProjectSchema = new mongoose.Schema({
     }
 });
 
-ProjectSchema.method({
+ProjectRoleSchema.method({
 });
 
-ProjectSchema.statics = {
+ProjectRoleSchema.statics = {
     get(id) {
         return this.findById(id)
             .exec()
-            .then((project) => {
-                if (project) {
-                    return project;
+            .then((projectRole) => {
+                if (projectRole) {
+                    return projectRole;
                 }
-                const err = new APIError('No such project exists!', httpStatus.NOT_FOUND, true);
+                const err = new APIError(`No such project-role with id '${id}'exists!`, httpStatus.NOT_FOUND, true);
                 return Promise.reject(err);
             });
     },
 
-    list({ skip = 0, limit = 50 } = {}) {
-        return this.find()
+    list({ skip = 0, limit = 50, extra = {} } = {}) {
+        return this.find(extra)
             .sort({ createdAt: -1 })
             .skip(+skip)
             .limit(+limit)
@@ -52,4 +44,4 @@ ProjectSchema.statics = {
     }
 };
 
-export default mongoose.model('Project', ProjectSchema);
+export default mongoose.model('ProjectRole', ProjectRoleSchema);

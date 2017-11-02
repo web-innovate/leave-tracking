@@ -10,7 +10,8 @@ function load(req, res, next, id) {
     LeaveRequest.get(id)
         .then((leaveRequest) => {
             req.leaveRequest = leaveRequest;
-            return next();
+            next();
+            return null;
         })
         .catch(e => next(e));
 }

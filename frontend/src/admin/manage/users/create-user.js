@@ -1,6 +1,7 @@
 import BaseUser from './base-user';
 
 export class CreateUser extends BaseUser {
+    roles = [];
     user = {
             firstName: '',
             lastName: '',
