@@ -40,8 +40,14 @@ function update(req, res, next) {
 }
 
 function list(req, res, next) {
-    const { limit = 50, skip = 0 } = req.query;
-    ProjectRole.list({ limit, skip })
+    const { limit = 50, skip = 0, name } = req.query;
+    const query = { limit, skip, extra: {} };
+
+    if (name && name !== '') {
+        query.extra = { name: { $regex: name, $options: 'i' } };
+    }
+
+    ProjectRole.list(query)
         .then(projectRoles => res.json(projectRoles))
         .catch(e => next(e));
 }
