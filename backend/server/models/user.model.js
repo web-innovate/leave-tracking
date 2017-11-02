@@ -62,37 +62,37 @@ UserSchema.method({
 UserSchema.statics = {
     get(id) {
         return this.findById(id)
-        .exec()
-        .then((user) => {
-            if (user) {
-                return user;
-            }
-            const err = new APIError('No such user exists!', httpStatus.NOT_FOUND, true);
-            return Promise.reject(err);
-        });
+            .exec()
+            .then((user) => {
+                if (user) {
+                    return user;
+                }
+                const err = new APIError('No such user exists!', httpStatus.NOT_FOUND, true);
+                return Promise.reject(err);
+            });
     },
 
     findByEmailAndPassword(email, password) {
         email = email.toLowerCase();
 
         return this.findOne({ email, password })
-        .exec()
-        .then(user => {
-            if(user) {
-                return user;
-            }
+            .exec()
+            .then(user => {
+                if(user) {
+                    return user;
+                }
 
-            const err = new APIError('Bad credentials', httpStatus.NOT_FOUND, true);
-            return Promise.reject(err);
-        });
+                const err = new APIError('Bad credentials', httpStatus.NOT_FOUND, true);
+                return Promise.reject(err);
+            });
     },
 
     list({ skip = 0, limit = 50, extra = {} } = {}) {
         return this.find(extra)
-        .sort({ createdAt: -1 })
-        .skip(+skip)
-        .limit(+limit)
-        .exec();
+            .sort({ createdAt: -1 })
+            .skip(+skip)
+            .limit(+limit)
+            .exec();
     }
 };
 

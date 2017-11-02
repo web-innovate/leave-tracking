@@ -46,22 +46,22 @@ LeaveRequestSchema.method({
 LeaveRequestSchema.statics = {
     get(id) {
         return this.findById(id)
-        .exec()
-        .then((leaveRequest) => {
-            if (leaveRequest) {
-                return leaveRequest;
-            }
-            const err = new APIError('No such LeaveRequest', httpStatus.NOT_FOUND, true);
-            return Promise.reject(err);
-        });
+            .exec()
+            .then((leaveRequest) => {
+                if (leaveRequest) {
+                    return leaveRequest;
+                }
+                const err = new APIError('No such LeaveRequest', httpStatus.NOT_FOUND, true);
+                return Promise.reject(err);
+            });
     },
 
     list({ skip = 0, limit = 50 } = {}) {
         return this.find()
-        .sort({ createdAt: -1 })
-        .skip(+skip)
-        .limit(+limit)
-        .exec();
+            .sort({ createdAt: -1 })
+            .skip(+skip)
+            .limit(+limit)
+            .exec();
     }
 };
 

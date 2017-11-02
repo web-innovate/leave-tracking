@@ -25,22 +25,22 @@ ProjectRoleSchema.method({
 ProjectRoleSchema.statics = {
     get(id) {
         return this.findById(id)
-        .exec()
-        .then((projectRole) => {
-            if (projectRole) {
-                return projectRole;
-            }
-            const err = new APIError(`No such project-role with id '${id}'exists!`, httpStatus.NOT_FOUND, true);
-            return Promise.reject(err);
-        });
+            .exec()
+            .then((projectRole) => {
+                if (projectRole) {
+                    return projectRole;
+                }
+                const err = new APIError(`No such project-role with id '${id}'exists!`, httpStatus.NOT_FOUND, true);
+                return Promise.reject(err);
+            });
     },
 
     list({ skip = 0, limit = 50 } = {}) {
         return this.find()
-        .sort({ createdAt: -1 })
-        .skip(+skip)
-        .limit(+limit)
-        .exec();
+            .sort({ createdAt: -1 })
+            .skip(+skip)
+            .limit(+limit)
+            .exec();
     }
 };
 

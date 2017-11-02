@@ -29,22 +29,22 @@ HolidaySchema.method({
 HolidaySchema.statics = {
     get(id) {
         return this.findById(id)
-        .exec()
-        .then((holiday) => {
-            if (holiday) {
-                return holiday;
-            }
-            const err = new APIError('No such Holiday exists!', httpStatus.NOT_FOUND, true);
-            return Promise.reject(err);
-        });
+            .exec()
+            .then((holiday) => {
+                if (holiday) {
+                    return holiday;
+                }
+                const err = new APIError('No such Holiday exists!', httpStatus.NOT_FOUND, true);
+                return Promise.reject(err);
+            });
     },
 
     list({ skip = 0, limit = 50 } = {}) {
         return this.find()
-        .sort({ createdAt: -1 })
-        .skip(+skip)
-        .limit(+limit)
-        .exec();
+            .sort({ createdAt: -1 })
+            .skip(+skip)
+            .limit(+limit)
+            .exec();
     }
 };
 

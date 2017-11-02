@@ -33,22 +33,22 @@ ProjectSchema.method({
 ProjectSchema.statics = {
     get(id) {
         return this.findById(id)
-        .exec()
-        .then((project) => {
-            if (project) {
-                return project;
-            }
-            const err = new APIError('No such project exists!', httpStatus.NOT_FOUND, true);
-            return Promise.reject(err);
-        });
+            .exec()
+            .then((project) => {
+                if (project) {
+                    return project;
+                }
+                const err = new APIError('No such project exists!', httpStatus.NOT_FOUND, true);
+                return Promise.reject(err);
+            });
     },
 
     list({ skip = 0, limit = 50 } = {}) {
         return this.find()
-        .sort({ createdAt: -1 })
-        .skip(+skip)
-        .limit(+limit)
-        .exec();
+            .sort({ createdAt: -1 })
+            .skip(+skip)
+            .limit(+limit)
+            .exec();
     }
 };
 

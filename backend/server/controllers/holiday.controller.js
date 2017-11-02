@@ -22,8 +22,8 @@ function create(req, res, next) {
     });
 
     holiday.save()
-    .then(savedHoliday => res.json(savedHoliday))
-    .catch(e => next(e));
+        .then(savedHoliday => res.json(savedHoliday))
+        .catch(e => next(e));
 }
 
 function update(req, res, next) {
