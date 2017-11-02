@@ -67,7 +67,7 @@
         <div class="form-group">
             <label class="col-xs-3 control-label">Position</label>
             <div class="col-xs-9">
-                <select disable="true" class="form-control" value.bind="user.position & validate">
+                <select class="form-control" value.bind="user.position & validate">
                     <option selected>None</option>
                     <option repeat.for="role of roles" value.bind="role._id">${role.name}</option>
                 </select>
