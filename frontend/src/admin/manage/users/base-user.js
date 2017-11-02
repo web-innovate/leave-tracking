@@ -1,8 +1,8 @@
-
 import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { UserService } from '~/services/user-service';
 import { ProjectService } from '~/services/project-service';
+import { ProjectRoleService } from '~/services/project-role-service';
 import {
     ValidationRules,
     ValidationControllerFactory,
@@ -10,13 +10,18 @@ import {
 } from 'aurelia-validation';
 import { BootstrapFormRenderer } from '~/components/validation/bootstrap-form-renderer';
 import { compareObjects, setupValidationControllers } from '~/util/utils';
+import { MultiObserver } from '~/util/multi-observer';
 
-@inject(UserService, ProjectService, Router, ValidationControllerFactory)
+let attachObserver = true;
+
+@inject(UserService, ProjectService, ProjectRoleService, Router, ValidationControllerFactory, MultiObserver)
 export default class BaseUser {
-    constructor(_user, _project, router, controllerFactory) {
+    constructor(_user, _project, _projectRole, router, controllerFactory, _observe) {
         this._user = _user;
         this._project = _project;
+        this._projectRole = _projectRole;
         this.router = router;
+        this._observe = _observe;
         this.originalUser = {};
 
         setupValidationControllers(controllerFactory, BootstrapFormRenderer, this, validateTrigger);
@@ -34,6 +39,18 @@ export default class BaseUser {
             .ensure('userType').required().satisfiesRule('otherThan', 'None')
             .ensure('projectId').required().satisfiesRule('otherThan', 'None')
             .on(this.user);
+
+        if (attachObserver) {
+            attachObserver = false;
+            this._observe.observe([
+                    [this.user, 'projectId']
+                ],
+                projectId => this.fetchProjectRoles(projectId));
+        }
+    }
+
+    unbind() {
+        attachObserver = true;
     }
 
     get canSave() {
@@ -74,5 +91,17 @@ export default class BaseUser {
     submit() {
         return this.controller.validate()
             .then(result => result.valid && this.user.submit());
+    }
+
+    async fetchProjectRoles(projectId) {
+        if (projectId === 'None') {
+            return [];
+        }
+        const { roles }  = await this._project.getProject(projectId);
+
+        const dataRoles = await
+            Promise.all(roles.map(async role => this._projectRole.getProjectRole(role)));
+
+        this.roles = dataRoles;
     }
 }
