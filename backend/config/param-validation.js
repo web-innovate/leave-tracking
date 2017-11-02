@@ -18,6 +18,7 @@ export default {
         body: {
             name: Joi.string().required(),
             description: Joi.string().required(),
+            roles: Joi.array().items(Joi.string()).required(),
             approvers: Joi.array().items(Joi.string()).required()
         }
     },
@@ -75,7 +76,9 @@ export default {
     updateProject: {
         body: {
             name: Joi.string().required(),
-            description: Joi.string().required()
+            description: Joi.string().required(),
+            roles: Joi.array().items(Joi.string()).required(),
+            approvers: Joi.array().items(Joi.string()).required()
         },
         params: {
             projectId: Joi.string().hex().required()
