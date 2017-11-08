@@ -3,6 +3,9 @@ import { REQUEST_STATUS } from '~/util/constants';
 import { ApiService } from './api-service';
 import { UserModel } from '~/models/user-model';
 import { Events } from './events';
+import LogRocket from 'logrocket';
+
+let shouldIdentifyLogRocket = true;
 
 @inject(ApiService, Events)
 export class AuthService {
@@ -28,6 +31,7 @@ export class AuthService {
                 this._api.attachToken(token);
                 localStorage.setItem('token', token);
 
+
                 return this.me();
             });
     }
@@ -42,6 +46,9 @@ export class AuthService {
         if (!token) {
             this._events.ea.publish('no_token', {});
         }
+
+        this.identifyLogRocket();
+
         return !!token;
     }
 
@@ -52,6 +59,22 @@ export class AuthService {
                 localStorage.setItem('me', JSON.stringify(meData))
                 return meData;
             })
+    }
+
+    identifyLogRocket() {
+        if (!shouldIdentifyLogRocket) {
+            return;
+        }
+
+        shouldIdentifyLogRocket = false;
+
+        const me = JSON.parse(localStorage.getItem('me'));
+
+        LogRocket.identify(me._id, {
+            name: `${me.firstName} ${me.lastName}`,
+            email: me.email,
+            userType: me.userType
+        });
     }
 
     localData() {

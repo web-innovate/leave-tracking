@@ -1,6 +1,7 @@
 import environment from '~/environment';
 import moment from 'moment'
 import { setupCustomValidationRules } from '~/components/validation/custom-rules';
+import LogRocket from 'logrocket';
 
 export function configure(aurelia) {
 
@@ -25,5 +26,8 @@ export function configure(aurelia) {
     }
 
     setupCustomValidationRules();
-    aurelia.start().then(() => aurelia.setRoot());
+    aurelia.start().then(() => {
+        LogRocket.init('o8pmf8/leave-tracker');
+        return aurelia.setRoot()
+    });
 }
