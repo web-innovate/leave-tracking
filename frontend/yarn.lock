@@ -3804,6 +3804,10 @@ log4js@^0.6.31:
     readable-stream "~1.0.2"
     semver "~4.3.3"
 
+logrocket@^0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/logrocket/-/logrocket-0.5.6.tgz#0825a3dcdb4f07a5df218784adfdc0c0c9a1f61f"
+
 longest@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
