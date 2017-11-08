@@ -70,6 +70,10 @@ export class AuthService {
 
         const me = JSON.parse(localStorage.getItem('me'));
 
+        if(!me) {
+            return;
+        }
+
         LogRocket.identify(me._id, {
             name: `${me.firstName} ${me.lastName}`,
             email: me.email,

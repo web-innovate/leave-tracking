@@ -9,4 +9,14 @@ function handleNewUsers(params, callback) {
         .catch(err => callback(err));
 }
 
-export default { handleNewUsers };
+function handlePasswordReset(params, callback) {
+    const { email, firstName } = params.user;
+
+    const emailSubject = `${firstName} password reset`;
+
+    smtp.sendMail(email, emailSubject, 'resetPassword', params)
+        .then(info => callback(null, info))
+        .catch(err => callback(err));
+}
+
+export default { handleNewUsers, handlePasswordReset };
