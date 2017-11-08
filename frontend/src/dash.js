@@ -45,8 +45,6 @@ export class Dash {
         const { holidays, taken, pending } = me;
 
         this.statusData.datasets[0].data = [ holidays, taken, pending];
-        console.log('data', this.statusData)
-
     }
 
     showExtra(extra) {
