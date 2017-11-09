@@ -27,7 +27,7 @@ export function configure(aurelia) {
 
     setupCustomValidationRules();
     aurelia.start().then(() => {
-        if (process.env.NODE_ENV === 'production') {
+        if (!environment.debug) {
             LogRocket.init('o8pmf8/leave-tracker');
         }
         return aurelia.setRoot()
