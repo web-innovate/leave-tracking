@@ -48,7 +48,11 @@ export class ForgotPassword {
 
     get canSave() {
         return (this.user.email !== '') ||
-            (this.user.password !== '' && this.user.newPassword !== '' ) &&
+            (
+                this.user.password !== '' &&
+                this.user.newPassword !== '' &&
+                this.user.password === this.user.newPassword
+            ) &&
             this.vCtrl.errors.length === 0;
     }
 
