@@ -24,14 +24,14 @@ const PasswordResetTokenSchema = new mongoose.Schema({
 
 function random(len, charSet) {
     charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var randomString = '';
-    for (var i = 0; i < len; i++) {
-        var randomPoz = Math.floor(Math.random() * charSet.length);
-        randomString += charSet.substring(randomPoz,randomPoz+1);
-    }
-    console.log('the rand', randomString)
-    return randomString;
+    let randomString = '';
 
+    for (let i = 0; i < len; i++) {
+        let randomPoz = Math.floor(Math.random() * charSet.length);
+        randomString += charSet.substring(randomPoz,randomPoz + 1);
+    }
+
+    return randomString;
 }
 
 PasswordResetTokenSchema.method({

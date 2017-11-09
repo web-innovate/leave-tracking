@@ -36,7 +36,7 @@ function me(req, res) {
     });
 }
 
-async function recover(req, res, next) {
+async function recover(req, res) {
     const { email } = req.body;
     const user = await User.findOne({ email });
 
