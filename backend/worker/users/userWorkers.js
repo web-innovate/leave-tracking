@@ -11,6 +11,9 @@ function handleNewUsers(params, callback) {
 
 function handlePasswordReset(params, callback) {
     const { email, firstName } = params.user;
+    const fe_domain = process.env.fe_domain || 'http://localhost:9000';
+
+    params.domain = fe_domain;
 
     const emailSubject = `${firstName} password reset`;
 
