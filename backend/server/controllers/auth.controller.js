@@ -61,8 +61,41 @@ async function recover(req, res) {
 
     worker.queuePasswordReset(data);
 
-    res.json(data);
+    res.json();
 
 }
 
-export default { login, me, recover };
+async function reset(req, res, next) {
+    const { password, confirmPassword, token } = req.body;
+
+    if (password !== confirmPassword) {
+        return next(new APIError('Passwords do not match', httpStatus.BAD_REQUEST, true));
+    }
+
+    const dbToken = await PasswordResetTokenSchema.findOne({ token });
+
+    if(!dbToken) {
+        return next(new APIError('Invalid token', httpStatus.BAD_REQUEST, true));
+    }
+
+    if(dbToken.used) {
+        return next(new APIError('Token was already used', httpStatus.BAD_REQUEST, true));
+    }
+
+    const { userId } = dbToken;
+    const user = await User.findOne({ _id: userId });
+
+    if(!user) {
+        return next(new APIError('User linked to token does not exist', httpStatus.BAD_REQUEST, true));
+    }
+
+    user.password = password;
+    await user.save();
+
+    dbToken.used = true;
+    await dbToken.save();
+
+    res.json();
+}
+
+export default { login, me, recover, reset };

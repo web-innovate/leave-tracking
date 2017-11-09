@@ -13,6 +13,9 @@ router.route('/login')
 router.route('/recover')
     .post(authCtrl.recover);
 
+router.route('/reset')
+    .post(authCtrl.reset);
+
 router.route('/me')
     .get(authorize(), authCtrl.me);
 

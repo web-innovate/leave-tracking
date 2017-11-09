@@ -92,4 +92,12 @@ export class AuthService {
     get isApprover() {
         return (this.localData() && this.localData().userType === 'APPROVER') || false
     }
+
+    recover(email) {
+        return this.http.post('auth/recover', { email });
+    }
+
+    reset(password, confirmPassword, token) {
+        return this.http.post('auth/reset', { password, confirmPassword, token });
+    }
 }
