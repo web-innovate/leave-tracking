@@ -14,6 +14,7 @@ class Worker {
     get PROCESS_EVENTS() {
         return {
             USER: 'process_new_user',
+            PASSWORD_RESET: 'process_password_reset',
             NEW_LEAVE: 'process_new_leave_request',
             APPROVED_LEAVE: 'process_approved_leave_request',
             REJECTED_LEAVE: 'process_rejected_leave_request'
@@ -36,6 +37,12 @@ class Worker {
         const queue = this.client.queue(this.QUEUE_EVENTS.USER);
 
         queue.enqueue(this.PROCESS_EVENTS.USER, data, () => {});
+    }
+
+    queuePasswordReset(data) {
+        const queue = this.client.queue(this.QUEUE_EVENTS.USER);
+
+        queue.enqueue(this.PROCESS_EVENTS.PASSWORD_RESET, data, () => {});
     }
 
     queueNewLeaveRequest(data) {
@@ -65,7 +72,8 @@ class Worker {
         const worker = this.client.worker([this.QUEUE_EVENTS.USER]);
 
         worker.register({
-            process_new_user: userWorkers.handleNewUsers
+            process_new_user: userWorkers.handleNewUsers,
+            process_password_reset: userWorkers.handlePasswordReset
         });
 
         this.workers.push(worker);

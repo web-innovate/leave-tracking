@@ -3,6 +3,8 @@ import httpStatus from 'http-status';
 import APIError from '../helpers/APIError';
 import config from '../../config/config';
 import { UserSchema } from '../models/user.model';
+import worker from '../../worker/worker';
+import PasswordResetTokenSchema from '../models/password-reset-token.model';
 import mongoose from 'mongoose';
 
 const User = mongoose.model('User', UserSchema);
@@ -34,4 +36,66 @@ function me(req, res) {
     });
 }
 
-export default { login, me };
+async function recover(req, res) {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if(!user) {
+        return res.json();
+    }
+
+    let safeUser = user.toObject();
+    delete safeUser.password;
+
+
+    const resetToken = new PasswordResetTokenSchema({
+        userId: safeUser._id,
+        used: false
+    });
+
+
+    const savedToken = await resetToken.save();
+
+
+    const data = { user: safeUser, token: savedToken.toObject() };
+
+    worker.queuePasswordReset(data);
+
+    res.json();
+
+}
+
+async function reset(req, res, next) {
+    const { password, confirmPassword, token } = req.body;
+
+    if (password !== confirmPassword) {
+        return next(new APIError('Passwords do not match', httpStatus.BAD_REQUEST, true));
+    }
+
+    const dbToken = await PasswordResetTokenSchema.findOne({ token });
+
+    if(!dbToken) {
+        return next(new APIError('Invalid token', httpStatus.BAD_REQUEST, true));
+    }
+
+    if(dbToken.used) {
+        return next(new APIError('Token was already used', httpStatus.BAD_REQUEST, true));
+    }
+
+    const { userId } = dbToken;
+    const user = await User.findOne({ _id: userId });
+
+    if(!user) {
+        return next(new APIError('User linked to token does not exist', httpStatus.BAD_REQUEST, true));
+    }
+
+    user.password = password;
+    await user.save();
+
+    dbToken.used = true;
+    await dbToken.save();
+
+    res.json();
+}
+
+export default { login, me, recover, reset };

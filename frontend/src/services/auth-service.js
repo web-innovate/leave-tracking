@@ -70,6 +70,10 @@ export class AuthService {
 
         const me = JSON.parse(localStorage.getItem('me'));
 
+        if(!me) {
+            return;
+        }
+
         LogRocket.identify(me._id, {
             name: `${me.firstName} ${me.lastName}`,
             email: me.email,
@@ -87,5 +91,13 @@ export class AuthService {
 
     get isApprover() {
         return (this.localData() && this.localData().userType === 'APPROVER') || false
+    }
+
+    recover(email) {
+        return this.http.post('auth/recover', { email });
+    }
+
+    reset(password, confirmPassword, token) {
+        return this.http.post('auth/reset', { password, confirmPassword, token });
     }
 }

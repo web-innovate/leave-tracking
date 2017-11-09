@@ -10,6 +10,12 @@ const { authorize } = expressAuth;
 router.route('/login')
     .post(validate(paramValidation.login), authCtrl.login);
 
+router.route('/recover')
+    .post(authCtrl.recover);
+
+router.route('/reset')
+    .post(authCtrl.reset);
+
 router.route('/me')
     .get(authorize(), authCtrl.me);
 

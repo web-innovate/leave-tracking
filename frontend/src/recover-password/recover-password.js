@@ -48,20 +48,36 @@ export class ForgotPassword {
 
     get canSave() {
         return (this.user.email !== '') ||
-            (this.user.password !== '' && this.user.newPassword !== '' ) &&
+            (
+                this.user.password !== '' &&
+                this.user.newPassword !== '' &&
+                this.user.password === this.user.newPassword
+            ) &&
             this.vCtrl.errors.length === 0;
     }
 
-    recoverPassword() {
+    async recoverPassword() {
         if (this.recoverKey) {
-            // call the set passwod api
-            this._notify.info('Your password has been set',
-                        { containerSelector: '#loginForm', limit: 1 })
+            const { password, newPassword } = this.user;
+
+            this._auth.reset(password, newPassword, this.recoverKey)
+                .then(() => {
+                    this._notify.info('Your password has been set',
+                        { containerSelector: '#loginForm', limit: 1 });
+                    this.redirect();
+                })
+                .catch(() =>
+                    this._notify.danger('Your password could not be set',
+                        { containerSelector: '#loginForm', limit: 1 }));
         } else {
-            // call the reset passwd api
+            await this._auth.recover(this.user.email);
             this._notify.info('An email with the instructions will be sent.',
                         { containerSelector: '#loginForm', limit: 1 })
+            this.redirect();
         }
-        setTimeout(() => this.router.navigate('login'), 6000)
+    }
+
+    redirect() {
+        setTimeout(() => this.router.navigate('login'), 6000);
     }
 }
