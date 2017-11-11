@@ -1,94 +1,88 @@
 import Joi from 'joi';
 
+const userValidations = {
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
+    email: Joi.string().required(),
+    password: Joi.string().required(),
+    holidays: Joi.number().required(),
+    position: Joi.string().allow('').optional(),
+    projectId: Joi.string().allow('').hex().optional(),
+    userType: Joi.string().required()
+};
+
+const projectValidations = {
+    name: Joi.string().required(),
+    description: Joi.string().required(),
+    roles: Joi.array().items(Joi.string()).required(),
+    approvers: Joi.array().items(Joi.string()).required()
+};
+
+const projectRoleValidations = {
+    name: Joi.string().required(),
+    description: Joi.string().required()
+};
+
+const holidayValidations = {
+    name: Joi.string().required(),
+    description: Joi.string().required(),
+    date: Joi.date().required()
+};
+
+const leaveRequestValidations = {
+    start: Joi.date().required(),
+    end: Joi.date().required(),
+    leaveType: Joi.string().required(),
+    status: Joi.string().required()
+};
+
+const isObjectId = Joi.string().hex().required();
+
 export default {
     createUser: {
-        body: {
-            firstName: Joi.string().required(),
-            lastName: Joi.string().required(),
-            email: Joi.string().required(),
-            password: Joi.string().required(),
-            holidays: Joi.number().required(),
-            position: Joi.string().required(),
-            projectId: Joi.string().hex().required(),
-            userType: Joi.string().required()
+        body: userValidations
+    },
+
+    updateUser: {
+        body: userValidations,
+        params: {
+            userId: isObjectId
         }
     },
 
     createProject: {
-        body: {
-            name: Joi.string().required(),
-            description: Joi.string().required(),
-            roles: Joi.array().items(Joi.string()).required(),
-            approvers: Joi.array().items(Joi.string()).required()
+        body: projectValidations
+    },
+
+    updateProject: {
+        body: projectValidations,
+        params: {
+            projectId: isObjectId
         }
     },
 
     createProjectRole: {
-        body: {
-            name: Joi.string().required(),
-            description: Joi.string().required()
+        body: projectRoleValidations
+    },
+
+    updateProjectRole: {
+        body: projectRoleValidations,
+        params: {
+            projectRoleId: isObjectId
         }
     },
 
     createLeaveRequest: {
-        body: {
-            start: Joi.date().required(),
-            end: Joi.date().required(),
-            leaveType: Joi.string().required(),
-            status: Joi.string().required()
-        }
+        body: leaveRequestValidations
     },
     createHoliday: {
-        body: {
-            name: Joi.string().required(),
-            description: Joi.string().required(),
-            date: Joi.date().required()
-        }
+        body: holidayValidations
     },
 
     updateHoliday: {
-        body: {
-            name: Joi.string().required(),
-            description: Joi.string().required(),
-            date: Joi.date().required()
-        },
+        body: holidayValidations,
         params: {
-            holidayId: Joi.string().hex().required()
-        }
-    },
-
-    updateUser: {
-        body: {
-            firstName: Joi.string().required(),
-            lastName: Joi.string().required(),
-            email: Joi.string().required(),
-            password: Joi.string().required(),
-            holidays: Joi.number().required(),
-            position: Joi.string().required(),
-            projectId: Joi.string().hex().required(),
-            userType: Joi.string().required()
-        },
-        params: {
-            userId: Joi.string().hex().required()
-        }
-    },
-
-    updateProject: {
-        body: {
-            name: Joi.string().required(),
-            description: Joi.string().required(),
-            roles: Joi.array().items(Joi.string()).required(),
-            approvers: Joi.array().items(Joi.string()).required()
-        },
-        params: {
-            projectId: Joi.string().hex().required()
-        }
-    },
-
-    updateProjectRole: {
-        body: {
-            name: Joi.string().required(),
-            description: Joi.string().required()
+            holidayId: isObjectId
         }
     },
 
