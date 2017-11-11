@@ -35,9 +35,9 @@ export default class BaseUser {
             .ensure('password').required().minLength(5)
             .ensure('daysPerYear').satisfiesRule('integerRange', 0, 500)
             .ensure('holidays').satisfiesRule('integerRange', 0, 500)
-            .ensure('position').required().satisfiesRule('otherThan', 'None')
-            .ensure('userType').required().satisfiesRule('otherThan', 'None')
-            .ensure('projectId').required().satisfiesRule('otherThan', 'None')
+            .ensure('position').satisfiesRule('otherThan', 'None', true)
+            .ensure('userType').satisfiesRule('otherThan', 'None')
+            .ensure('projectId').satisfiesRule('otherThan', 'None', true)
             .on(this.user);
 
         if (attachObserver) {
@@ -94,7 +94,7 @@ export default class BaseUser {
     }
 
     async fetchProjectRoles(projectId) {
-        if (projectId === 'None') {
+        if (projectId === 'None' || projectId === '') {
             return [];
         }
         const { roles }  = await this._project.getProject(projectId);

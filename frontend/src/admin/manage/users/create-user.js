@@ -8,7 +8,7 @@ export class CreateUser extends BaseUser {
             email: '',
             password: '',
             position: '',
-            projectId: 'None',
+            projectId: '',
             daysPerYear: 0,
             holidays: 0,
             userType: ''
