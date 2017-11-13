@@ -8,8 +8,13 @@ export function setupCustomValidationRules() {
     };
 
     const otherThanMessage = `\${$displayName} must be selected.`;
-    const otherThanRule = (value, obj, str) => {
-        return value === null || value === undefined || value !== str;
+    const otherThanRule = (value, obj, str, isOptional = false) => {
+        const satisfiesRule = value !== null &&
+            value !== undefined &&
+            value !== '' &&
+            value !== str;
+
+        return  isOptional ? true : satisfiesRule;
     };
 
     ValidationRules.customRule(

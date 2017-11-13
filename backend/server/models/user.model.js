@@ -39,11 +39,11 @@ const UserSchema = new mongoose.Schema({
     },
     position: {
         type: String,
-        required: true
+        required: false
     },
     projectId: {
         type: String,
-        required: true
+        required: false
     },
     userType: {
         type: String,

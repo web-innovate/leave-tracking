@@ -16,9 +16,13 @@
                             <p class="list-group-item-text">${user.email}</p>
                         </div>
 
-                        <div class="col-sm-4">
-                            <p class="list-group-item-text">${user.position}</p>
-                            <p class="list-group-item-text">${user.project}</p>
+                        <div show.bind="user.role.name" class="col-sm-4">
+                            <p class="list-group-item-text">
+                                <strong>
+                                    ${user.role.name} @
+                                </strong>
+                                ${user.project}
+                            </p>
                         </div>
                     </div>
                 </a>
