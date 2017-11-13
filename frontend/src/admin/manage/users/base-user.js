@@ -74,6 +74,16 @@ export default class BaseUser {
     }
 
     async save() {
+        const { position, projectId } = this.user;
+
+        if(position === 'None') {
+            this.user.position = '';
+        }
+
+        if(projectId === 'None') {
+            this.user.projectId = '';
+        }
+
         await this._user.saveUser(this.user);
         this.router.navigateBack();
     }
@@ -95,10 +105,9 @@ export default class BaseUser {
 
     async fetchProjectRoles(projectId) {
         if (projectId === 'None' || projectId === '') {
-            return [];
+            return this.roles = [];
         }
         const { roles }  = await this._project.getProject(projectId);
-
         const dataRoles = await
             Promise.all(roles.map(async role => this._projectRole.getProjectRole(role)));
 
