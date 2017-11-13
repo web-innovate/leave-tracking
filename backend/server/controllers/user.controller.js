@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import User from '../models/user.model';
 import worker from '../../worker/worker';
 import _ from 'lodash';
@@ -29,6 +30,9 @@ function create(req, res, next) {
         userType: req.body.userType
     });
 
+    // hash the password
+    user.password = bcrypt.hashSync(user.password, 10);
+
     user.save()
         .then(user => {
             worker.queueNewUser(user.toObject());
@@ -44,7 +48,7 @@ function update(req, res, next) {
     user.firstName = req.body.firstName;
     user.lastName = req.body.lastName;
     user.email = req.body.email.toLowerCase();
-    user.password = req.body.password;
+    user.password = bcrypt.hashSync(req.body.password, 10);
     user.daysPerYear = req.body.daysPerYear;
     user.holidays = req.body.holidays;
     user.position = req.body.position;
