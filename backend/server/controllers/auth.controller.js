@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import httpStatus from 'http-status';
 import APIError from '../helpers/APIError';
@@ -9,22 +10,27 @@ import mongoose from 'mongoose';
 
 const User = mongoose.model('User', UserSchema);
 
-function login(req, res, next) {
-    User.findByEmailAndPassword(req.body.email, req.body.password)
-        .then(user => {
-            if(!user._id) {
-                const err = new APIError('Authentication error', httpStatus.UNAUTHORIZED, true);
-                return next(err);
-            }
+async function login(req, res, next) {
+    const unauthorizedError = new APIError('Bad credentials', httpStatus.UNAUTHORIZED, true);
+    const { email, password } = req.body;
 
-            const token = jwt.sign({ id: user.id, userType: user.userType }, config.jwtSecret);
+    const user = await User.findOne({ email: email.toLowerCase() });
 
-            return res.json({ token });
-        })
-        .catch(() => {
-            const err = new APIError('Authentication error', httpStatus.UNAUTHORIZED, true);
-            return next(err);
-        });
+    if (!user && !user._id) {
+        return next(unauthorizedError);
+    }
+
+    const dbHash = user.password;
+
+    const match = await bcrypt.compare(password, dbHash);
+
+    if(!match) {
+        return next(unauthorizedError);
+    }
+
+    const token = jwt.sign({ id: user.id, userType: user.userType }, config.jwtSecret);
+
+    res.json({ token });
 }
 
 function me(req, res) {
@@ -38,7 +44,7 @@ function me(req, res) {
 
 async function recover(req, res) {
     const { email } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email.toLowerCase() });
 
     if(!user) {
         return res.json();
@@ -47,7 +53,7 @@ async function recover(req, res) {
     let safeUser = user.toObject();
     delete safeUser.password;
 
-    // set used: true for any other token that was not used
+    // query for unused tokens for the given user id
     const notUsedTokenQuery = {
         userId: safeUser._id,
         used: false

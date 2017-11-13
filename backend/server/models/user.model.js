@@ -72,21 +72,6 @@ UserSchema.statics = {
             });
     },
 
-    findByEmailAndPassword(email, password) {
-        email = email.toLowerCase();
-
-        return this.findOne({ email, password })
-            .exec()
-            .then(user => {
-                if(user) {
-                    return user;
-                }
-
-                const err = new APIError('Bad credentials', httpStatus.NOT_FOUND, true);
-                return Promise.reject(err);
-            });
-    },
-
     list({ skip = 0, limit = 50, extra = {} } = {}) {
         return this.find(extra)
             .sort({ createdAt: -1 })
