@@ -47,15 +47,21 @@ async function recover(req, res) {
     let safeUser = user.toObject();
     delete safeUser.password;
 
+    // set used: true for any other token that was not used
+    const notUsedTokenQuery = {
+        userId: safeUser._id,
+        used: false
+    };
+
+    // mark previously not used tokens as invalid before we generate a new one
+    await PasswordResetTokenSchema.update(notUsedTokenQuery, { used: true }, { multi: true });
 
     const resetToken = new PasswordResetTokenSchema({
         userId: safeUser._id,
         used: false
     });
 
-
     const savedToken = await resetToken.save();
-
 
     const data = { user: safeUser, token: savedToken.toObject() };
 
