@@ -101,7 +101,7 @@ async function reset(req, res, next) {
         return next(new APIError('User linked to token does not exist', httpStatus.BAD_REQUEST, true));
     }
 
-    user.password = password;
+    user.password = bcrypt.hashSync(password, 10);
     await user.save();
 
     dbToken.used = true;
