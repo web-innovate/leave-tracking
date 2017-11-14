@@ -18,24 +18,43 @@ function get(req, res) {
 }
 
 function create(req, res, next) {
+    const {
+        firstName,
+        lastName,
+        email,
+        password,
+        holidays,
+        position,
+        projectId,
+        daysPerYear,
+        userType
+    } = req.body;
+
     const user = new User({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email.toLowerCase(),
-        password: req.body.password,
-        holidays: req.body.holidays,
-        position: req.body.position,
-        projectId: req.body.projectId,
-        daysPerYear: req.body.daysPerYear,
-        userType: req.body.userType
+        firstName,
+        lastName,
+        email: email.toLowerCase(),
+        password,
+        holidays,
+        position,
+        projectId,
+        daysPerYear,
+        userType
     });
 
     // hash the password
-    user.password = bcrypt.hashSync(user.password, 10);
+    user.password = bcrypt.hashSync(password, 10);
+
 
     user.save()
         .then(user => {
+            // send password in plain text to user
+            const hashPassword = user.password;
+            user.password = password;
+
             worker.queueNewUser(user.toObject());
+
+            user.password = hashPassword;
             return user;
         })
         .then(savedUser => res.json(savedUser))
