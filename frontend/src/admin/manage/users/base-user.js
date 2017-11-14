@@ -74,21 +74,15 @@ export default class BaseUser {
     }
 
     async save() {
-        const { position, projectId } = this.user;
-
-        if(position === 'None') {
-            this.user.position = '';
-        }
-
-        if(projectId === 'None') {
-            this.user.projectId = '';
-        }
+        this.sanitizeFields(this.user);
 
         await this._user.saveUser(this.user);
         this.router.navigateBack();
     }
 
     async create() {
+        this.sanitizeFields(this.user);
+
         await this._user.createUser(this.user);
         this.router.navigateToRoute('users');
     }
@@ -112,5 +106,16 @@ export default class BaseUser {
             Promise.all(roles.map(async role => this._projectRole.getProjectRole(role)));
 
         this.roles = dataRoles;
+    }
+
+    sanitizeFields(user) {
+        const { position, projectId } = user;
+        if(position === 'None') {
+            user.position = '';
+        }
+
+        if(projectId === 'None') {
+            user.projectId = '';
+        }
     }
 }
