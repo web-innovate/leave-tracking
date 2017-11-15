@@ -1,6 +1,7 @@
 import Project from '../models/project.model';
 import User from '../models/user.model';
 import APIError from '../helpers/APIError';
+import queryHelper from '../helpers/query-support';
 
 function load(req, res, next, id) {
     Project.get(id)
@@ -87,4 +88,10 @@ async function getApprovers(req, res, next) {
         .catch(e => next(e));
 }
 
-export default { load, get, create, update, list, remove, getUsers, getApprovers };
+function queryInfo(req, res) {
+    const data = queryHelper.getQueryData(Project.schema);
+
+    res.json(data);
+}
+
+export default { load, get, create, update, list, remove, getUsers, getApprovers, queryInfo };
