@@ -10,7 +10,7 @@ const { authorize } = expressAuth;
 
 
 router.route('/queryInfo')
-    .get(userCtrl.queryInfo)
+    .get(userCtrl.queryInfo);
 
 router.use(authorize());
 
