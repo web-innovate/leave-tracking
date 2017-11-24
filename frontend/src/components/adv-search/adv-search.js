@@ -36,10 +36,6 @@ export class AdvSearch {
         return this.selectedField === 'None' || this.queryCollection.indexOf(this.selectedField) > -1;
     }
 
-    showAll() {
-        console.log('all', this)
-    }
-
     deleteFilter(item) {
         this.queryCollection = this.queryCollection.filter(q => q !== item)
         delete this.queryData[item];
