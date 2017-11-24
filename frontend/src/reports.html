@@ -6,22 +6,26 @@
 
     <div class="col-gt-12">
         <adv-search
+            class="col-sm-6"
             config.bind="userInfo"
             query-data.bind="userQuery"
             title="Users advanced query">
         </adv-search>
 
-        <span>User query: ${userQueryJson}</span>
+        
 
         <adv-search
+            class="col-sm-6"
             config.bind="projectInfo"
             query-data.bind="projectQuery"
             title="Project advanced query">
         </adv-search>
 
-        <span>Project query: ${projectQueryJson}</span>
+        
 
     </div>
+    <span>User query: ${userQueryJson}</span>
+    <span>Project query: ${projectQueryJson}</span>
 
 
 
