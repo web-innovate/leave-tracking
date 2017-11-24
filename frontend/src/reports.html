@@ -1,20 +1,45 @@
 <template>
-  <require from="./components/type-ahead"></require>
+
+    <require from="./components/type-ahead"></require>
+    <require from="./components/adv-search/adv-search"></require>
+
+
+    <div class="col-gt-12">
+        <adv-search
+            config.bind="userInfo"
+            query-data.bind="userQuery"
+            title="Users advanced query">
+        </adv-search>
+
+        <span>User query: ${userQueryJson}</span>
+
+        <adv-search
+            config.bind="projectInfo"
+            query-data.bind="projectQuery"
+            title="Project advanced query">
+        </adv-search>
+
+        <span>Project query: ${projectQueryJson}</span>
+
+    </div>
+
+
+
 
     <div class="col-sm-9">
         <h3><i class="glyphicon glyphicon-list-alt"></i> Reports could be built here :)</h3>
 
         <type-ahead
-            field="_id"
-            placeholder="Search for users ..."
-            display-name="fullName"
-            results.two-way="results"
-            data-source.bind="userSource"
-            >
-        </type-ahead>
+        field="_id"
+        placeholder="Search for users ..."
+        display-name="fullName"
+        results.two-way="results"
+        data-source.bind="userSource"
+        >
+    </type-ahead>
 
-        <hr>
-        <span>User IDs: ${results}</span>
-        <hr>
-    </div>
+    <hr>
+    <span>User IDs: ${results}</span>
+    <hr>
+</div>
 </template>

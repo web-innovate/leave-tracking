@@ -8,6 +8,10 @@ import expressAuth from '../helpers/ExpressAuth';
 const router = express.Router();
 const { authorize } = expressAuth;
 
+
+router.route('/queryInfo')
+    .get(userCtrl.queryInfo)
+
 router.use(authorize());
 
 router.route('/')
