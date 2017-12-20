@@ -5,9 +5,13 @@
   "scripts": {
     "install": "cd ./frontend && yarn install && cd ../backend && yarn install",
     "build": "cd ./frontend && au build --env prod && cd ../backend && gulp",
-    "lint": "cd ./backend && yarn lint"
+    "lint": "cd ./backend && yarn lint",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
-    "yarn": "^0.22.0"
-  }
+    "yarn": "^0.22.0",
+    "snyk": "^1.52.1"
+  },
+  "snyk": true
 }
