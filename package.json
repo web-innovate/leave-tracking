@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "yarn": "^0.22.0",
-    "snyk": "^1.52.1"
+    "snyk": "^1.52.1",
+    "express-winston": "2.5.0"
   },
   "snyk": true
 }
