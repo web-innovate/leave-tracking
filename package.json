@@ -3,9 +3,9 @@
     "node": "8"
   },
   "scripts": {
-    "install": "cd ./frontend && yarn install && cd ../backend && yarn install",
-    "build": "cd ./frontend && au build --env prod && cd ../backend && gulp",
-    "lint": "cd ./backend && yarn lint",
+    "install-deps": "cd ./frontend && yarn install && cd ../backend && yarn install",
+    "build-projects": "cd ./frontend && au build --env prod && cd ../backend && gulp",
+    "lint-projects": "cd ./backend && yarn lint",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect"
   },

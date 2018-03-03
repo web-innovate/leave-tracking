@@ -12,8 +12,8 @@ cache:
     - backend/node_modules
 
 install:
-  - cd ~/ && yarn install
+  - yarn run install-deps
 
 script:
-  - cd ~/ && yarn build
-  - cd ~/ && yarn lint
+  - yarn run build-projects
+  - yarn run lint-projects
