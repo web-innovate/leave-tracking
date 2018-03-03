@@ -43,7 +43,7 @@ export class ApiService {
 
         const message = response && response.message || '';
 
-        this._notify.danger(`${error.statusCode} | ${error.statusText} | ${message}`, { timeout: 0 });
+        console.log(`${error.statusCode} | ${error.statusText} | ${message}`, error);
         return Promise.reject(new Error(error.statusText));
     }
 
