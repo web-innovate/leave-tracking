@@ -28,11 +28,12 @@ export class App {
                 route: 'reports',
                 name: 'reports',
                 moduleId: './reports',
-                nav: true,
+                nav: false,
                 title:'Reports',
                 settings: {
                     icon: 'list-alt'
                 },
+                requires: ['ADMIN'],
                 auth: true
             },
             {
