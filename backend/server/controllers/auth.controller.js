@@ -16,7 +16,7 @@ async function login(req, res, next) {
 
     const user = await User.findOne({ email: email.toLowerCase() });
 
-    if (!user && !user._id) {
+    if (user == null) {
         return next(unauthorizedError);
     }
 
