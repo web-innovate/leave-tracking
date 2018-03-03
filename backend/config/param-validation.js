@@ -1,6 +1,7 @@
 import Joi from 'joi';
 
 const userValidations = {
+    startDate: Joi.date().required(),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
     email: Joi.string().required(),

@@ -4,6 +4,10 @@ import httpStatus from 'http-status';
 import APIError from '../helpers/APIError';
 
 const UserSchema = new mongoose.Schema({
+    startDate: {
+        type: Date,
+        required: true
+    },
     firstName: {
         type: String,
         required: true

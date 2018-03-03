@@ -19,6 +19,7 @@ function get(req, res) {
 
 function create(req, res, next) {
     const {
+        startDate,
         firstName,
         lastName,
         email,
@@ -31,6 +32,7 @@ function create(req, res, next) {
     } = req.body;
 
     const user = new User({
+        startDate,
         firstName,
         lastName,
         email: email.toLowerCase(),
@@ -64,6 +66,7 @@ function create(req, res, next) {
 function update(req, res, next) {
     const user = req.user;
 
+    user.startDate = req.body.startDate;
     user.firstName = req.body.firstName;
     user.lastName = req.body.lastName;
     user.email = req.body.email.toLowerCase();

@@ -16,6 +16,15 @@ let attachObserver = true;
 
 @inject(UserService, ProjectService, ProjectRoleService, Router, ValidationControllerFactory, MultiObserver)
 export default class BaseUser {
+    pickerOptions = {
+        showTodayButton: true,
+        showClose: true,
+        format: 'YYYY-MM-DD',
+        widgetPositioning: {
+            vertical: 'bottom'
+        }
+    };
+
     constructor(_user, _project, _projectRole, router, controllerFactory, _observe) {
         this._user = _user;
         this._project = _project;
@@ -29,6 +38,7 @@ export default class BaseUser {
 
     attached() {
         ValidationRules
+            .ensure('startDate').satisfies(obj => obj instanceof Date)
             .ensure('firstName').required()
             .ensure('lastName').required()
             .ensure('email').required().email()
