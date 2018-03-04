@@ -1,0 +1,70 @@
+<template bindable="config, title, query-data">
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong>${title}</strong>
+    </div>
+
+    <div class="panel-body">
+        <div class="col-sm-4">
+            <select class="form-control" value.bind="selectedField">
+                <option selected>None</option>
+                <option
+                    repeat.for="item of myCollection"
+                    value.bind="item.field">
+                    ${item.field}
+                </option>
+            </select>
+        </div>
+
+
+        <div class="col-xs-1">
+            <div class="form-group">
+                <a
+                    class="btn icon-btn btn-info ${disableAdd ? 'disabled' : ''}"
+                    click.trigger="addQuery()">
+                    <span class="glyphicon btn-glyphicon glyphicon-plus img-circle"></span>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="row form-row" repeat.for="item of queryCollection">
+                <div class="col-xs-3">
+                    <div class="form-group">
+                        <h4>${item}</h4>
+                    </div>
+                </div>
+
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <select class="form-control" value.bind="queryData[item].operation">
+                        <option repeat.for="operation of config[item].operations">
+                            ${operation}
+                        </option>
+                    </select>
+                    </div>
+                </div>
+
+                <div class="col-xs-3">
+                    <div class="form-group">
+                        <input class="form-control" type="${config[item].type}" value.bind="queryData[item].value"/>
+                    </div>
+                </div>
+
+                <div class="col-xs-1">
+                    <div class="form-group">
+                        <a class="btn icon-btn btn-danger"
+                            click.trigger="deleteFilter(item)">
+                            <span
+                                class="glyphicon btn-glyphicon glyphicon-trash img-circle text-info">
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</template>

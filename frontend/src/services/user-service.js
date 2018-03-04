@@ -72,4 +72,8 @@ export class UserService {
     searchApproverUserByName(name) {
         return this.searchUser(name, 'APPROVER');
     }
+
+    queryInfo() {
+        return this.http.get(`users/queryInfo`);
+    }
 }

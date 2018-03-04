@@ -33,4 +33,8 @@ export class ProjectService {
     updateProject(project) {
         return this.http.put(`projects/${project._id}`, project);
     }
+
+    queryInfo() {
+        return this.http.get(`projects/queryInfo`);
+    }
 }

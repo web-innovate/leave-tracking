@@ -13,6 +13,9 @@ router.route('/')
     .get(projectCtrl.list)
     .post(validate(paramValidation.createProject), projectCtrl.create);
 
+router.route('/queryInfo')
+    .get(projectCtrl.queryInfo);
+
 router.route('/:projectId')
     .get(projectCtrl.get)
     .put(validate(paramValidation.updateProject), projectCtrl.update)

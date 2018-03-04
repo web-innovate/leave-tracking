@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import User from '../models/user.model';
 import worker from '../../worker/worker';
 import _ from 'lodash';
+import queryHelper from '../helpers/query-support';
 
 function load(req, res, next, id) {
     User.get(id)
@@ -134,4 +135,12 @@ function remove(req, res, next) {
         .catch(e => next(e));
 }
 
-export default { load, get, create, update, list, remove };
+function queryInfo(req, res) {
+    const sensitiveFields = ['password'];
+
+    const data = queryHelper.getQueryData(User.schema, sensitiveFields);
+
+    res.json(data);
+}
+
+export default { load, get, create, update, list, remove, queryInfo };
