@@ -12,7 +12,7 @@ cache:
     - backend/node_modules
 
 install:
-  - yarn run install-deps
+  - yarn install
 
 script:
   - yarn run build-projects

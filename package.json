@@ -4,15 +4,7 @@
   },
   "scripts": {
     "install": "cd ./frontend && yarn install && cd ../backend && yarn install",
-    "install-deps": "cd ./frontend && yarn install && cd ../backend && yarn install",
     "build-projects": "cd ./frontend && au build --env prod && cd ../backend && gulp",
-    "lint-projects": "cd ./backend && yarn lint",
-    "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
-  },
-  "dependencies": {
-    "yarn": "^0.22.0",
-    "snyk": "^1.52.1"
-  },
-  "snyk": true
+    "lint-projects": "cd ./backend && yarn lint"
+  }
 }
