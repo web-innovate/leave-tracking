@@ -3,6 +3,10 @@ import validate from 'express-validation';
 import paramValidation from '../../config/param-validation';
 import leaveCtrl from '../controllers/leave-request.controller';
 import expressAuth from '../helpers/ExpressAuth';
+import permit from './permission';
+import { USER_TYPES } from '../helpers/constants';
+
+const { ADMIN, APPROVER, USER } = USER_TYPES;
 
 const router = express.Router();
 
@@ -11,21 +15,21 @@ const { authorize } = expressAuth;
 router.use(authorize());
 
 router.route('/')
-    .get(leaveCtrl.list)
-    .post(validate(paramValidation.createLeaveRequest), leaveCtrl.create);
+    .get(permit(), leaveCtrl.list)
+    .post(permit(), validate(paramValidation.createLeaveRequest), leaveCtrl.create);
 
 router.route('/pending')
-    .get(leaveCtrl.pending);
+    .get(permit(APPROVER, ADMIN), leaveCtrl.pending);
 
 router.route('/approved')
-    .get(leaveCtrl.approved);
+    .get(permit(APPROVER, ADMIN), leaveCtrl.approved);
 
 router.route('/rejected')
-    .get(leaveCtrl.rejected);
+    .get(permit(APPROVER, ADMIN), leaveCtrl.rejected);
 
 router.route('/:leaveId')
-    .get(leaveCtrl.get)
-    .put(leaveCtrl.update);
+    .get(permit(ADMIN), leaveCtrl.get)
+    .put(permit(APPROVER, ADMIN), leaveCtrl.update);
 
 router.param('leaveId', leaveCtrl.load);
 

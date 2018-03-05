@@ -21,20 +21,20 @@ function get(req, res) {
 }
 
 async function create(req, res, next) {
-    const user = req.user;
+    const { token } = req;
     const leave = new LeaveRequest(
         {
             start: req.body.start,
             end: req.body.end,
             leaveType: req.body.leaveType,
-            userId: user.id,
+            userId: token.id,
             status: req.body.status,
             workDays: req.body.workDays
         });
 
     const pendingAndApproved = await LeaveRequest
         .find({
-            userId: user.id ,
+            userId: token.id ,
             $or: [{ status: 'approved' }, { status: 'pending' }]
         });
 
@@ -55,7 +55,7 @@ async function create(req, res, next) {
 }
 
 function update(req, res, next) {
-    const user = req.user;
+    const { token } = req;
     const leave = req.leaveRequest;
 
     leave.status = req.body.status;
@@ -65,7 +65,7 @@ function update(req, res, next) {
             const { leaveType, status, userId, workDays } = savedRequest;
 
             // we attach the id of the user that updated the request
-            savedRequest.approverId = user.id;
+            savedRequest.approverId = token.id;
 
             if (status == 'approved') {
                 worker.queueApprovedLeaveRequest(savedRequest.toObject());
@@ -149,37 +149,37 @@ function checkForOverlap(item, leave, next) {
             status: item.status
         };
 
-        next(new APIError(JSON.stringify(existing), 400, true));
+        next(new APIError(existing, 400, true));
         return overlaps;
     }
 }
 
 function pending(req, res, next) {
-    const { user } = req;
+    const { token } = req;
 
-    fetchLeaves(user, 'pending')
+    fetchLeaves(token.id, 'pending')
         .then(pendingLeaves => res.json(pendingLeaves))
         .catch(e => next(e));
 }
 
 function approved(req, res, next) {
-    const { user } = req;
+    const { token } = req;
 
-    fetchLeaves(user, 'approved')
+    fetchLeaves(token.id, 'approved')
         .then(approvedLeaves => res.json(approvedLeaves))
         .catch(e => next(e));
 }
 
 function rejected(req, res, next) {
-    const { user } = req;
+    const { token } = req;
 
-    fetchLeaves(user, 'rejected')
+    fetchLeaves(token.id, 'rejected')
         .then(rejectedLeaves => res.json(rejectedLeaves))
         .catch(e => next(e));
 }
 
-async function fetchLeaves(user, status) {
-    const projectsQuery = { approvers: { $in: [user.id] } };
+async function fetchLeaves(userId, status) {
+    const projectsQuery = { approvers: { $in: [userId] } };
     const projectsICanApprove = await fetchProjects(projectsQuery);
 
     let usersICanApprove = await Promise.all(projectsICanApprove.map(async projectId => {

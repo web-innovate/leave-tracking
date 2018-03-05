@@ -4,24 +4,29 @@ import paramValidation from '../../config/param-validation';
 import userCtrl from '../controllers/user.controller';
 import leaveCtrl from '../controllers/leave-request.controller';
 import expressAuth from '../helpers/ExpressAuth';
+import permit from './permission';
+import { USER_TYPES } from '../helpers/constants';
 
+const { ADMIN, APPROVER, USER } = USER_TYPES;
 const router = express.Router();
 const { authorize } = expressAuth;
+
 
 router.use(authorize());
 
 router.route('/')
-    .get(userCtrl.list)
-    .post(validate(paramValidation.createUser), userCtrl.create);
+    .get(permit(ADMIN), userCtrl.list)
+    .post(permit(ADMIN), validate(paramValidation.createUser), userCtrl.create);
 
 router.route('/:userId')
-    .get(userCtrl.get)
-    .put(validate(paramValidation.updateUser), userCtrl.update)
-    .delete(userCtrl.remove);
+    .get(permit(), userCtrl.get)
+    .put(permit(ADMIN), validate(paramValidation.updateUser), userCtrl.update)
+    .delete(permit(ADMIN), userCtrl.remove);
 
 router.route('/:userId/leaves')
-    .get(leaveCtrl.getForUser);
+    .get(permit(), leaveCtrl.getForUser);
 
 router.param('userId', userCtrl.load);
+
 
 export default router;

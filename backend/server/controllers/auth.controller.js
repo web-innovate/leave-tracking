@@ -34,7 +34,7 @@ async function login(req, res, next) {
 }
 
 function me(req, res) {
-    return User.get(req.user.id).then(user => {
+    return User.get(req.token.id).then(user => {
         user = user.toObject();
         delete user.password;
 

@@ -3,6 +3,10 @@ import validate from 'express-validation';
 import paramValidation from '../../config/param-validation';
 import projectCtrl from '../controllers/project.controller';
 import expressAuth from '../helpers/ExpressAuth';
+import permit from './permission';
+import { USER_TYPES } from '../helpers/constants';
+
+const { ADMIN, APPROVER, USER } = USER_TYPES;
 
 const router = express.Router();
 const { authorize } = expressAuth;
@@ -10,19 +14,19 @@ const { authorize } = expressAuth;
 router.use(authorize());
 
 router.route('/')
-    .get(projectCtrl.list)
-    .post(validate(paramValidation.createProject), projectCtrl.create);
+    .get(permit(ADMIN), projectCtrl.list)
+    .post(permit(ADMIN), validate(paramValidation.createProject), projectCtrl.create);
 
 router.route('/:projectId')
-    .get(projectCtrl.get)
-    .put(validate(paramValidation.updateProject), projectCtrl.update)
-    .delete(projectCtrl.remove);
+    .get(permit(), projectCtrl.get)
+    .put(permit(ADMIN), validate(paramValidation.updateProject), projectCtrl.update)
+    .delete(permit(ADMIN), projectCtrl.remove);
 
 router.route('/:projectId/users')
-    .get(projectCtrl.getUsers);
+    .get(permit(ADMIN), projectCtrl.getUsers);
 
 router.route('/:projectId/approvers')
-    .get(projectCtrl.getApprovers);
+    .get(permit(ADMIN), projectCtrl.getApprovers);
 
 router.param('projectId', projectCtrl.load);
 
