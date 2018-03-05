@@ -9,7 +9,7 @@ export default function permit(...allowed) {
             next(); // role is allowed, so continue on the next middleware
         } else {
             const errorMessage = `Current: '${req.token.userType}', Requires: '${allowed}'`;
-            next(new APIError(errorMessage, 403, true))
+            next(new APIError(errorMessage, 403, true));
         }
-    }
+    };
 }
