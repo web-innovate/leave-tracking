@@ -106,7 +106,7 @@ export class App {
                 route: 'profile',
                 name: 'profile',
                 moduleId: './profile/profile',
-                nav: false,
+                nav: true,
                 title:'Profile',
                 settings: {
                 },

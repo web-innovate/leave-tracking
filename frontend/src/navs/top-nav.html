@@ -39,13 +39,7 @@
 
                 <ul if.bind="isAuth" class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-                            <i class="glyphicon glyphicon-user"></i> ${user.name} <span class="caret"></span>
-                        </a>
-                        <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                            <li><a href="#/profile">My Profile</a></li>
-                            <li><a href="" click.delegate="logout()"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
-                        </ul>
+                        <a href="" click.delegate="logout()"><i class="glyphicon glyphicon-off"></i> Logout</a>
                     </li>
                 </ul>
                 <ul if.bind="!isAuth" class="nav navbar-nav navbar-right">
