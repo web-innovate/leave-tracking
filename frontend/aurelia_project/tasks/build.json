@@ -6,6 +6,11 @@
       "name": "env",
       "description": "Sets the build environment.",
       "type": "string"
+    },
+    {
+      "name": "api_url",
+      "description": "Sets the api_url environment.",
+      "type": "string"
     }
   ]
 }

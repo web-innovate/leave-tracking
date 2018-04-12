@@ -1,4 +1,5 @@
 export default {
   debug: true,
-  testing: true
+  testing: false,
+  API_URL: 'TBC'
 };
