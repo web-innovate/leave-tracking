@@ -23,7 +23,7 @@ export default class BaseUser {
         widgetPositioning: {
             vertical: 'bottom'
         }
-    };
+    }
 
     constructor(_user, _project, _projectRole, router, controllerFactory, _observe) {
         this._user = _user;
@@ -53,8 +53,7 @@ export default class BaseUser {
         if (attachObserver) {
             attachObserver = false;
             this._observe.observe([
-                    [this.user, 'projectId']
-                ],
+                [this.user, 'projectId']],
                 projectId => this.fetchProjectRoles(projectId));
         }
     }
@@ -74,7 +73,7 @@ export default class BaseUser {
         await this.fetchProjectsData();
     }
 
-    async fetchData(params) {
+    async fetchData() {
         await this.fetchProjectsData();
     }
 

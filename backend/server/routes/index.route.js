@@ -5,6 +5,7 @@ import authRoutes from './auth.route';
 import projectRoutes from './project.route';
 import projectRoleRoutes from './project-role.route';
 import holidayRoutes from './holiday.route';
+import icalRoute from './ical.route';
 
 const router = express.Router();
 
@@ -17,5 +18,7 @@ router.use('/leaves', leaveRoutes);
 router.use('/projects', projectRoutes);
 router.use('/project-roles', projectRoleRoutes);
 router.use('/holidays', holidayRoutes);
+router.use('/iCal', icalRoute);
+
 
 export default router;
