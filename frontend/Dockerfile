@@ -4,7 +4,7 @@ LABEL maintainer="Bogdan Livadariu <bogdan.livadariu@gmail.com>"
 
 ENV NODE_ENV=development
 ENV PORT=3000
-ENV API_URL=http://localhost:4040/api/1
+ENV API_URL=http://localhost:4040/api/
 
 # Create app directory
 RUN mkdir -p /usr/src/app
