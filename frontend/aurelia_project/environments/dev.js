@@ -1,4 +1,5 @@
 export default {
   debug: true,
-  testing: true
+  testing: true,
+  API_URL: 'API_REPLACE'
 };

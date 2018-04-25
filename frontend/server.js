@@ -25,5 +25,5 @@ app.use(compression());
 app.use(serveStatic(`${__dirname}/`, {'extensions': ['html']}));
 
 app.listen(port, () => {
-  console.log('Server running...');
+  console.log('Server running ... on port', port);
 });
