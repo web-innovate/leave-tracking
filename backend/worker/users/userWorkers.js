@@ -3,8 +3,6 @@ import mongoose from 'mongoose';
 import smtp from '../../smtp/smtp';
 import { UserSchema } from '../../server/models/user.model';
 
-
-
 const User = mongoose.model('User', UserSchema);
 
 function handleNewUsers(params, callback) {
