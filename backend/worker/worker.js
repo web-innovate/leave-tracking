@@ -29,7 +29,7 @@ class Worker {
         }
     }
 
-    async start() {
+    start() {
         this.registerWorkers();
         this.startWorkers();
 
