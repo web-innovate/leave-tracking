@@ -3,6 +3,11 @@ import User from '../models/user.model';
 import APIError from '../helpers/APIError';
 
 function load(req, res, next, id) {
+    if (id === 'undefined') {
+        next(new APIError('Project id is undefined', 400, true));
+        return null;
+    }
+
     Project.get(id)
         .then((project) => {
             req.project = project;
@@ -66,6 +71,10 @@ async function remove(req, res, next) {
 
 function getUsers(req, res, next) {
     const { projectId } = req.params;
+    if (projectId === 'undefined') {
+        next(new APIError('Project id is undefined', 400, true));
+        return null;
+    }
     User.find({projectId})
         .then(users => res.json(users))
         .catch(e => next(e));
