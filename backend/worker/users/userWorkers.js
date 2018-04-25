@@ -30,30 +30,31 @@ function handlePasswordReset(params, callback) {
 }
 
 function createDefaultUser(params, cb) {
-    User.count().then(result => {
-        if (result !== 0) {
-            return cb(null, {result});
-        }
+    User.count()
+        .then(result => {
+            if (result !== 0) {
+                return cb(null, {result});
+            }
 
-        const user = new User({
-            startDate: Date.now(),
-            firstName: 'admin',
-            lastName: 'admin',
-            email: 'admin@admin',
-            password: bcrypt.hashSync('admin', 10),
-            holidays: 99,
-            position: '',
-            projectId: '',
-            userType: 'ADMIN'
-        });
+            const user = new User({
+                startDate: Date.now(),
+                firstName: 'admin',
+                lastName: 'admin',
+                email: 'admin@admin',
+                password: bcrypt.hashSync('admin', 10),
+                holidays: 99,
+                position: '',
+                projectId: '',
+                userType: 'ADMIN'
+            });
 
 
 
-        user.save()
-            .then(data => cb(null, data))
-            .catch(err => cb(err));
-    })
-    .catch(err => cb(err));
+            user.save()
+                .then(data => cb(null, data))
+                .catch(err => cb(err));
+        })
+        .catch(err => cb(err));
 }
 
 export default { handleNewUsers, handlePasswordReset, createDefaultUser };
