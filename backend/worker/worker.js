@@ -14,6 +14,7 @@ class Worker {
     get PROCESS_EVENTS() {
         return {
             USER: 'process_new_user',
+            CHECK_FOR_USERS: 'process_check_for_users',
             PASSWORD_RESET: 'process_password_reset',
             NEW_LEAVE: 'process_new_leave_request',
             APPROVED_LEAVE: 'process_approved_leave_request',
@@ -28,15 +29,25 @@ class Worker {
         }
     }
 
-    start() {
+    async start() {
         this.registerWorkers();
         this.startWorkers();
+
+        // in case users collection is empty,
+        // a default admin@admin/admin user will be created
+        this.queueCheckForUsers();
     }
 
     queueNewUser(data) {
         const queue = this.client.queue(this.QUEUE_EVENTS.USER);
 
         queue.enqueue(this.PROCESS_EVENTS.USER, data, () => {});
+    }
+
+    queueCheckForUsers() {
+        const queue = this.client.queue(this.QUEUE_EVENTS.USER);
+
+        queue.enqueue(this.PROCESS_EVENTS.CHECK_FOR_USERS, {}, () => {});
     }
 
     queuePasswordReset(data) {
@@ -73,7 +84,8 @@ class Worker {
 
         worker.register({
             process_new_user: userWorkers.handleNewUsers,
-            process_password_reset: userWorkers.handlePasswordReset
+            process_password_reset: userWorkers.handlePasswordReset,
+            process_check_for_users: userWorkers.createDefaultUser
         });
 
         this.workers.push(worker);
