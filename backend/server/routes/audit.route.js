@@ -1,6 +1,4 @@
 import express from 'express';
-import validate from 'express-validation';
-import paramValidation from '../../config/param-validation';
 import auditCtrl from '../controllers/audit.controller';
 import expressAuth from '../helpers/ExpressAuth';
 import permit from './permission';
@@ -14,6 +12,11 @@ const { authorize } = expressAuth;
 router.use(authorize());
 
 router.route('/')
-    .get(permit(ADMIN), auditCtrl.list)
+    .get(permit(ADMIN), auditCtrl.list);
+
+router.route('/:auditId')
+    .get(permit(), auditCtrl.get);
+
+router.param('auditId', auditCtrl.load);
 
 export default router;
