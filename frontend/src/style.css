@@ -21,3 +21,13 @@ ai-dialog-overlay.active {
 .cal-day-holiday {
     background: #f2dede;
 }
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #101010;
+    color: white;
+    text-align: center;
+}
