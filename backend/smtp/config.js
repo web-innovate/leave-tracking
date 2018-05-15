@@ -1,13 +1,13 @@
 // this config is for testing purposes,
 // real configs will be provided through process.env params
 const config = {
-    senderEmail: process.env.smtpSenderEmail || 'Leave Tracking <leave.tracking@my-domain.com>',
-    host: process.env.smtpHost || 'smtp.ethereal.email',
-    port: process.env.smtPort || 587,
-    secure: process.env.smtSecure || false,
+    senderEmail: process.env.SMTP_SENDER_EMAIL || 'Leave Tracking <leave.tracking@my-domain.com>',
+    host: process.env.SMTP_HOST || 'smtp.ethereal.email',
+    port: process.env.SMTP_PORT || 587,
+    secure: process.env.SMTP_SECURE || false,
     auth: {
-        user: process.env.smtUser || 'uhzdcegtgaxt427t@ethereal.email',
-        pass: process.env.smtPass || 'cR48DwNMD3ncEwykrG'
+        user: process.env.SMTP_USER || 'uhzdcegtgaxt427t@ethereal.email',
+        pass: process.env.SMTP_PASSWORD || 'cR48DwNMD3ncEwykrG'
     }
 };
 

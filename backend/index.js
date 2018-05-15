@@ -16,7 +16,13 @@ mongoose.Promise = Promise;
 
 // connect to mongo db
 const mongoUri = process.env.MONGO_URI || config.mongo.host;
-mongoose.connect(mongoUri, { server: { socketOptions: { keepAlive: 1 } } });
+
+mongoose.connect(mongoUri, {
+    server: {
+        socketOptions: { keepAlive: 1 },
+        reconnectTries: Number.MAX_VALUE
+    }
+});
 mongoose.connection.on('error', () => {
     throw new Error(`unable to connect to database: ${mongoUri}`);
 });
