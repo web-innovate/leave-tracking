@@ -1,0 +1,23 @@
+<template>
+    <spinner if.bind="loading"></spinner>
+<div class="panel panel-default">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Author</th>
+      <th scope="col">Description</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr repeat.for="audit of audits">
+      <th scope="row">${$index + 1}</th>
+      <td title="${audit.author.email}">${audit.author.firstName} ${audit.author.firstName}</td>
+      <td>${audit.description}</td>
+      <td>${audit.createdAt}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</template>

@@ -66,6 +66,17 @@ export class Admin {
                     icon: 'time'
                 },
                 auth: true
+            },
+            {
+                route: ['audit'],
+                name: 'audit',
+                moduleId: './audit/audit',
+                nav: true,
+                title:'Audit time :)',
+                settings: {
+                    icon: 'time'
+                },
+                auth: true
             }
         ]);
 
