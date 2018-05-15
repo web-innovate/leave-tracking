@@ -6,11 +6,32 @@ import APIError from '../helpers/APIError';
 const AuditSchema = new mongoose.Schema({
     author: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
-    description: {
+    details: {
         type: String,
         required: true
+    },
+    target_user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
+    target_holiday: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Holiday',
+    },
+    target_leave_request: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'LeaveRequest',
+    },
+    target_project_role: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ProjectRole',
+    },
+    target_project: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project',
     },
     createdAt: {
         type: Date,
