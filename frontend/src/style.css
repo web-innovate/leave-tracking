@@ -13,3 +13,21 @@ ai-dialog-overlay.active {
 .spinner-wrapper {
     border: none;
 }
+
+.cal-day-holiday span[data-cal-date] {
+        color: #ff0000;
+    font-size: 4em;
+}
+.cal-day-holiday {
+    background: #f2dede;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #101010;
+    color: white;
+    text-align: center;
+}

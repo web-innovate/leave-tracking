@@ -15,6 +15,8 @@ ENV SMTP_SECURE="false"
 ENV SMTP_USER="uhzdcegtgaxt427t@ethereal.email"
 ENV SMTP_PASSWORD="cR48DwNMD3ncEwykrG"
 
+ENV FE_DOMAIN=http://localhost:3000
+
 # Create app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app

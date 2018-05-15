@@ -12,7 +12,7 @@
                 </button>
                 <a href="/#/" class="navbar-brand">Leave Tracker</a>
             </div>
-            <div class="navbar-collapse collapse">
+            <div id="nav-container" class="navbar-collapse collapse">
                 <ul if.bind="isAuth" class="nav navbar-nav">
                     <li repeat.for="row of router.navigation"
                         class="${row.isActive ? 'active' : ''}">
@@ -39,12 +39,12 @@
 
                 <ul if.bind="isAuth" class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="" click.delegate="logout()"><i class="glyphicon glyphicon-off"></i> Logout</a>
+                        <a href="" data-toggle="collapse" data-target="#nav-container" click.delegate="logout()"><i class="glyphicon glyphicon-off"></i> Logout</a>
                     </li>
                 </ul>
                 <ul if.bind="!isAuth" class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="./#/login">Login</a>
+                        <a href="./#/login" data-toggle="collapse" data-target="#nav-container">Login</a>
                     </li>
                 </ul>
             </div>

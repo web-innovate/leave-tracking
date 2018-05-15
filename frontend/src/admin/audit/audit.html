@@ -1,0 +1,33 @@
+<template>
+    <spinner if.bind="loading"></spinner>
+<div class="panel panel-default">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Author</th>
+      <th scope="col">Details</th>
+      <th scope="col">target_user</th>
+      <th scope="col">target_project</th>
+      <th scope="col">target_project_role</th>
+      <th scope="col">target_leave_request</th>
+      <th scope="col">target_holiday</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr repeat.for="audit of audits">
+      <th scope="row">${$index + 1}</th>
+      <td title="${audit.author.email}">${audit.author.firstName} ${audit.author.firstName}</td>
+      <td>${audit.details}</td>
+      <td>${audit.target_user}</td>
+      <td>${audit.target_project}</td>
+      <td>${audit.target_project_role}</td>
+      <td>${audit.target_leave_request}</td>
+      <td>${audit.target_holiday}</td>
+      <td>${audit.createdAt}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</template>
