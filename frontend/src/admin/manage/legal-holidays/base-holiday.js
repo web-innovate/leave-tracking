@@ -16,7 +16,6 @@ export default class BaseHoliday {
         calendarWeeks: true,
         showTodayButton: true,
         showClose: true,
-        daysOfWeekDisabled: [0, 6], // we disable saturday & sunday
         format: 'YYYY-MM-DD',
         widgetPositioning: {
             horizontal: 'left'
