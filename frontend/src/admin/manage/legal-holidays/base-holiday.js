@@ -8,6 +8,7 @@ import {
 } from 'aurelia-validation';
 import { BootstrapFormRenderer } from '~/components/validation/bootstrap-form-renderer';
 import { compareObjects, setupValidationControllers } from '~/util/utils';
+import moment from 'moment';
 
 @inject(HolidayService, Router, ValidationControllerFactory)
 export default class BaseHoliday {
@@ -41,6 +42,7 @@ export default class BaseHoliday {
 
     activate(model) {
         this.holiday = model;
+        this.holiday.date = moment(model.date);
         this.originalHoliday = JSON.parse(JSON.stringify(this.holiday));
     }
 

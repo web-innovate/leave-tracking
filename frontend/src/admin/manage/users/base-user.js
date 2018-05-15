@@ -11,6 +11,7 @@ import {
 import { BootstrapFormRenderer } from '~/components/validation/bootstrap-form-renderer';
 import { compareObjects, setupValidationControllers } from '~/util/utils';
 import { MultiObserver } from '~/util/multi-observer';
+import moment from 'moment';
 
 let attachObserver = true;
 
@@ -69,6 +70,7 @@ export default class BaseUser {
 
     async activate(model) {
         this.user = model;
+        this.user.startDate = moment(model.startDate);
         this.originalUser = JSON.parse(JSON.stringify(this.user));
 
         await this.fetchProjectsData();
