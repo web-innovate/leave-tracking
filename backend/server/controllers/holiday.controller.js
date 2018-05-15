@@ -1,4 +1,5 @@
 import Holiday from '../models/holiday.model';
+import Audit from '../models/audit.model';
 
 function load(req, res, next, id) {
     Holiday.get(id)
@@ -22,7 +23,14 @@ function create(req, res, next) {
     });
 
     holiday.save()
-        .then(savedHoliday => res.json(savedHoliday))
+        .then(async savedHoliday => {
+            const audit = new Audit({
+                author: req.token.id,
+                details: `Created Holiday: ${savedHoliday.name}|${savedHoliday.description}(${savedHoliday.date})`
+            });
+            await audit.save();
+            return res.json(savedHoliday);
+        })
         .catch(e => next(e));
 }
 
@@ -34,7 +42,16 @@ function update(req, res, next) {
 
 
     holiday.save()
-        .then(savedHoliday => res.json(savedHoliday))
+        .then(async savedHoliday => {
+            const audit = new Audit({
+                author: req.token.id,
+                details: `Updated Holiday:
+                    ${req.body.name}|${req.body.description}|${req.body.date} with
+                    ${savedHoliday.name}|${savedHoliday.description}(${savedHoliday.date})`
+            });
+            await audit.save();
+            return res.json(savedHoliday);
+        })
         .catch(e => next(e));
 }
 
@@ -48,9 +65,16 @@ function list(req, res, next) {
 function remove(req, res, next) {
     const holiday = req.holiday;
     holiday.remove()
-        .then(deletedHoliday => res.json(deletedHoliday))
+        .then(async deletedHoliday => {
+            const audit = new Audit({
+                author: req.token.id,
+                details: `Deleted Holiday:
+                    ${deletedHoliday.name}|${deletedHoliday.description}(${deletedHoliday.date})`
+            });
+            await audit.save();
+            return res.json(deletedHoliday);
+        })
         .catch(e => next(e));
 }
-
 
 export default { load, get, create, update, list, remove };
