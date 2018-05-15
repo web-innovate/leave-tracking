@@ -45,7 +45,12 @@ AuditSchema.method({
 AuditSchema.statics = {
     get(id) {
         return this.findById(id)
-            .populate('author', '-password')
+            .populate('author', 'firstName lastName email userType')
+            .populate('target_user')
+            .populate('target_holiday')
+            .populate('target_leave_request')
+            .populate('target_project_role')
+            .populate('target_project')
             .then((audit) => {
                 if (audit) {
                     return audit;
@@ -57,6 +62,12 @@ AuditSchema.statics = {
 
     list({ skip = 0, limit = 50 } = {}) {
         return this.find()
+            .populate('author', 'firstName lastName email userType')
+            .populate('target_user')
+            .populate('target_holiday')
+            .populate('target_leave_request')
+            .populate('target_project_role')
+            .populate('target_project')
             .sort({ createdAt: -1 })
             .skip(+skip)
             .limit(+limit)
