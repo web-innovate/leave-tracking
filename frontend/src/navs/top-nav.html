@@ -12,7 +12,7 @@
                 </button>
                 <a href="/#/" class="navbar-brand">Leave Tracker</a>
             </div>
-            <div class="navbar-collapse collapse">
+            <div id="nav-container" class="navbar-collapse collapse">
                 <ul if.bind="isAuth" class="nav navbar-nav">
                     <li repeat.for="row of router.navigation"
                         class="${row.isActive ? 'active' : ''}">
