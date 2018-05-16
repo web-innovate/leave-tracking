@@ -7,7 +7,10 @@
                 <div class="list-group panel-body">
                     <ul  class="nav nav-pills">
                         <li class="${$index === 0 ? 'active': ''}" repeat.for="agg of aggregatedHolidays">
-                            <a  href="#${agg._id}" data-toggle="tab">${agg._id}(${agg.workingDays})</a>
+                            <a  href="#${agg._id}" data-toggle="tab">
+                                ${agg._id}
+                                <span class="badge badge-light" title="total work days">${agg.workingDays}</span>
+                            </a>
                         </li>
                     </ul>
                     <hr/>
