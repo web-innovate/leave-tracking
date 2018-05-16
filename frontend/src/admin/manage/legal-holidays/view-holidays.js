@@ -9,9 +9,12 @@ export class ViewHolidays {
     }
 
     async attached() {
-        const holidays = await this._holiday.getHolidays();
+        // const holidays = await this._holiday.getHolidays();
+        const aggregatedHolidays = await this._holiday.getAggregatedHolidays();
 
-        this.holidays = holidays;
+        // this.holidays = holidays;
+        this.aggregatedHolidays = aggregatedHolidays;
+
         this.loading = false;
     }
 }

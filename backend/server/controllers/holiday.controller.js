@@ -57,7 +57,25 @@ function update(req, res, next) {
 
 function list(req, res, next) {
     const { limit = 50, skip = 0 } = req.query;
-    Holiday.list({ limit, skip })
+    Holiday
+    .list({ limit, skip })
+        .then(holidays => res.json(holidays))
+        .catch(e => next(e));
+}
+
+function aggregate(req, res, next) {
+    Holiday
+    .aggregate([ { $group: {
+        _id: { $year: '$date' },
+        items: { $push: '$$ROOT' },
+        workingDays: {
+            $sum: {
+                $cond: {
+                    if: { $in: [ { $dayOfWeek:{ date:'$date', timezone: 'Europe/Bucharest'} }, {$range: [ 2, 6 ] } ] },
+                    then: 1, else: 0
+                }
+            }
+        }}}])
         .then(holidays => res.json(holidays))
         .catch(e => next(e));
 }
@@ -77,4 +95,4 @@ function remove(req, res, next) {
         .catch(e => next(e));
 }
 
-export default { load, get, create, update, list, remove };
+export default { load, get, create, update, list, remove, aggregate };
