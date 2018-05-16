@@ -16,6 +16,10 @@ export class HolidayService {
         return this.http.get('holidays');
     }
 
+    getAggregatedHolidays() {
+        return this.http.get('holidays/aggregate');
+    }
+
     getHoliday(id) {
         return this.http.get(`holidays/${id}`);
     }
