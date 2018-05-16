@@ -18,6 +18,7 @@
     "aurelia-bootstrap-select": "^0.1.1",
     "aurelia-bootstrapper": "^2.1.0",
     "aurelia-chart": "^0.2.7",
+    "aurelia-google-analytics": "^2.3.1",
     "aurelia-http-client": "^1.1.1",
     "aurelia-notify": "^0.7.0",
     "aurelia-validation": "^1.0.0",
