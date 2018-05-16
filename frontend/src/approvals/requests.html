@@ -24,8 +24,18 @@
                 </button>
 
                 <ul class="dropdown-menu">
-                    <li><a click.delegate="approveRequest(request)">Approve</a></li>
-                    <li><a click.delegate="rejectRequest(request)">Reject</a></li>
+                    <li>
+                        <a
+                        data-analytics-category="approvals"
+                        data-analytics-action="approved"
+                        click.delegate="approveRequest(request)">Approve</a>
+                    </li>
+                    <li>
+                        <a
+                        data-analytics-category="approvals"
+                        data-analytics-action="rejected"
+                        click.delegate="rejectRequest(request)">Reject</a>
+                    </li>
                 </ul>
             </div>
 

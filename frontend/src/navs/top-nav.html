@@ -16,7 +16,13 @@
                 <ul if.bind="isAuth" class="nav navbar-nav">
                     <li repeat.for="row of router.navigation"
                         class="${row.isActive ? 'active' : ''}">
-                        <a href.bind="row.href" data-toggle="collapse" data-target="#nav-container">
+                        <a
+                            data-analytics-category="navigator"
+                            data-analytics-action="click"
+                            data-analytics-label="${row.title}"
+                            href.bind="row.href"
+                            data-toggle="collapse"
+                            data-target="#nav-container">
                             <i class="glyphicon glyphicon-${row.settings.icon}"></i>
                             ${row.title}
                         </a>

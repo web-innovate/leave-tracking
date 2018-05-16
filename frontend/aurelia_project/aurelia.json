@@ -263,6 +263,12 @@
             "resources": [
               "*"
             ]
+          },
+          "deepmerge",
+          {
+            "name": "aurelia-google-analytics",
+            "path": "../node_modules/aurelia-google-analytics/dist/amd",
+            "main": "index"
           }
         ]
       }

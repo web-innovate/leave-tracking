@@ -15,8 +15,7 @@ ai-dialog-overlay.active {
 }
 
 .cal-day-holiday span[data-cal-date] {
-        color: #ff0000;
-    font-size: 4em;
+    font-size: 1.8em;
 }
 .cal-day-holiday {
     background: #f2dede;
