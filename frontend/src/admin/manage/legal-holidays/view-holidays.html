@@ -9,7 +9,9 @@
                         <li class="${$index === 0 ? 'active': ''}" repeat.for="agg of aggregatedHolidays">
                             <a  href="#${agg._id}" data-toggle="tab">
                                 ${agg._id}
-                                <span class="badge badge-light" title="total work days">${agg.workingDays}</span>
+                                <span class="badge badge-light" title="total work days">
+                                    ${agg.totalDays}/${agg.workingDays}
+                                </span>
                             </a>
                         </li>
                     </ul>
