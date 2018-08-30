@@ -67,11 +67,11 @@ function update(req, res, next) {
             // we attach the id of the user that updated the request
             savedRequest.approverId = token.id;
 
-            if (status == 'approved') {
+            if (status === 'approved') {
                 worker.queueApprovedLeaveRequest(savedRequest.toObject());
             }
 
-            if (status == 'rejected') {
+            if (status === 'rejected') {
                 worker.queueRejectedLeaveRequest(savedRequest.toObject());
             }
 

@@ -65,19 +65,28 @@ function list(req, res, next) {
 
 function aggregate(req, res, next) {
     Holiday
-    .aggregate([ { $group: {
-        _id: { $year: '$date' },
-        items: { $push: '$$ROOT' },
-        workingDays: {
-            $sum: {
-                $cond: {
-                    if: { $in: [ { $dayOfWeek:{ date:'$date', timezone: 'Europe/Bucharest'} }, {$range: [ 2, 6 ] } ] },
-                    then: 1, else: 0
+    .aggregate([
+        { $sort: { date: 1 } },
+        { $group:{
+            _id: { $year: '$date' },
+            items: { $push: '$$ROOT' },
+            totalDays: { $sum: 1},
+            workingDays: {
+                $sum: {
+                    $cond: {
+                        if: { $in: [
+                            { $dayOfWeek:{ date:'$date', timezone: 'Europe/Bucharest'} },
+                            {$range: [ 2, 6 ] } ]
+                        },
+                        then: 1, else: 0
+                    }
                 }
             }
-        }}}])
-        .then(holidays => res.json(holidays))
-        .catch(e => next(e));
+        }},
+        { $sort: { _id: -1 } }
+    ])
+    .then(holidays => res.json(holidays))
+    .catch(e => next(e));
 }
 
 function remove(req, res, next) {

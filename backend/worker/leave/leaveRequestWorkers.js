@@ -38,12 +38,16 @@ async function handleApprovedLeaveRequest(params, callback) {
         params.employee = user;
         params.approver = approver;
 
+
+        const approvedCopyEmailAddress = process.env.APPROVED_LEAVE_CC_EMAIL || 'hr@APPROVED_LEAVE_CC_EMAIL.com';
+
+
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been APPROVED`;
         const approverEmailSubject = `[${leaveType}] APPROVED Leave request for: ${firstName} ${lastName}`;
 
         Promise.all(
             [
-                smtp.sendMail(email, userEmailSubject, 'approvedLeaveRequest', params),
+                smtp.sendMail(`${email},${approvedCopyEmailAddress}`, userEmailSubject, 'approvedLeaveRequest', params),
                 smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'approvedLeaveRequest', params)
             ])
             .then(info => callback(null, info))
