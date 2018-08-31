@@ -12,16 +12,17 @@ const LeaveRequestSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    approverId: {
-        type: String,
-        required: false
+    approver: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     leaveType: {
         type: String,
         required: true
     },
-    userId: {
-        type: String,
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     status: {
@@ -35,6 +36,10 @@ const LeaveRequestSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    lastUpdatedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 });
 

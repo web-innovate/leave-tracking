@@ -14,9 +14,38 @@
 
                         <spinner show.bind="!allRequests.length"></spinner>
 
-                        <ul class="list-group">
-                            <li repeat.for="request of allRequests"
-                                class="list-group-item ${request.status | computeBadge}">
+                        <ul id="leave-requests" class="list-group">
+                            <div repeat.for="request of allRequests"
+                                 class="list-group-item ${request.status | computeBadge}"
+                                 data-leave-request-id="${request._id}">
+                                <div
+                                        if.bind="request.status !== 'canceled'">
+                                    <button
+                                            type="button"
+                                            class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false">
+                                        Action<span class="caret"></span>
+                                    </button>
+
+
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a
+                                                    data-analytics-category="requests"
+                                                    data-analytics-action="canceled"
+                                                    click.delegate="cancelRequest(request)">Cancel</a>
+                                        </li>
+                                        <!--<li>-->
+                                        <!--<a-->
+                                        <!--data-analytics-category="requests"-->
+                                        <!--data-analytics-action="edit"-->
+                                        <!--click.delegate="editRequest(request)">Reject</a>-->
+                                        <!--</li>-->
+                                    </ul>
+                                </div>
+
                                 <span>
                                     ${request.workDays | days}
                                 </span>
@@ -26,7 +55,7 @@
                                 </span>
                                 | ${request.leaveType | humanizeLeave}
                                 <span class="badge badge-pill">${request.status}</span>
-                            </li>
+                                </li>
                         </ul>
                     </div>
                 </div>
@@ -40,12 +69,12 @@
 
                     <div class="panel-body">
 
-                     <chart id="dynamic-doughnut-chart"
-                            style="display: block;"
-                            type="doughnut"
-                            should-update="true"
-                            throttle="10"
-                            data.bind="statusData"></chart>
+                        <chart id="dynamic-doughnut-chart"
+                               style="display: block;"
+                               type="doughnut"
+                               should-update="true"
+                               throttle="10"
+                               data.bind="statusData"></chart>
 
                     </div>
                 </div>
@@ -54,17 +83,18 @@
     </div>
 
     <footer class="footer">
-      <div class="container">
+        <div class="container">
         <span data-analytics-category="donate" data-analytics-action="click" class="text-muted">
             Keep the project alive
 
             <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
                 <input type="hidden" name="cmd" value="_s-xclick">
                 <input type="hidden" name="hosted_button_id" value="854S7CN3W64YL">
-                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0"
+                       name="submit" alt="PayPal - The safer, easier way to pay online!">
                 <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
             </form>
         </span>
-      </div>
+        </div>
     </footer>
 </template>

@@ -5,3 +5,5 @@ scripts
 backend/dist
 frontend/font-awesome
 data/mongo
+datas/mongo
+.idea

@@ -7,7 +7,6 @@ import environment from '~/environment';
 @inject(NotificationService)
 export class ApiService {
     constructor(_notify) {
-        console.log('env>>', environment)
         // const backendURL = 'http://localhost:4040/api/';
         // const backendURL = 'https://be-leave-tracking.herokuapp.com/api/';
         const backendURL = environment.API_URL;

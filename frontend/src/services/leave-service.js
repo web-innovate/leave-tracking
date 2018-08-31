@@ -83,6 +83,10 @@ export class LeaveService {
         return this.fetch('leaves/rejected');
     }
 
+    getCanceledRequests() {
+        return this.fetch('leaves/canceled');
+    }
+
     updateLeaveRequestStatus(request, status) {
         request.status = status;
         return this.http.put(`leaves/${request._id}`, request);

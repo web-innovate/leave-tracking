@@ -5,6 +5,7 @@ import User from '../models/user.model';
 import Project from '../models/project.model';
 import worker from '../../worker/worker';
 import APIError from '../helpers/APIError';
+import {USER_TYPES} from '../helpers/constants';
 
 function load(req, res, next, id) {
     LeaveRequest.get(id)
@@ -21,21 +22,26 @@ function get(req, res) {
 }
 
 async function create(req, res, next) {
-    const { token } = req;
+    const {token} = req;
+
+    const user = await User.findOne({_id: token.id});
+
+
     const leave = new LeaveRequest(
         {
             start: req.body.start,
             end: req.body.end,
             leaveType: req.body.leaveType,
-            userId: token.id,
+            user: user,
             status: req.body.status,
-            workDays: req.body.workDays
+            workDays: req.body.workDays,
+            lastUpdatedBy: user
         });
 
     const pendingAndApproved = await LeaveRequest
         .find({
-            userId: token.id ,
-            $or: [{ status: 'approved' }, { status: 'pending' }]
+            user: { _id: token.id },
+            $or: [{status: 'approved'}, {status: 'pending'}]
         });
 
     const overlapFound = pendingAndApproved.some(item => checkForOverlap(item, leave, next));
@@ -54,18 +60,24 @@ async function create(req, res, next) {
         .catch(e => next(e));
 }
 
-function update(req, res, next) {
-    const { token } = req;
+async function update(req, res, next) {
+    const {token} = req;
     const leave = req.leaveRequest;
 
     leave.status = req.body.status;
 
+    const lastUpdatedBy = await User.findOne({_id: token.id});
+
+    leave.lastUpdatedBy = lastUpdatedBy;
+
     leave.save()
         .then(savedRequest => {
-            const { leaveType, status, userId, workDays } = savedRequest;
+            const {leaveType, status, userId, workDays} = savedRequest;
 
             // we attach the id of the user that updated the request
-            savedRequest.approverId = token.id;
+            if (lastUpdatedBy.userType === 'approver') {
+                savedRequest.approver = lastUpdatedBy;
+            }
 
             if (status === 'approved') {
                 worker.queueApprovedLeaveRequest(savedRequest.toObject());
@@ -73,6 +85,10 @@ function update(req, res, next) {
 
             if (status === 'rejected') {
                 worker.queueRejectedLeaveRequest(savedRequest.toObject());
+            }
+
+            if (status === 'canceled') {
+                worker.queueCanceledLeaveRequest(savedRequest.toObject());
             }
 
             // decrease the remaining days only for annual leave
@@ -89,6 +105,10 @@ function update(req, res, next) {
                             usr.pending -= workDays;
                         }
 
+                        if (status === 'canceled') {
+                            usr.pending -= workDays;
+                        }
+
                         return usr.save()
                             .then(() => res.json(savedRequest));
                     });
@@ -100,22 +120,23 @@ function update(req, res, next) {
 }
 
 function list(req, res, next) {
-    const { limit = 50, skip = 0 } = req.query;
-    LeaveRequest.list({ limit, skip })
+    const {limit = 50, skip = 0} = req.query;
+    LeaveRequest.list({limit, skip})
         .then(users => res.json(users))
         .catch(e => next(e));
 }
 
 function getForUser(req, res, next) {
-    const { userId } = req.params;
+    const {userId} = req.params;
 
-    LeaveRequest.find({ userId })
+    LeaveRequest.find({userId})
+        .populate({path: 'lastUpdatedBy', select: '_id userType'})
         .then(leaves => res.json(leaves))
         .catch(e => next(e));
 }
 
 function updateUserData(savedLeave, res) {
-    const { leaveType, userId, workDays, status } = savedLeave;
+    const {leaveType, userId, workDays, status} = savedLeave;
 
     if (leaveType === 'annual-leave' && status === 'pending') {
         return User.get(userId)
@@ -133,7 +154,7 @@ function updateUserData(savedLeave, res) {
 function checkForOverlap(item, leave, next) {
     const currentStart = moment(leave.start);
     const currentEnd = moment(leave.end);
-    let { start, end } = item;
+    let {start, end} = item;
 
     start = moment(start);
     end = moment(end);
@@ -155,7 +176,7 @@ function checkForOverlap(item, leave, next) {
 }
 
 function pending(req, res, next) {
-    const { token } = req;
+    const {token} = req;
 
     fetchLeaves(token.id, 'pending')
         .then(pendingLeaves => res.json(pendingLeaves))
@@ -163,7 +184,7 @@ function pending(req, res, next) {
 }
 
 function approved(req, res, next) {
-    const { token } = req;
+    const {token} = req;
 
     fetchLeaves(token.id, 'approved')
         .then(approvedLeaves => res.json(approvedLeaves))
@@ -171,7 +192,7 @@ function approved(req, res, next) {
 }
 
 function rejected(req, res, next) {
-    const { token } = req;
+    const {token} = req;
 
     fetchLeaves(token.id, 'rejected')
         .then(rejectedLeaves => res.json(rejectedLeaves))
@@ -179,22 +200,32 @@ function rejected(req, res, next) {
 }
 
 async function fetchLeaves(userId, status) {
-    const projectsQuery = { approvers: { $in: [userId] } };
-    const projectsICanApprove = await fetchProjects(projectsQuery);
 
-    let usersICanApprove = await Promise.all(projectsICanApprove.map(async projectId => {
-        return await Promise.all(fetchUsers(projectId));
-    }));
+    const user = await User.findOne({_id: userId});
 
-    usersICanApprove = _.flatten(usersICanApprove);
+    if (user.userType === USER_TYPES.ADMIN) {
+        return LeaveRequest.find({status})
+            .populate({path: 'lastUpdatedBy', select: '_id userType firstName lastName email'});
 
-    const leaveQuery = { status, userId: { $in: usersICanApprove } };
+    } else {
 
-    return LeaveRequest.find(leaveQuery);
+        const projectsQuery = {approvers: {$in: [userId]}};
+        const projectsICanApprove = await fetchProjects(projectsQuery);
+
+        let usersICanApprove = await Promise.all(projectsICanApprove.map(async projectId => {
+            return await Promise.all(fetchUsers(projectId));
+        }));
+
+        usersICanApprove = _.flatten(usersICanApprove);
+
+        const leaveQuery = {status, userId: {$in: usersICanApprove}};
+
+        return LeaveRequest.find(leaveQuery);
+    }
 }
 
 function fetchUsers(projectId) {
-    return User.find({ projectId })
+    return User.find({projectId})
         .then(users => users.map(u => u._id));
 }
 
@@ -203,4 +234,12 @@ function fetchProjects(query) {
         .then(projects => projects.map(p => p._id));
 }
 
-export default { load, get, create, update, list, getForUser, pending, approved, rejected };
+function canceled(req, res, next) {
+    const { token } = req;
+
+    fetchLeaves(token.id, 'canceled')
+        .then(pendingLeaves => res.json(pendingLeaves))
+        .catch(e => next(e));
+}
+
+export default {load, get, create, update, list, getForUser, pending, approved, rejected, canceled};
