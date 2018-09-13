@@ -15,6 +15,8 @@ export class EditUser extends BaseUser {
     async fetchData(params) {
         const user = await this._user.getUser(params.userId);
         this.user = user;
+        this.user.projectId = user.project._id;
+        this.user.position = user.position;
         this.user.submit = this.save.bind(this);
 
         await this.fetchProjectRoles(this.user.projectId);

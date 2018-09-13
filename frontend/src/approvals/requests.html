@@ -11,21 +11,31 @@
         <li repeat.for="request of requests"
             class="list-group-item ${request.status | computeBadge}">
             <div
-                if.bind="request.status == 'pending'"
-                class="btn-group">
+                    if.bind="request.status == 'pending'"
+                    class="btn-group">
 
                 <button
-                    type="button"
-                    class="btn btn-default dropdown-toggle"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false">
-                Action<span class="caret"></span>
+                        type="button"
+                        class="btn btn-default dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                    Action<span class="caret"></span>
                 </button>
 
                 <ul class="dropdown-menu">
-                    <li><a click.delegate="approveRequest(request)">Approve</a></li>
-                    <li><a click.delegate="rejectRequest(request)">Reject</a></li>
+                    <li>
+                        <a
+                                data-analytics-category="approvals"
+                                data-analytics-action="approved"
+                                click.delegate="approveRequest(request)">Approve</a>
+                    </li>
+                    <li>
+                        <a
+                                data-analytics-category="approvals"
+                                data-analytics-action="rejected"
+                                click.delegate="rejectRequest(request)">Reject</a>
+                    </li>
                 </ul>
             </div>
 
@@ -39,8 +49,14 @@
                 - ${request.end | dateFormat}
             </span>
             | ${request.leaveType | humanizeLeave}
-            <span if.bind="request.status != 'pending'" class="badge badge-pill">
-                ${request.status}
+            <!--<span if.bind="request.status !== 'pending'" class="badge badge-pill">-->
+            <!--${request.status}-->
+            <!--</span>-->
+            <span if.bind="request.status !== 'pending' && request.lastUpdatedBy" class="badge badge-pill">
+                Updated By
+                ${request.lastUpdatedBy.firstName}
+                ${request.lastUpdatedBy.lastName}
+                (${request.lastUpdatedBy.email})
             </span>
         </li>
     </ul>

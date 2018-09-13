@@ -2,6 +2,7 @@ import md5 from 'md5';
 
 export class UserModel {
     constructor(data) {
+        console.log('da0', data)
         Object.assign(this, data);
     }
 

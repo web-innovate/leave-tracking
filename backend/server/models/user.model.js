@@ -45,9 +45,9 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    projectId: {
-        type: String,
-        required: false
+    project: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project'
     },
     userType: {
         type: String,

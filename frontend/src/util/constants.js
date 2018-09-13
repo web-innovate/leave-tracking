@@ -1,8 +1,9 @@
 export const REQUEST_STATUS = {
     APPROVED: 'approved',
     REJECTED: 'rejected',
-    PENDING: 'pending'
-}
+    PENDING: 'pending',
+    CANCELLED: 'canceled'
+};
 
 export const LEAVE_TYPES = {
     ANNUAL: 'annual-leave',
@@ -13,7 +14,7 @@ export const LEAVE_TYPES = {
     HALF_DAY: 'half-day-leave',
     BEREAVEMENT_LEAVE: 'bereavement-leave',
     MARRIAGE_LEAVE: 'marriage-leave'
-}
+};
 
 export const HUMAN_LEAVE_TYPES = {
     'annual-leave': 'Annual Leave',
@@ -24,4 +25,4 @@ export const HUMAN_LEAVE_TYPES = {
     'half-day-leave': 'Half Day Off',
     'bereavement-leave': 'Bereavement Leave',
     'marriage-leave': 'Marriage Leave'
-}
+};

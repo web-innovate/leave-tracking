@@ -7,7 +7,6 @@ const HolidaySchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        index: { unique: true }
     },
     description: {
         type: String,
@@ -15,7 +14,8 @@ const HolidaySchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        required: true
+        required: true,
+        index: { unique: true }
     },
     createdAt: {
         type: Date,

@@ -9,15 +9,18 @@
                 </div>
 
                 <div class="panel-body">
-                    <ul  class="nav nav-pills">
+                    <ul class="nav nav-pills">
                         <li class="active">
-                            <a  href="#pending" data-toggle="tab">Pending</a>
+                            <a href="#pending" data-toggle="tab">Pending</a>
                         </li>
                         <li>
                             <a href="#approved" data-toggle="tab">Approved</a>
                         </li>
                         <li>
                             <a href="#rejected" data-toggle="tab">Rejected</a>
+                        </li>
+                        <li>
+                            <a href="#canceled" data-toggle="tab">Canceled</a>
                         </li>
                     </ul>
                     <hr></hr>
@@ -33,6 +36,10 @@
 
                         <div class="tab-pane" id="rejected">
                             <requests requests.bind="allRejectedRequests" loading.bind="rejectedLoading"></requests>
+                        </div>
+
+                        <div class="tab-pane" id="canceled">
+                            <requests requests.bind="allCanceledRequests" loading.bind="canceledLoading"></requests>
                         </div>
                     </div>
                 </div>

@@ -6,8 +6,8 @@ const config = {
     port: process.env.SMTP_PORT || 587,
     secure: process.env.SMTP_SECURE || false,
     auth: {
-        user: process.env.SMTP_USER || 'uhzdcegtgaxt427t@ethereal.email',
-        pass: process.env.SMTP_PASSWORD || 'cR48DwNMD3ncEwykrG'
+        user: process.env.SMTP_USER || 'tsqkdxlesjay6lbl@ethereal.email',
+        pass: process.env.SMTP_PASSWORD || 'ubksRq4EdAp7MHjtFP'
     }
 };
 

@@ -7,28 +7,33 @@ const ProjectSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        index: { unique: true }
+        index: {unique: true}
     },
-    approvers: {
-        type: [ String ],
-        required: true
-    },
+    approvers: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        }
+    ],
     description: {
         type: String,
         required: true
     },
-    roles: {
-        type: [ String ],
-        required: true
-    },
+    roles: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'ProjectRole',
+            required: true
+        }
+    ],
     createdAt: {
         type: Date,
         default: Date.now
     }
 });
 
-ProjectSchema.method({
-});
+ProjectSchema.method({});
 
 ProjectSchema.statics = {
     get(id) {
@@ -43,9 +48,9 @@ ProjectSchema.statics = {
             });
     },
 
-    list({ skip = 0, limit = 50 } = {}) {
+    list({skip = 0, limit = 50} = {}) {
         return this.find()
-            .sort({ createdAt: -1 })
+            .sort({createdAt: -1})
             .skip(+skip)
             .limit(+limit)
             .exec();

@@ -8,7 +8,8 @@ function load(req, res, next, id) {
         return null;
     }
 
-    Project.get(id)
+    Project.findOne({_id: id})
+        .populate('roles')
         .then((project) => {
             req.project = project;
             next();
@@ -49,7 +50,8 @@ function update(req, res, next) {
 
 function list(req, res, next) {
     const { limit = 50, skip = 0 } = req.query;
-    Project.list({ limit, skip })
+    Project.find()
+        .populate('roles')
         .then(projects => res.json(projects))
         .catch(e => next(e));
 }

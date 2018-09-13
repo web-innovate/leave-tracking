@@ -16,6 +16,42 @@ import APIError from '../server/helpers/APIError';
 
 const app = express();
 
+
+const expressSwagger = require('express-swagger-generator')(app);
+
+
+let options = {
+    swaggerDefinition: {
+        info: {
+            description: 'This is a sample server',
+            title: 'Swagger',
+            version: '1.0.0',
+        },
+        host: '192.168.25.64:4040',
+        basePath: '/api',
+        produces: [
+            "application/json",
+            "application/xml"
+        ],
+        schemes: ['http', 'https'],
+        securityDefinitions: {
+            JWT: {
+                type: 'apiKey',
+                in: 'header',
+                name: 'Authorization',
+                description: "",
+            }
+        }
+    },
+    basedir: __dirname, //app absolute path
+    files: ['../**/routes/**/*.js'] //Path to the API handle folder
+};
+
+console.log('io', options)
+
+expressSwagger(options)
+
+
 if (config.env === 'development') {
     app.use(logger('dev'));
 }

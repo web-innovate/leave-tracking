@@ -19,10 +19,21 @@
         </div>
 
         <div class="input-group pull-right">
-            <button type="submit" disabled.bind="canSave" class="btn btn-primary">
+            <button
+                data-analytics-category="project-role"
+                data-analytics-action="create/update"
+                data-analytics-label="${ctaButtonLabel}"
+                type="submit"
+                disabled.bind="canSave"
+                class="btn btn-primary">
                 ${ctaButtonLabel}
             </button>
-            <button if.bind="isEdit" click.delegate="deleteProjectRole()" class="btn btn-danger">
+            <button
+                data-analytics-category="project-role"
+                data-analytics-action="delete"
+                if.bind="isEdit"
+                click.delegate="deleteProjectRole()"
+                class="btn btn-danger">
                 Delete
             </button>
         </div>

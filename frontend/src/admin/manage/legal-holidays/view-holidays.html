@@ -1,31 +1,53 @@
 <template>
     <spinner if.bind="loading"></spinner>
 
-    <div if.bind="!loading" class="bootcards-list">
-        <div class="panel panel-default">
-            <div class="list-group" >
-                <a class="list-group-item" repeat.for="holiday of holidays"
-                    href="#/admin/holidays/${holiday._id}/edit">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <h4 class="list-group-item-heading">
-                                ${holiday.name}
-                            </h4>
-                        </div>
+    <div if.bind="!loading" class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="list-group panel-body">
+                    <ul  class="nav nav-pills">
+                        <li class="${$index === 0 ? 'active': ''}" repeat.for="agg of aggregatedHolidays">
+                            <a  href="#${agg._id}" data-toggle="tab">
+                                ${agg._id}
+                                <span class="badge badge-light" title="total work days">
+                                    ${agg.totalDays}/${agg.workingDays}
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <hr/>
 
-                        <div class="col-sm-4">
-                            <p class="list-group-item-text">
-                                ${holiday.description}
-                            </p>
-                        </div>
+                    <div class="tab-content list-group">
+                        <div
+                            repeat.for="agg of aggregatedHolidays"
+                            class="tab-pane ${$index === 0 ? 'active': ''}"
+                            id="${agg._id}">
 
-                        <div class="col-sm-4">
-                            <p class="list-group-item-text">
-                                ${holiday.date | dateFormat}
-                            </p>
+                            <a class="list-group-item" repeat.for="holiday of agg.items"
+                                href="#/admin/holidays/${holiday._id}/edit">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <h4 class="list-group-item-heading">
+                                            ${holiday.name}
+                                        </h4>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <p class="list-group-item-text">
+                                            ${holiday.description}
+                                        </p>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <p class="list-group-item-text">
+                                            ${holiday.date | dateFormat}
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
         </div>
     </div>
