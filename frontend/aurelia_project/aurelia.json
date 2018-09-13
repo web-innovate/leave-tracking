@@ -270,12 +270,6 @@
             "path": "../node_modules/aurelia-google-analytics/dist/amd",
             "main": "index"
 
-          },
-
-          {
-            "name": "bootstrap-confirmation2",
-            "path": "../node_modules/bootstrap-confirmation2/dist",
-            "main": "bootstrap-confirmation"
           }
         ]
       }
