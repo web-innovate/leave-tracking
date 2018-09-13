@@ -5,7 +5,7 @@ import User from '../models/user.model';
 import Project from '../models/project.model';
 import worker from '../../worker/worker';
 import APIError from '../helpers/APIError';
-import {USER_TYPES} from "../helpers/Constants";
+import {USER_TYPES} from '../helpers/Constants';
 
 function load(req, res, next, id) {
     LeaveRequest.get(id)
@@ -193,8 +193,7 @@ function rejected(req, res, next) {
 async function fetchLeaves(userId, status) {
     const user = await User.findOne({_id: userId});
     if (user.userType === USER_TYPES.ADMIN) {
-        console.log('user is admin')
-        return LeaveRequest.find({status})
+        return LeaveRequest.find({status});
     } else {
         const projectsQuery = {approvers: {$in: [userId]}};
         const projectsICanApprove = await fetchProjects(projectsQuery);
