@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "au build --env prod && node server.js",
-    "dev": "au run --env dev --watch"
+    "dev": "au run --env dev --watch",
+    "lint": "esw *.js src --color"
   },
   "license": "MIT",
   "dependencies": {
@@ -79,6 +80,10 @@
     "through2": "^2.0.1",
     "uglify-js": "^2.6.3",
     "underscore": "^1.8.3",
-    "vinyl-fs": "^2.4.3"
+    "vinyl-fs": "^2.4.3",
+    "eslint": "3.16.1",
+    "eslint-config-airbnb-base": "7.1.0",
+    "eslint-plugin-import": "1.16.0",
+    "eslint-watch": "2.1.14"
   }
 }
