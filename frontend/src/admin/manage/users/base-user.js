@@ -1,16 +1,13 @@
-import { inject } from 'aurelia-framework';
-import { Router } from 'aurelia-router';
-import { UserService } from '~/services/user-service';
-import { ProjectService } from '~/services/project-service';
-import { ProjectRoleService } from '~/services/project-role-service';
-import {
-    ValidationRules,
-    ValidationControllerFactory,
-    validateTrigger
-} from 'aurelia-validation';
-import { BootstrapFormRenderer } from '~/components/validation/bootstrap-form-renderer';
-import { compareObjects, setupValidationControllers } from '~/util/utils';
-import { MultiObserver } from '~/util/multi-observer';
+import {inject} from 'aurelia-framework';
+import {Router} from 'aurelia-router';
+import {UserService} from '~/services/user-service';
+import {ProjectService} from '~/services/project-service';
+import {ProjectRoleService} from '~/services/project-role-service';
+import {validateTrigger, ValidationControllerFactory, ValidationRules} from 'aurelia-validation';
+import _ from 'underscore';
+import {BootstrapFormRenderer} from '~/components/validation/bootstrap-form-renderer';
+import {compareObjects, setupValidationControllers} from '~/util/utils';
+import {MultiObserver} from '~/util/multi-observer';
 import moment from 'moment';
 
 let attachObserver = true;
@@ -29,7 +26,6 @@ export default class BaseUser {
     constructor(_user, _project, _projectRole, router, controllerFactory, _observe) {
         this._user = _user;
         this._project = _project;
-        this._projectRole = _projectRole;
         this.router = router;
         this._observe = _observe;
         this.originalUser = {};
@@ -48,20 +44,29 @@ export default class BaseUser {
             .ensure('holidays').satisfiesRule('integerRange', 0, 500)
             .ensure('position').satisfiesRule('otherThan', 'None', true)
             .ensure('userType').satisfiesRule('otherThan', 'None')
-            .ensure('projectId').satisfiesRule('otherThan', 'None', true)
+            .ensure('projectId')
+                .satisfies(obj => {
+                    this.fetchProjectRoles(obj);
+                    return true;
+                })
+                .satisfiesRule('otherThan', 'None', true)
             .on(this.user);
 
-        if (attachObserver) {
-            attachObserver = false;
-            this._observe.observe([
-                    [this.user, 'projectId']
-                ],
-                projectId => this.fetchProjectRoles(projectId));
-        }
+        // if (attachObserver) {
+        //     attachObserver = false;
+        //     this._observe.observe([
+        //             [this.user, 'projectId']
+        //         ],
+        //         projectId => this.fetchProjectRoles(projectId));
+        // }
     }
 
-    unbind() {
-        attachObserver = true;
+    // unbind() {
+    //     attachObserver = true;
+    // }
+
+    populateRoles() {
+        console.log('>>>>>>>>>>>>>')
     }
 
     get canSave() {
@@ -105,6 +110,8 @@ export default class BaseUser {
     }
 
     submit() {
+        this.user.project = { _id: _.where(this.projects, {_id: this.user.projectId})[0]._id };
+
         return this.controller.validate()
             .then(result => result.valid && this.user.submit());
     }
@@ -113,11 +120,15 @@ export default class BaseUser {
         if (projectId === 'None' || projectId === '') {
             return this.roles = [];
         }
-        const { roles }  = await this._project.getProject(projectId);
-        const dataRoles = await
-            Promise.all(roles.map(async role => this._projectRole.getProjectRole(role)));
 
-        this.roles = dataRoles;
+        //
+        // console.log('ddd', this.projects)
+        // const { roles }  = _.where(this.projects, {_id: projectId})[0];
+        //
+        // console.log('>>>a',_.where(this.projects, {_id: projectId})[0].roles)
+
+        this.roles = this.user.project.roles || _.where(this.projects, {_id: projectId })[0].roles;
+
     }
 
     sanitizeFields(user) {

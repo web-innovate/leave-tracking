@@ -4,7 +4,8 @@ import worker from '../../worker/worker';
 import _ from 'lodash';
 
 function load(req, res, next, id) {
-    User.get(id)
+    User.findOne({ _id: id })
+        .populate('project')
         .then((user) => {
             req.user = user;
             next();
@@ -26,7 +27,7 @@ function create(req, res, next) {
         password,
         holidays,
         position,
-        projectId,
+        project,
         daysPerYear,
         userType
     } = req.body;
@@ -39,7 +40,7 @@ function create(req, res, next) {
         password,
         holidays,
         position,
-        projectId,
+        project,
         daysPerYear,
         userType
     });
@@ -74,7 +75,7 @@ function update(req, res, next) {
     user.daysPerYear = req.body.daysPerYear;
     user.holidays = req.body.holidays;
     user.position = req.body.position;
-    user.projectId = req.body.projectId;
+    user.project = req.body.project;
     user.userType = req.body.userType;
 
     user.save()
@@ -82,7 +83,7 @@ function update(req, res, next) {
         .catch(e => next(e));
 }
 
-function list(req, res, next) {
+async function list(req, res, next) {
 
     const { limit = 50, skip = 0, name, fields, userType } = req.query;
 
@@ -104,8 +105,16 @@ function list(req, res, next) {
         ];
     }
 
-    User.list(queryOptions)
-        .then(users => res.json(users))
+        // User.list(queryOptions)
+        User.find()
+            .populate('project')
+        .then(users => {
+            // users.forEach(async user => {
+            //    const some = await user.populate('project')
+            //     console.log('>>>>', some)
+            // })
+            res.json(users)
+        })
         .catch(e => next(e));
 }
 
