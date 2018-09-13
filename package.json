@@ -3,8 +3,8 @@
     "node": "8"
   },
   "scripts": {
-    "install": "cd ./frontend && yarn install && cd ../backend && yarn install",
+    "install": "cd ./frontend && npm install && cd ../backend && npm install",
     "build-projects": "cd ./frontend && au build --env prod && cd ../backend && gulp",
-    "lint-projects": "cd ./backend && yarn lint"
+    "lint-projects": "cd ./backend && npm lint"
   }
 }

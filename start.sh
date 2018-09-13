@@ -3,8 +3,8 @@
 if [ $GOAL = "FE" ]
 then
     echo 'Starting FRONTEND'
-    cd frontend &&  yarn start
+    cd frontend &&  npm start
 else
     echo 'Starting BACKEND'
-    cd backend  && yarn start
+    cd backend  && npm start
 fi
