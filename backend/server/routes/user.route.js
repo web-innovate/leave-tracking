@@ -5,7 +5,7 @@ import userCtrl from '../controllers/user.controller';
 import leaveCtrl from '../controllers/leave-request.controller';
 import expressAuth from '../helpers/ExpressAuth';
 import permit from './permission';
-import { USER_TYPES } from '../helpers/constants';
+import { USER_TYPES } from '../helpers/Constants';
 
 const { ADMIN } = USER_TYPES;
 const router = express.Router();
