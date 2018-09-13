@@ -6,5 +6,5 @@ then
     cd frontend &&  npm start
 else
     echo 'Starting BACKEND'
-    cd backend  && npm start
+    cd backend  && npm run build && node dist/index.js
 fi
