@@ -18,7 +18,7 @@ router.route('/')
     .post(permit(ADMIN), validate(paramValidation.createHoliday), holidayCtrl.create);
 
 router.route('/aggregate')
-    .get(permit(ADMIN), holidayCtrl.aggregate)
+    .get(permit(ADMIN), holidayCtrl.aggregate);
 
 router.route('/:holidayId')
     .get(permit(), holidayCtrl.get)

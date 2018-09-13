@@ -27,6 +27,9 @@ router.route('/approved')
 router.route('/rejected')
     .get(permit(APPROVER, ADMIN), leaveCtrl.rejected);
 
+router.route('/canceled')
+    .get(permit(APPROVER, ADMIN), leaveCtrl.canceled);
+
 router.route('/:leaveId')
     .get(permit(ADMIN), leaveCtrl.get)
     .put(permit(APPROVER, ADMIN), leaveCtrl.update);

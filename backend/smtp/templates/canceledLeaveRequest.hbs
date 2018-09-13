@@ -1,0 +1,32 @@
+{{#with approver}}
+    <h1>Leave request has been CANCELED by {{ firstName }} {{ lastName }} : {{ email }}</h1>
+{{/with}}
+
+{{#with employee}}
+    <h2>Employee: {{ firstName }} {{ lastName }} : {{ email }}</h2>
+{{/with}}
+
+<p>
+    Start Date: <strong>{{ start }}</strong>
+</p>
+
+<p>
+    End Date: <strong>{{ end }}</strong>
+</p>
+
+<p>
+    Status <strong>{{ status }}</strong>
+</p>
+
+<p>
+    No. of working days: <strong>{{ workDays }}</strong>
+</p>
+
+<p>
+    Created at: <strong>{{ createdAt }}</strong>
+</p>
+
+
+<p>
+    Project: <strong>{{ projectName }}</strong>
+</p>

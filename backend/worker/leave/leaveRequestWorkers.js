@@ -81,6 +81,28 @@ async function handleRejectedLeaveRequest(params, callback) {
     }
 }
 
+async function handleCanceledLeaveRequest(params, callback) {
+    try {
+        const { leaveType } = params;
+        const { user, project, approver, approversData, approversEmails } = await getAndAgredateLeaveRequestData(params);
+        const { email, firstName, lastName } = user;
+        params.projectName = project.name;
+        params.approvers = approversData;
+        params.employee = user;
+        params.approver = approver;
+        const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been CANCELED`;
+        const approverEmailSubject = `[${leaveType}] CANCELED Leave request for: ${firstName} ${lastName}`;
+        Promise.all(
+            [
+                smtp.sendMail(email, userEmailSubject, 'canceledLeaveRequest', params),
+                smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'canceledLeaveRequest', params)
+            ])
+            .then(info => callback(null, info))
+    } catch(error) {
+        return callback(error);
+    }
+}
+
 function getUserDetails(_id) {
     return User.findOne({ _id }).then(result => stripSensitiveData(result));
 }
@@ -128,4 +150,4 @@ async function getAndAgredateLeaveRequestData(params) {
     };
 }
 
-export default { handleNewLeaveRequest, handleApprovedLeaveRequest, handleRejectedLeaveRequest };
+export default { handleNewLeaveRequest, handleApprovedLeaveRequest, handleRejectedLeaveRequest, handleCanceledLeaveRequest };

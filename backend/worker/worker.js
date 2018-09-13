@@ -18,7 +18,8 @@ class Worker {
             PASSWORD_RESET: 'process_password_reset',
             NEW_LEAVE: 'process_new_leave_request',
             APPROVED_LEAVE: 'process_approved_leave_request',
-            REJECTED_LEAVE: 'process_rejected_leave_request'
+            REJECTED_LEAVE: 'process_rejected_leave_request',
+            CANCELED_LEAVE: 'process_canceled_leave_request'
         };
     }
 
@@ -74,6 +75,11 @@ class Worker {
         queue.enqueue(this.PROCESS_EVENTS.REJECTED_LEAVE, data, () => {});
     }
 
+    queueCanceledLeaveRequest(data) {
+        const queue = this.client.queue(this.QUEUE_EVENTS.LEAVE);
+        queue.enqueue(this.PROCESS_EVENTS.CANCELED_LEAVE, data, () => {});
+    }
+
     registerWorkers() {
         this.registerUserWorkers();
         this.registerLeaveRequestWorkers();
@@ -97,7 +103,8 @@ class Worker {
         worker.register({
             process_new_leave_request: leaveWorkers.handleNewLeaveRequest,
             process_approved_leave_request: leaveWorkers.handleApprovedLeaveRequest,
-            process_rejected_leave_request: leaveWorkers.handleRejectedLeaveRequest
+            process_rejected_leave_request: leaveWorkers.handleRejectedLeaveRequest,
+            process_canceled_leave_request: leaveWorkers.handleCanceledLeaveRequest
         });
 
         this.workers.push(worker);
