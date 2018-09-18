@@ -15,6 +15,10 @@ export class Requests {
         return this._leave.updateLeaveRequestStatus(request, REQUEST_STATUS.APPROVED);
     }
 
+    cancelRequest(request) {
+        return this._leave.updateLeaveRequestStatus(request, REQUEST_STATUS.CANCELLED);
+    }
+
     rejectRequest(request) {
         return this._leave.updateLeaveRequestStatus(request, REQUEST_STATUS.REJECTED);
     }
