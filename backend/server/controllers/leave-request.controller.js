@@ -59,6 +59,7 @@ async function update(req, res, next) {
     const {token} = req;
     const leave = req.leaveRequest;
 
+    leave.leaveType = req.body.leaveType;
     leave.status = req.body.status;
 
     const lastUpdatedBy = await User.findOne({_id: token.id});

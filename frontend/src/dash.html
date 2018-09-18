@@ -34,15 +34,15 @@
                                         <li>
                                             <a
                                                     data-analytics-category="requests"
-                                                    data-analytics-action="canceled"
+                                                    data-analytics-action="cancel"
                                                     click.delegate="cancelRequest(request)">Cancel</a>
                                         </li>
-                                        <!--<li>-->
-                                        <!--<a-->
-                                        <!--data-analytics-category="requests"-->
-                                        <!--data-analytics-action="edit"-->
-                                        <!--click.delegate="editRequest(request)">Reject</a>-->
-                                        <!--</li>-->
+                                        <li>
+                                            <a
+                                                    data-analytics-category="requests"
+                                                    data-analytics-action="edit"
+                                                    href="#/add-request/${request._id}/edit">Edit</a>
+                                        </li>
                                     </ul>
                                 </div>
 

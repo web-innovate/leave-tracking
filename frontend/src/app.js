@@ -60,6 +60,17 @@ export class App {
                 auth: true
             },
             {
+                route: ['add-request/:requestId/edit'],
+                name: 'edit-request',
+                moduleId: './add-request/edit-request',
+                nav: false,
+                title:'Edit request',
+                settings: {
+                    icon: 'time'
+                },
+                auth: true
+            },
+            {
                 route: 'admin',
                 name: 'admin',
                 moduleId: './admin/admin',

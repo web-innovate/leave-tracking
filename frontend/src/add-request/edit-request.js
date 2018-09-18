@@ -21,27 +21,52 @@ const {
     MARRIAGE_LEAVE } = LEAVE_TYPES;
 
 @inject(LeaveService, UserService, HolidayService, Router)
-export class AddRequest {
+export class EditRequest {
     @bindable sPick;
     @bindable ePick;
     @bindable leaveType;
 
-   constructor(_leave, _user, _holiday, router) {
+    constructor(_leave, _user, _holiday, router) {
         this._leave = _leave;
         this._user = _user;
         this._holiday = _holiday;
         this.router = router;
     }
 
+    async activate(params) {
+       console.log(">>><<<", params)
+        this.request = await this._leave.getLeaveRequest(params.requestId);
+
+       console.log('da', this.request)
+        this.selectedLeave = this.request.leaveType;
+        this.start = moment(this.request.start).toDate() ;
+        this.end = moment(this.request.end).toDate();
+        this.dateDiff = this.request.workDays;
+
+        console.log('s',this.start,moment(this.request.start).toDate() )
+        console.log('e',this.end, moment(this.request.end).toDate())
+
+
+    }
+
     attached() {
-        this.disableDates();
-        this.computeDiff();
+        console.log('att', this.request)
+        this.start = moment(this.request.start).toDate() ;
+        this.end = moment(this.request.end).toDate();
+        console.log('spick', this.sPick)
+
+       // this.disableDates();
+        //this.computeDiff();
     }
 
     dateFormat = 'YYYY-MM-DD';
     allowedDate = moment().subtract(1, "days").toDate();
-    start = moment().toDate();
-    end = moment().toDate();
+    start = '';
+    end = '';
+
+
+    // start = moment().toDate();
+    // end = moment().toDate();
     holidays = [];
 
     pickerOptions = {
@@ -69,15 +94,16 @@ export class AddRequest {
     ];
 
     leaveTypeChanged() {
-            this.leaveType.events.onChanged = (e) => {
-                if(this.isHalfDaySelected()) {
-                    this.ePick.methods.date(this.sPick.methods.date().toDate());
-                    this.ePick.methods.disable();
-                } else {
-                    this.ePick.methods.minDate(this.sPick.methods.date().toDate());
-                    this.ePick.methods.enable();
-                }
-            };
+        this.leaveType.events.onChanged = (e) => {
+            console.log('changed', e)
+            if(this.isHalfDaySelected()) {
+                this.ePick.methods.date(this.sPick.methods.date().toDate());
+                this.ePick.methods.disable();
+            } else {
+                this.ePick.methods.minDate(this.sPick.methods.date().toDate());
+                this.ePick.methods.enable();
+            }
+        };
 
     }
 
@@ -106,6 +132,7 @@ export class AddRequest {
     ePickChanged() {
         this.ePick.events.onChange = (e) => {
             this.end = this.ePick.methods.date().toDate();
+            console.log('eee',this.end)
             this.computeDiff();
         }
     }
@@ -139,6 +166,7 @@ export class AddRequest {
             this.start = moment(this.start).startOf('day').toDate();
             this.end = moment(this.end).endOf('day').toDate();
             const leave = {
+                _id :this.request._id,
                 userId: this._user.currentUser.id,
                 leaveType: this.selectedLeave,
                 start: this.start,
@@ -146,7 +174,9 @@ export class AddRequest {
                 workDays: this.dateDiff
             };
 
-            this._leave.addLeaveRequest(leave)
+            console.log('poc', leave)
+
+            this._leave.updateLeaveRequestStatus(leave, this.request.status)
                 .then(() => {
                     this.start = moment().toDate();
                     this.end = moment().toDate();

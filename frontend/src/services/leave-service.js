@@ -15,6 +15,10 @@ export class LeaveService {
         return this.http.get('leaves');
     }
 
+    getLeaveRequest(requestId) {
+        return this.http.get(`leaves/${requestId}`);
+    }
+
     async getCalendarEvents() {
         let leaves = await this.getLeaveRequests();
         // show just the approved leaves
@@ -86,6 +90,7 @@ export class LeaveService {
     getCanceledRequests() {
         return this.fetch('leaves/canceled');
     }
+
     updateLeaveRequestStatus(request, status) {
         request.status = status;
         return this.http.put(`leaves/${request._id}`, request);
