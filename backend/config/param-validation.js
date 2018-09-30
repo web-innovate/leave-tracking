@@ -11,7 +11,7 @@ const updateUserValidations = {
     userType: Joi.string().required()
 };
 
-const createUserValidations = Object.assign({ password: Joi.string().required() }, updateUserValidations)
+const createUserValidations = Object.assign({ password: Joi.string().required() }, updateUserValidations);
 
 const projectValidations = {
     name: Joi.string().required(),

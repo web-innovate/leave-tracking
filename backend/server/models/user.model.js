@@ -61,8 +61,8 @@ const UserSchema = new mongoose.Schema({
     toObject: {
         transform(doc, ret) {
             delete ret.password;
-            ret.fullName = `${ret.firstName} ${ret.lastName}`
-            return ret
+            ret.fullName = `${ret.firstName} ${ret.lastName}`;
+            return ret;
         }
     }
 });
