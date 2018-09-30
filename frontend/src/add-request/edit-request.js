@@ -34,39 +34,25 @@ export class EditRequest {
     }
 
     async activate(params) {
-       console.log(">>><<<", params)
         this.request = await this._leave.getLeaveRequest(params.requestId);
-
-       console.log('da', this.request)
         this.selectedLeave = this.request.leaveType;
         this.start = moment(this.request.start).toDate() ;
         this.end = moment(this.request.end).toDate();
         this.dateDiff = this.request.workDays;
-
-        console.log('s',this.start,moment(this.request.start).toDate() )
-        console.log('e',this.end, moment(this.request.end).toDate())
-
-
     }
 
     attached() {
-        console.log('att', this.request)
         this.start = moment(this.request.start).toDate() ;
         this.end = moment(this.request.end).toDate();
-        console.log('spick', this.sPick)
 
-       // this.disableDates();
-        //this.computeDiff();
+        // this.disableDates();
+        // this.computeDiff();
     }
 
     dateFormat = 'YYYY-MM-DD';
     allowedDate = moment().subtract(1, "days").toDate();
     start = '';
     end = '';
-
-
-    // start = moment().toDate();
-    // end = moment().toDate();
     holidays = [];
 
     pickerOptions = {
@@ -95,8 +81,7 @@ export class EditRequest {
 
     leaveTypeChanged() {
         this.leaveType.events.onChanged = (e) => {
-            console.log('changed', e)
-            if(this.isHalfDaySelected()) {
+            if (this.isHalfDaySelected()) {
                 this.ePick.methods.date(this.sPick.methods.date().toDate());
                 this.ePick.methods.disable();
             } else {
@@ -132,7 +117,6 @@ export class EditRequest {
     ePickChanged() {
         this.ePick.events.onChange = (e) => {
             this.end = this.ePick.methods.date().toDate();
-            console.log('eee',this.end)
             this.computeDiff();
         }
     }
@@ -173,8 +157,6 @@ export class EditRequest {
                 end: this.end,
                 workDays: this.dateDiff
             };
-
-            console.log('poc', leave)
 
             this._leave.updateLeaveRequestStatus(leave, this.request.status)
                 .then(() => {

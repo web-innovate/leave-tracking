@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { inject } from 'aurelia-framework';
-import { REQUEST_STATUS, LEAVE_TYPES, HUMAN_LEAVE_TYPES } from '~/util/constants';
+import { LEAVE_TYPES, HUMAN_LEAVE_TYPES } from '~/util/constants';
 import { ApiService } from './api-service';
 import { UserService } from './user-service';
 
@@ -25,7 +25,7 @@ export class LeaveService {
         leaves = leaves.filter(x => x.status === 'approved');
 
         const events =  await leaves.map(async leave => {
-            const user = await this._user.getUser(leave.userId);
+            const user = await this._user.getUser(leave.userId._id);
             const { leaveType } = leave;
 
             const leaveEvent = {

@@ -26,7 +26,6 @@
                         placeholder="Search for users ..."
                         display-name="fullName"
                         results.two-way="project.approvers & validate"
-                        results-resolver.bind="getUser"
                         data-source.bind="userSource">
                 </type-ahead>
             </div>
@@ -40,31 +39,30 @@
                         placeholder="Search for roles ..."
                         display-name="name"
                         results.two-way="project.roles & validate"
-                        results-resolver.bind="getProjectRole"
                         data-source.bind="projectRoleSource">
                 </type-ahead>
             </div>
         </div>
 
-        <div class="input-group pull-right">
-            <button
-                data-analytics-category="project"
-                data-analytics-action="create/update"
-                data-analytics-label="${ctaButtonLabel}"
-                type="submit"
-                disabled.bind="canSave"
-                class="btn btn-primary">
-                ${ctaButtonLabel}
-            </button>
-            <button
-                data-analytics-category="project"
-                data-analytics-action="delete"
-                if.bind="isEdit"
-                click.delegate="deleteProject()"
-                class="btn btn-danger">
-                Delete
-            </button>
-        </div>
+        <button
+            data-analytics-category="project"
+            data-analytics-action="create/update"
+            data-analytics-label="${ctaButtonLabel}"
+            type="submit"
+            disabled.bind="canSave"
+            class="btn btn-primary col-xs-offset-3">
+            <i class="fa fa-check"></i>
+            ${ctaButtonLabel}
+        </button>
+
+        <button
+            data-analytics-category="project"
+            data-analytics-action="delete"
+            if.bind="isEdit"
+            click.delegate="deleteProject()"
+            class="btn btn-danger pull-right">
+            Delete
+        </button>
     </form>
 
     <div if.bind="users.length">
@@ -72,7 +70,8 @@
         <div if.bind="!loading" class="bootcards-list">
             <div class="panel panel-default">
                 <div class="list-group" >
-                    <a class="list-group-item" repeat.for="user of users">
+                    <a class="list-group-item" repeat.for="user of users"
+                        href="#/admin/users/${user._id}/edit">
                         <div class="row">
                             <div class="col-sm-4">
                                 <img class="fa fa-3x pull-left"

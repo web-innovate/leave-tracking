@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import mongoose from 'mongoose';
 import httpStatus from 'http-status';
 import APIError from '../helpers/APIError';
@@ -21,7 +20,8 @@ const LeaveRequestSchema = new mongoose.Schema({
         required: true
     },
     userId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     status: {
@@ -58,6 +58,7 @@ LeaveRequestSchema.statics = {
 
     list({ skip = 0, limit = 50 } = {}) {
         return this.find()
+            .populate('userId')
             .sort({ createdAt: -1 })
             .skip(+skip)
             .limit(+limit)

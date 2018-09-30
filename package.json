@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "8"
+    "node": ">8"
   },
   "scripts": {
     "install": "cd ./frontend && npm install && cd ../backend && npm install",

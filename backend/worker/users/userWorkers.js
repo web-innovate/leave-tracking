@@ -50,9 +50,7 @@ function createDefaultUser(params, cb) {
                 lastName: 'admin',
                 email: 'admin@admin',
                 password: bcrypt.hashSync('admin', 10),
-                holidays: 99,
-                position: '',
-                projectId: '',
+                holidays: 24,
                 userType: 'ADMIN'
             });
 

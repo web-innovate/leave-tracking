@@ -20,33 +20,31 @@
             <label class="col-xs-3 control-label">Holiday date</label>
             <div class="col-xs-9">
                 <abp-datetime-picker
-                        options.bind="pickerOptions"
-                        element.bind="date"
-                        model.bind="holiday.date">
+                    options.bind="pickerOptions"
+                    element.bind="date"
+                    model.bind="holiday.date">
                 </abp-datetime-picker>
             </div>
         </div>
 
-        <div class="pull-right">
-            <button
+        <button
+            data-analytics-category="legal-holiday"
+            data-analytics-action="create/update"
+            data-analytics-label="${ctaButtonLabel}"
+            class="btn btn-primary col-xs-offset-3"
+            type="submit"
+            disabled.bind="canSave">
+            <i class="fa fa-check"></i>
+            ${ctaButtonLabel}
+        </button>
+
+        <button
             data-analytics-category="legal-holiday"
             data-analytics-action="delete"
             if.bind="isEdit"
             click.delegate="delete()"
-            class="btn btn-danger">
-                Delete
-            </button>
-
-            <button
-                data-analytics-category="legal-holiday"
-                data-analytics-action="create/update"
-                data-analytics-label="${ctaButtonLabel}"
-                class="btn btn-primary"
-                type="submit"
-                disabled.bind="canSave">
-                <i class="fa fa-check"></i>
-                ${ctaButtonLabel}
-            </button>
-        </div>
+            class="btn btn-danger pull-right">
+            Delete
+        </button>
     </form>
 </template>

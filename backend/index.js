@@ -8,19 +8,16 @@ import worker from './worker/worker';
 
 const debug = require('debug')('express-mongoose-es6-rest-api:index');
 
-// make bluebird default Promise
-Promise = require('bluebird'); // eslint-disable-line no-global-assign
-
-// plugin bluebird promise in mongoose
-mongoose.Promise = Promise;
+mongoose.Promise = global.Promise;
 
 // connect to mongo db
 const mongoUri = process.env.MONGO_URI || config.mongo.host;
+const reconnectTries = 5;
 
 mongoose.connect(mongoUri, {
     server: {
         socketOptions: { keepAlive: 1 },
-        reconnectTries: Number.MAX_VALUE
+        reconnectTries
     }
 });
 mongoose.connection.on('error', () => {

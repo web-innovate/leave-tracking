@@ -110,24 +110,22 @@ export default class BaseUser {
     }
 
     async fetchProjectRoles(projectId) {
-        if (projectId === 'None' || projectId === '') {
+        if (projectId === 'None' || !projectId) {
             return this.roles = [];
         }
         const { roles }  = await this._project.getProject(projectId);
-        const dataRoles = await
-            Promise.all(roles.map(async role => this._projectRole.getProjectRole(role)));
 
-        this.roles = dataRoles;
+        this.roles = roles;
     }
 
     sanitizeFields(user) {
         const { position, projectId } = user;
-        if(position === 'None') {
-            user.position = '';
+        if (position === 'None') {
+            delete user.position;
         }
 
-        if(projectId === 'None') {
-            user.projectId = '';
+        if (projectId === 'None') {
+            delete user.projectId;
         }
     }
 }

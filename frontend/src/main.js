@@ -1,5 +1,4 @@
 import environment from '~/environment';
-import moment from 'moment'
 import { setupCustomValidationRules } from '~/components/validation/custom-rules';
 import LogRocket from 'logrocket';
 

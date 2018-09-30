@@ -1,6 +1,5 @@
 import _ from 'lodash';
-import { observable, bindable } from 'aurelia-framework';
-import { UserService } from '~/services/user-service';
+import { bindable } from 'aurelia-framework';
 
 export class TypeAhead {
     @bindable tagsInput;
@@ -25,10 +24,10 @@ export class TypeAhead {
 
     async attached() {
         if (this.results) {
-            await Promise.all(this.results.map(async (result) => {
-               const data = await this.resultsResolver(result);
-               this.selectedData.push(data);
-            }));
+            this.results = this.results.map(result => {
+                this.selectedData.push(result);
+                return result[this.field];
+            });
         }
     }
 

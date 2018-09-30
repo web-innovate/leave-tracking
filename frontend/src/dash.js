@@ -6,6 +6,7 @@ import {REQUEST_STATUS} from "./util/constants";
 
 @inject(UserService, AuthService, LeaveService)
 export class Dash {
+    loading = true;
     allRequests = [];
     allPendingApprovals = [];
 
@@ -36,6 +37,7 @@ export class Dash {
     async activate() {
         await this.leaveRequests();
         await this.populateData();
+        this.loading = false;
     }
 
     async leaveRequests() {
@@ -55,10 +57,7 @@ export class Dash {
     }
 
     isCanceled(request) {
-        // console.log('req', request)
-        const da = request.status === 'canceled'
-        console.log('req', request, da)
-        return da;
+        return request.status === 'canceled';
     }
 
     cancelRequest(request) {

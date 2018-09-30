@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import mongoose from 'mongoose';
 import httpStatus from 'http-status';
 import APIError from '../helpers/APIError';
@@ -19,7 +18,7 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        index: { unique: true }
+        index: true
     },
     password: {
         type: String,
@@ -46,7 +45,8 @@ const UserSchema = new mongoose.Schema({
         required: false
     },
     projectId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project',
         required: false
     },
     userType: {
@@ -57,16 +57,19 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
+}, {
+    toObject: {
+        transform(doc, ret) {
+            delete ret.password;
+            ret.fullName = `${ret.firstName} ${ret.lastName}`
+            return ret
+        }
+    }
 });
-
-UserSchema.method({
-});
-
 
 UserSchema.statics = {
     get(id) {
         return this.findById(id)
-            .exec()
             .then((user) => {
                 if (user) {
                     return user;
@@ -80,8 +83,7 @@ UserSchema.statics = {
         return this.find(extra)
             .sort({ createdAt: -1 })
             .skip(+skip)
-            .limit(+limit)
-            .exec();
+            .limit(+limit);
     }
 };
 

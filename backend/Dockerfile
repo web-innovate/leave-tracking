@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:10-alpine
 
 LABEL maintainer="Bogdan Livadariu <bogdan.livadariu@gmail.com>"
 

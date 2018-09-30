@@ -1,7 +1,5 @@
 import { inject, bindable } from 'aurelia-framework';
-import { Profile } from '~/profile/profile';
 import { AuthService } from '~/services/auth-service';
-
 
 @inject(AuthService)
 export class TopNav {

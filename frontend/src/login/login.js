@@ -3,7 +3,7 @@ import { Router } from 'aurelia-router';
 import { ValidationControllerFactory, ValidationRules } from 'aurelia-validation';
 import { AuthService } from '~/services/auth-service';
 import { ValidationFormRenderer } from '~/validators/validation-form-renderer'
-import {NotificationService} from 'aurelia-notify';
+import { NotificationService } from 'aurelia-notify';
 
 
 @inject(AuthService, Router, ValidationControllerFactory, NotificationService)
@@ -17,7 +17,6 @@ export class Login {
     rules = ValidationRules
         .ensure('email')
         .required()
-        // .email()
         .ensure('password')
         .required()
         .rules;

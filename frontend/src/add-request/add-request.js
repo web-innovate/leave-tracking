@@ -56,7 +56,7 @@ export class AddRequest {
         }
     };
 
-    selectedLeave = {};
+    selectedLeave = '';
     leaveTypes = [
         { value: ANNUAL , option: HUMAN_LEAVE_TYPES[ANNUAL] },
         { value: SICK, option: HUMAN_LEAVE_TYPES[SICK] },

@@ -12,7 +12,7 @@
 
                     <div class="panel-body">
 
-                        <spinner show.bind="!allRequests.length"></spinner>
+                        <spinner show.bind="loading"></spinner>
 
                         <ul id="leave-requests" class="list-group">
                             <div repeat.for="request of allRequests"

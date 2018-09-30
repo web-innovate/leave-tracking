@@ -20,7 +20,7 @@ export class App {
                 nav: true,
                 title:'Home',
                 settings: {
-                    icon: 'time'
+                    icon: 'home'
                 },
                 auth: true
             },
@@ -31,7 +31,7 @@ export class App {
                 nav: false,
                 title:'Reports',
                 settings: {
-                    icon: 'list-alt'
+                    icon: 'folder-open'
                 },
                 requires: ['ADMIN'],
                 auth: true
@@ -43,7 +43,7 @@ export class App {
                 nav: true,
                 title:'Calendar',
                 settings: {
-                    icon: 'list-alt'
+                    icon: 'calendar'
                 },
                 auth: true
 
@@ -66,7 +66,7 @@ export class App {
                 nav: false,
                 title:'Edit request',
                 settings: {
-                    icon: 'time'
+                    icon: 'pencil'
                 },
                 auth: true
             },
@@ -77,7 +77,7 @@ export class App {
                 nav: false,
                 title:'Admin',
                 settings: {
-                    icon: 'plus'
+                    icon: 'cog'
                 },
                 auth: true,
                 requires: ['ADMIN']
@@ -89,7 +89,7 @@ export class App {
                 nav: false,
                 title:'Approvals',
                 settings: {
-                    icon: 'plus'
+                    icon: 'ok'
                 },
                 auth: true,
                 requires: ['ADMIN', 'APPROVER']
@@ -101,6 +101,7 @@ export class App {
                 nav: false,
                 title:'Login',
                 settings: {
+                    icon: 'log-in'
                 }
             },
             {
@@ -120,6 +121,7 @@ export class App {
                 nav: true,
                 title:'Profile',
                 settings: {
+                    icon: 'user'
                 },
                 auth: true
             },
