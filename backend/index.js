@@ -12,14 +12,13 @@ mongoose.Promise = global.Promise;
 
 // connect to mongo db
 const mongoUri = process.env.MONGO_URI || config.mongo.host;
-const reconnectTries = 5;
 
 mongoose.connect(mongoUri, {
-    server: {
-        socketOptions: { keepAlive: 1 },
-        reconnectTries
-    }
+    useNewUrlParser: true,
+    reconnectTries: 5,
+    reconnectInterval: 1000
 });
+
 mongoose.connection.on('error', () => {
     throw new Error(`unable to connect to database: ${mongoUri}`);
 });

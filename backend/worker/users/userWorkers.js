@@ -38,7 +38,7 @@ function handlePasswordReset(params, callback) {
 }
 
 function createDefaultUser(params, cb) {
-    User.count()
+    User.countDocuments()
         .then(result => {
             if (result !== 0) {
                 return cb(null, {result});
