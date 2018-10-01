@@ -28,6 +28,7 @@ async function create(req, res, next) {
             start: req.body.start,
             end: req.body.end,
             leaveType: req.body.leaveType,
+            lastUpdatedBy: token.id,
             userId: token.id,
             status: req.body.status,
             workDays: req.body.workDays
@@ -58,12 +59,16 @@ async function create(req, res, next) {
 async function update(req, res, next) {
     const {token} = req;
     const leave = req.leaveRequest;
+    const daysDiff = leave.workDays - req.body.workDays;
 
-    leave.leaveType = req.body.leaveType;
+    leave.start = req.body.start;
+    leave.end = req.body.end;
     leave.status = req.body.status;
+    leave.workDays = req.body.workDays;
+    leave.leaveType = req.body.leaveType;
 
     const lastUpdatedBy = await User.findOne({_id: token.id});
-    leave.lastUpdatedBy = lastUpdatedBy;
+    leave.lastUpdatedBy = lastUpdatedBy._id;
 
     leave.save()
         .then(savedRequest => {
@@ -100,6 +105,10 @@ async function update(req, res, next) {
 
                         if (status === 'canceled') {
                             usr.pending -= workDays;
+                        }
+
+                        if (status === 'pending') {
+                            usr.pending -= daysDiff;
                         }
 
                         return usr.save()

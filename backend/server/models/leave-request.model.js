@@ -24,6 +24,11 @@ const LeaveRequestSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    lastUpdatedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: false
+    },
     status: {
         type: String,
         required: true
@@ -37,11 +42,6 @@ const LeaveRequestSchema = new mongoose.Schema({
         default: Date.now
     }
 });
-
-
-LeaveRequestSchema.method({
-});
-
 
 LeaveRequestSchema.statics = {
     get(id) {

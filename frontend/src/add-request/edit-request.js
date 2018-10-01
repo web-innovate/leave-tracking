@@ -4,7 +4,7 @@ const moment = extendMoment(Moment);
 
 import business from 'moment-business';
 import { bindable, inject } from 'aurelia-framework';
-import { Router} from 'aurelia-router';
+import { Router } from 'aurelia-router';
 import { LeaveService } from '~/services/leave-service';
 import { UserService } from '~/services/user-service';
 import { HolidayService } from '~/services/holiday-service';
@@ -36,26 +36,21 @@ export class EditRequest {
     async activate(params) {
         this.request = await this._leave.getLeaveRequest(params.requestId);
         this.selectedLeave = this.request.leaveType;
-        this.start = moment(this.request.start).toDate() ;
+        this.start = moment(this.request.start).toDate();
         this.end = moment(this.request.end).toDate();
         this.dateDiff = this.request.workDays;
     }
 
     attached() {
-        this.start = moment(this.request.start).toDate() ;
-        this.end = moment(this.request.end).toDate();
-
-        // this.disableDates();
-        // this.computeDiff();
+        this.computeDiff();
     }
 
     dateFormat = 'YYYY-MM-DD';
     allowedDate = moment().subtract(1, "days").toDate();
-    start = '';
-    end = '';
     holidays = [];
 
     pickerOptions = {
+        useCurrent: false,
         calendarWeeks: true,
         showTodayButton: true,
         showClose: true,
@@ -67,7 +62,7 @@ export class EditRequest {
         }
     };
 
-    selectedLeave = {};
+    selectedLeave = '';
     leaveTypes = [
         { value: ANNUAL , option: HUMAN_LEAVE_TYPES[ANNUAL] },
         { value: SICK, option: HUMAN_LEAVE_TYPES[SICK] },
@@ -160,21 +155,8 @@ export class EditRequest {
 
             this._leave.updateLeaveRequestStatus(leave, this.request.status)
                 .then(() => {
-                    this.start = moment().toDate();
-                    this.end = moment().toDate();
-                    this.dateDiff = 0;
-
                     this.router.navigate('home')
                 });
         }
-    }
-
-    async disableDates() {
-        const holidays = await this._holiday.getHolidays();
-        const disabledDates = holidays.map(h => moment(h.date).toDate());
-
-        this.ePick.methods.disabledDates(disabledDates);
-        this.sPick.methods.disabledDates(disabledDates);
-        this.holidays = holidays;
     }
 }
