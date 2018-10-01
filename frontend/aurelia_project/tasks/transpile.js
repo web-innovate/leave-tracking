@@ -17,7 +17,7 @@ function configureEnvironment() {
     .pipe(rename('environment.js'))
     .pipe(modifyFile((content, path, file) => {
         const api_url = CLIOptions.getFlagValue('api_url');
- 
+
         return `${content.replace(
           'API_URL: \'API_REPLACE\'',
           `API_URL: \'${api_url}\'`)}`

@@ -15,9 +15,8 @@ COPY . .
 RUN npm install
 RUN npm install -g aurelia-cli
 
-RUN au build --env prod --api_url $API_URL
-
 RUN echo '#!/bin/sh \n\
+au build --env prod --api_url $API_URL && \
 node ./server.js' > /start.sh && chmod +x /start.sh
 
 EXPOSE 3000
