@@ -2,7 +2,7 @@ import express from 'express';
 import validate from 'express-validation';
 import paramValidation from '../../config/param-validation';
 import authCtrl from '../controllers/auth.controller';
-import expressAuth from '../helpers/ExpressAuth';
+import expressAuth from '../helpers/expressAuth';
 
 const router = express.Router();
 const { authorize } = expressAuth;

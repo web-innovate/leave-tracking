@@ -1,6 +1,6 @@
 import express from 'express';
 import auditCtrl from '../controllers/audit.controller';
-import expressAuth from '../helpers/ExpressAuth';
+import expressAuth from '../helpers/expressAuth';
 import permit from './permission';
 import { USER_TYPES } from '../helpers/constants';
 

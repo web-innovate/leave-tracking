@@ -5,7 +5,7 @@ import User from '../models/user.model';
 import Project from '../models/project.model';
 import worker from '../../worker/worker';
 import APIError from '../helpers/APIError';
-import {USER_TYPES} from '../helpers/Constants';
+import { USER_TYPES } from '../helpers/constants';
 
 function load(req, res, next, id) {
     LeaveRequest.get(id)

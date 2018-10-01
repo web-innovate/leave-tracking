@@ -1,7 +1,6 @@
 import { inject } from 'aurelia-framework';
 import { LeaveService } from '~/services/leave-service';
 import { UserService } from '~/services/user-service';
-import { REQUEST_STATUS } from '~/util/constants';
 
 @inject(LeaveService, UserService)
 export class Approvals {

@@ -1,5 +1,4 @@
 import { inject } from 'aurelia-framework';
-import { REQUEST_STATUS } from '~/util/constants';
 import { ApiService } from './api-service';
 import { UserModel } from '~/models/user-model';
 import { Events } from './events';
