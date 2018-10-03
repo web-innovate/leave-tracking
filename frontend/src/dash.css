@@ -1,9 +1,66 @@
 .approval-row .btn-group {
   padding-right: 10px;
 }
-
 .approval-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+
+.bootcards-summary-item {
+  background: #f5f5f5;
+  display: block;
+  border-radius: 4px;
+  padding: 25px 10px;
+  text-align: center;
+  position: relative;
+  height: 130px;
+}
+@media (max-width: 400px) {
+  .bootcards-summary-item {
+    padding: 15px 5px;
+  }
+}
+.bootcards-summary-item:hover {
+  text-decoration: none;
+  background: #eee;
+}
+.bootcards-summary-item > i {
+  color: #bbb;
+  display: block;
+  text-align: center;
+  margin-bottom: 5px;
+}
+.bootcards-summary-item h4 {
+  margin: 0 auto;
+}
+.bootcards-summary-item .badge,
+.bootcards-summary-item .label {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.bootcards-summary .panel-body > .row > div {
+  padding: 8px;
+}
+
+
+.list-group-item .list-group-item-text {
+  line-height: 18px;
+  margin-bottom: 5px;
+  overflow: hidden;
+}
+.list-group-item .list-group-item-heading:last-child,
+.list-group-item .list-group-item-text:last-child {
+  margin-bottom: 0;
+}
+.list-group-item .row div:last-child > .list-group-item-heading:last-child,
+.list-group-item .row div:last-child > .list-group-item-text:last-child {
+  margin-bottom: 0;
+}
+.list-group-item img {
+  height: 42px;
+  width: 42px;
+  margin-right: 15px;
 }

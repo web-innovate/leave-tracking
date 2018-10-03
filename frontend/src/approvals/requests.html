@@ -46,7 +46,7 @@
                     </ul>
                 </div>
                 <span>
-                    <strong>${request.user.fullName}</strong> | ${request.workDays | days} | ${request.start | dateFormat}
+                    <strong>${request.userId.fullName}</strong> | ${request.workDays | days} | ${request.start | dateFormat}
                     <span show.bind="showExtra(request)">
                         - ${request.end | dateFormat}
                     </span>

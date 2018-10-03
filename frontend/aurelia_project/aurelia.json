@@ -222,14 +222,6 @@
             ]
           },
           {
-            "name": "bootcards",
-            "path": "../node_modules/bootcards/dist",
-            "main": "js/bootcards.js",
-            "resources": [
-              "css/bootcards-desktop.min.css"
-            ]
-          },
-          {
             "name": "font-awesome",
             "path": "../node_modules/font-awesome",
             "main": "css/font-awesome.min.css",
@@ -277,7 +269,6 @@
       "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2": "bootstrap/fonts",
       "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff": "bootstrap/fonts",
       "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf": "bootstrap/fonts",
-      "node_modules/bootcards/dist/fonts/*": "bootstrap/fonts",
       "node_modules/font-awesome/fonts/*": "font-awesome/fonts",
       "node_modules/bootstrap-calendar/tmpls/*": "bootstrap-calendar/tmpls",
       "node_modules/bootstrap-calendar/img/*": "bootstrap-calendar/img"
