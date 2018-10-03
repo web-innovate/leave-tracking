@@ -24,7 +24,6 @@ ProjectRoleSchema.method({
 ProjectRoleSchema.statics = {
     get(id) {
         return this.findById(id)
-            .exec()
             .then((projectRole) => {
                 if (projectRole) {
                     return projectRole;
@@ -38,8 +37,7 @@ ProjectRoleSchema.statics = {
         return this.find(extra)
             .sort({ createdAt: -1 })
             .skip(+skip)
-            .limit(+limit)
-            .exec();
+            .limit(+limit);
     }
 };
 

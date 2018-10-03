@@ -36,7 +36,8 @@
         <div class="form-group">
             <label class="col-xs-3 control-label">Password</label>
             <div class="col-xs-9">
-                <input type="password" class="form-control" value.bind="user.password & validate">
+                <input if.bind="!isEdit" type="password" class="form-control" value.bind="user.password & validate">
+                <input if.bind="isEdit" type="password" class="form-control" value.bind="user.password">
             </div>
         </div>
 

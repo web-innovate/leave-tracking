@@ -1,8 +1,7 @@
 import { inject } from 'aurelia-framework';
 import { LeaveService } from '~/services/leave-service';
-import { UserService } from '~/services/user-service';
 
-@inject(LeaveService, UserService)
+@inject(LeaveService)
 export class Approvals {
     pendingLoading = true;
     approvedLoading = true;
@@ -11,7 +10,6 @@ export class Approvals {
 
     constructor(_leave, _user) {
         this._leave = _leave;
-        this._user = _user;
     }
 
     activate() {
@@ -26,48 +24,23 @@ export class Approvals {
     }
 
     async fetchPendingRequests() {
-        let pendingsRequests = await this._leave.getPendingRequests();
-
-        pendingsRequests = await this.agregateUserData(pendingsRequests);
-
-        this.allPendingRequests = pendingsRequests;
+        this.allPendingRequests = await this._leave.getPendingRequests();
         this.pendingLoading = false;
     }
 
 
     async fetchApprovedRequests() {
-        let approvedRequests = await this._leave.getApprovedRequests();
-
-        approvedRequests = await this.agregateUserData(approvedRequests);
-
-        this.allApprovedRequests = approvedRequests;
+        this.allApprovedRequests = await this._leave.getApprovedRequests();
         this.approvedLoading = false;
     }
 
     async fetchRejectedRequests() {
-        let rejectedRequests = await this._leave.getRejectedRequests();
-
-        rejectedRequests = await this.agregateUserData(rejectedRequests);
-
-        this.allRejectedRequests = rejectedRequests;
+        this.allRejectedRequests = await this._leave.getRejectedRequests();
         this.rejectedLoading = false;
     }
 
     async fetchCanceledRequests() {
-        let canceledRequests = await this._leave.getCanceledRequests();
-
-        canceledRequests = await this.agregateUserData(canceledRequests);
-
-        this.allCanceledRequests = canceledRequests;
+        this.allCanceledRequests = await this._leave.getCanceledRequests();
         this.canceledLoading = false;
-    }
-
-    agregateUserData(pendings) {
-        return Promise.all(pendings.map(async item => {
-            const user = await this._user.getUser(item.userId);
-
-            item.user = user;
-            return item;
-        }));
     }
 }

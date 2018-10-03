@@ -46,7 +46,8 @@ const LeaveRequestSchema = new mongoose.Schema({
 LeaveRequestSchema.statics = {
     get(id) {
         return this.findById(id)
-            .exec()
+            .populate('userId')
+            .populate('lastUpdatedBy')
             .then((leaveRequest) => {
                 if (leaveRequest) {
                     return leaveRequest;
@@ -59,10 +60,10 @@ LeaveRequestSchema.statics = {
     list({ skip = 0, limit = 50 } = {}) {
         return this.find()
             .populate('userId')
+            .populate('lastUpdatedBy')
             .sort({ createdAt: -1 })
             .skip(+skip)
-            .limit(+limit)
-            .exec();
+            .limit(+limit);
     }
 };
 

@@ -147,7 +147,7 @@ export class EditRequest {
             const leave = {
                 _id :this.request._id,
                 userId: this._user.currentUser.id,
-                leaveType: this.selectedLeave,
+                leaveType: Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave,
                 start: this.start,
                 end: this.end,
                 workDays: this.dateDiff

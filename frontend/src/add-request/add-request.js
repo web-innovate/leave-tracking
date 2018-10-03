@@ -140,7 +140,7 @@ export class AddRequest {
             this.end = moment(this.end).endOf('day').toDate();
             const leave = {
                 userId: this._user.currentUser.id,
-                leaveType: this.selectedLeave,
+                leaveType: Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave,
                 start: this.start,
                 end: this.end,
                 workDays: this.dateDiff

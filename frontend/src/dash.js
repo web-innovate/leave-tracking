@@ -2,7 +2,7 @@ import {inject} from 'aurelia-framework';
 import {UserService} from '~/services/user-service';
 import {AuthService} from '~/services/auth-service';
 import {LeaveService} from '~/services/leave-service';
-import {REQUEST_STATUS} from "./util/constants";
+import {REQUEST_MAPPING} from "./util/constants";
 
 @inject(UserService, AuthService, LeaveService)
 export class Dash {
@@ -56,11 +56,7 @@ export class Dash {
         return extra.workDays > 1;
     }
 
-    isCanceled(request) {
-        return request.status === 'canceled';
-    }
-
     cancelRequest(request) {
-        return this._leave.updateLeaveRequestStatus(request, REQUEST_STATUS.CANCELLED);
+        return this._leave.updateLeaveRequestStatus(request, REQUEST_MAPPING.CANCELLED.status);
     }
 }

@@ -74,8 +74,9 @@ async function update(req, res, next) {
         .then(savedRequest => {
             const {leaveType, status, userId, workDays} = savedRequest;
 
-            // we attach the id of the user that updated the request
-            savedRequest.approverId = token.id;
+            // TODO edit all kind of requests only by admin
+
+            savedRequest.lastUpdatedBy = lastUpdatedBy;
 
             if (status === 'approved') {
                 worker.queueApprovedLeaveRequest(savedRequest.toObject());
@@ -162,7 +163,6 @@ function checkForOverlap(item, leave, next) {
 
     const overlaps = currentStart.isBefore(end) && start.isBefore(currentEnd);
 
-
     if (overlaps) {
         const existing = {
             message: 'There is a leave-request already created that overlaps with your dates',
@@ -203,31 +203,23 @@ function rejected(req, res, next) {
 async function fetchLeaves(userId, status) {
     const user = await User.findOne({_id: userId});
     if (user.userType === USER_TYPES.ADMIN) {
-        return LeaveRequest.find({status});
+        return LeaveRequest
+            .find({status})
+            .populate('userId')
+            .populate('lastUpdatedBy');
     } else {
         const projectsQuery = {approvers: {$in: [userId]}};
-        const projectsICanApprove = await fetchProjects(projectsQuery);
+        const projectsICanApprove = (await Project.find(projectsQuery)).map(proj => proj._id);
 
-        let usersICanApprove = await Promise.all(projectsICanApprove.map(async projectId => {
-            return await Promise.all(fetchUsers(projectId));
-        }));
-
-        usersICanApprove = _.flatten(usersICanApprove);
+        const usersQuery = {projectId: {$in: projectsICanApprove}};
+        const usersICanApprove = (await User.find(usersQuery)).map(usr => usr._id);
 
         const leaveQuery = {status, userId: {$in: usersICanApprove}};
-
-        return LeaveRequest.find(leaveQuery);
+        return LeaveRequest
+            .find(leaveQuery)
+            .populate('userId')
+            .populate('lastUpdatedBy');
     }
-}
-
-function fetchUsers(projectId) {
-    return User.find({projectId})
-        .then(users => users.map(u => u._id));
-}
-
-function fetchProjects(query) {
-    return Project.find(query)
-        .then(projects => projects.map(p => p._id));
 }
 
 function canceled(req, res, next) {
