@@ -51,7 +51,7 @@ export class Login {
             })
             .catch((err) => {
                 this.loading = false;
-                this._notify.danger('Invalid credentials, be more carefull next time',
+                this._notify.danger('Invalid credentials!',
                     { containerSelector: '#loginForm', limit: 1 })
             })
     }

@@ -148,10 +148,6 @@ export class AddRequest {
 
             this._leave.addLeaveRequest(leave)
                 .then(() => {
-                    this.start = moment().toDate();
-                    this.end = moment().toDate();
-                    this.dateDiff = 0;
-
                     this.router.navigate('home')
                 });
         }

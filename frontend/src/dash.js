@@ -2,7 +2,6 @@ import {inject} from 'aurelia-framework';
 import {UserService} from '~/services/user-service';
 import {AuthService} from '~/services/auth-service';
 import {LeaveService} from '~/services/leave-service';
-import {REQUEST_MAPPING} from "./util/constants";
 
 @inject(UserService, AuthService, LeaveService)
 export class Dash {
@@ -57,6 +56,6 @@ export class Dash {
     }
 
     cancelRequest(request) {
-        return this._leave.updateLeaveRequestStatus(request, REQUEST_MAPPING.CANCELLED.status);
+        return this._leave.deleteRequest(request._id);
     }
 }

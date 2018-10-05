@@ -10,18 +10,15 @@
         <li repeat.for="request of requests"
             class="list-group-item ${request.status | computeBadge} approval-row">
             <div>
-                <div class="btn-group" if.bind="request.status === 'pending'">
+                <div class="btn-group" if.bind="request.status === 'pending' && userType !== 'USER'">
                     <button type="button" class="btn btn-default" click.delegate="approveRequest(request)">
                         <i class="glyphicon glyphicon-ok" style="color: green;"></i>
                     </button>
-                    <a class="btn btn-default" href="#/add-request/${request._id}/edit">
-                        <i class="glyphicon glyphicon-pencil"></i>
-                    </a>
                     <button type="button" class="btn btn-default" click.delegate="rejectRequest(request)">
                         <i class="glyphicon glyphicon-remove" style="color: red;"></i>
                     </button>
                 </div>
-                <div class="btn-group" if.bind="request.status !== 'pending'">
+                <div class="btn-group" if.bind="request.status === 'approved' && userType === 'ADMIN'">
                     <button
                         type="button"
                         class="btn btn-default dropdown-toggle"
@@ -31,17 +28,17 @@
                         Action <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li repeat.for="status of statuses">
+                        <li>
                             <a
                                 data-analytics-category="approvals"
-                                data-analytics-action=${status}
-                                click.delegate="updateRequest(request, status)">${status}</a>
+                                data-analytics-action="edit"
+                                href="#/add-request/${request._id}/edit">Edit</a>
                         </li>
                         <li>
                             <a
                                 data-analytics-category="approvals"
-                                data-analytics-action="canceled"
-                                href="#/add-request/${request._id}/edit">Edit</a>
+                                data-analytics-action="cancel"
+                                click.delegate="cancelRequest(request)">Cancel</a>
                         </li>
                     </ul>
                 </div>

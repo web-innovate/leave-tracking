@@ -6,7 +6,6 @@ export class Approvals {
     pendingLoading = true;
     approvedLoading = true;
     rejectedLoading = true;
-    canceledLoading = true;
 
     constructor(_leave, _user) {
         this._leave = _leave;
@@ -20,7 +19,6 @@ export class Approvals {
         this.fetchPendingRequests();
         this.fetchApprovedRequests();
         this.fetchRejectedRequests();
-        this.fetchCanceledRequests();
     }
 
     async fetchPendingRequests() {
@@ -37,10 +35,5 @@ export class Approvals {
     async fetchRejectedRequests() {
         this.allRejectedRequests = await this._leave.getRejectedRequests();
         this.rejectedLoading = false;
-    }
-
-    async fetchCanceledRequests() {
-        this.allCanceledRequests = await this._leave.getCanceledRequests();
-        this.canceledLoading = false;
     }
 }

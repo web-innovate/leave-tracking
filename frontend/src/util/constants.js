@@ -1,8 +1,7 @@
-export const REQUEST_MAPPING = {
-    APPROVED: { status: 'approved', action: 'Approve' },
-    REJECTED: { status: 'rejected', action: 'Reject' },
-    PENDING: { status: 'pending', action: 'Pend' },
-    CANCELLED: { status: 'canceled', action: 'Cancel' }
+export const REQUEST_STATUS = {
+    APPROVED: 'approved',
+    REJECTED: 'rejected',
+    PENDING: 'pending'
 }
 
 export const LEAVE_TYPES = {

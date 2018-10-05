@@ -1,24 +1,35 @@
 import { bindable, inject } from 'aurelia-framework';
+import { AuthService } from '~/services/auth-service';
 import { LeaveService } from '~/services/leave-service';
-import { REQUEST_MAPPING } from '~/util/constants';
+import { REQUEST_STATUS } from '~/util/constants';
 
-@inject(LeaveService)
+@inject(AuthService, LeaveService)
 export class Requests {
-    statuses = [];
     @bindable requests = [];
     @bindable loading = false;
 
-    constructor(_leave) {
+    constructor(_auth, _leave) {
+        this._auth = _auth;
         this._leave = _leave;
+        this.userType = '';
     }
 
-    attached() {
-        this.excluded = (this.requests && this.requests[0] || {}).status;
-        this.statuses = Object.values(REQUEST_MAPPING).filter(i => i.status !== this.excluded).map(i => i.action);
+    async attached() {
+        const { userType } = await this._auth.me();
+
+        this.userType = userType;
     }
 
-    updateRequest(request, status) {
-        return this._leave.updateLeaveRequestStatus(request, status);
+    approveRequest(request) {
+        return this._leave.updateLeaveRequestStatus(request, REQUEST_STATUS.APPROVED);
+    }
+
+    rejectRequest(request) {
+        return this._leave.updateLeaveRequestStatus(request, REQUEST_STATUS.REJECTED);
+    }
+
+    cancelRequest(request) {
+        return this._leave.deleteRequest(request._id);
     }
 
     showExtra(extra) {

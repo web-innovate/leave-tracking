@@ -27,12 +27,11 @@ router.route('/approved')
 router.route('/rejected')
     .get(permit(APPROVER, ADMIN), leaveCtrl.rejected);
 
-router.route('/canceled')
-    .get(permit(APPROVER, ADMIN), leaveCtrl.canceled);
-
 router.route('/:leaveId')
     .get(permit(), leaveCtrl.get)
-    .put(permit(APPROVER, ADMIN, USER), leaveCtrl.update);
+    .put(permit(USER, ADMIN), leaveCtrl.update)
+    .patch(permit(APPROVER, ADMIN), leaveCtrl.updateStatus)
+    .delete(permit(USER, ADMIN), leaveCtrl.remove);
 
 router.param('leaveId', leaveCtrl.load);
 

@@ -1,14 +1,12 @@
 import moment from 'moment';
 import { inject } from 'aurelia-framework';
-import { LEAVE_TYPES, HUMAN_LEAVE_TYPES } from '~/util/constants';
+import { LEAVE_TYPES, HUMAN_LEAVE_TYPES, REQUEST_STATUS } from '~/util/constants';
 import { ApiService } from './api-service';
-import { UserService } from './user-service';
 
-@inject(ApiService, UserService)
+@inject(ApiService)
 export class LeaveService {
-    constructor(api, _user) {
+    constructor(api) {
         this.http = api.http;
-        this._user = _user;
     }
 
     getLeaveRequests() {
@@ -22,25 +20,22 @@ export class LeaveService {
     async getCalendarEvents() {
         let leaves = await this.getLeaveRequests();
         // show just the approved leaves
-        leaves = leaves.filter(x => x.status === 'approved');
+        leaves = leaves.filter(x => x.status === REQUEST_STATUS.APPROVED);
 
-        const events =  await leaves.map(async leave => {
-            const user = await this._user.getUser(leave.userId._id);
+        const events = leaves.map(leave => {
             const { leaveType } = leave;
 
-            const leaveEvent = {
+            return {
                 id: leave._id,
-                title: `${user.fullName} | ${HUMAN_LEAVE_TYPES[leaveType]}`,
+                title: `${leave.userId.fullName} | ${HUMAN_LEAVE_TYPES[leaveType]}`,
                 type: leaveType,
                 class: this.computeEventClass(leaveType),
                 start: moment(leave.start).toDate().valueOf(),
                 end: moment(leave.end).toDate().valueOf()
             }
-
-            return leaveEvent;
         });
 
-        return await Promise.all(events);
+        return events;
     }
 
     computeEventClass(type) {
@@ -69,7 +64,7 @@ export class LeaveService {
             start,
             end,
             workDays,
-            status: 'pending'
+            status: REQUEST_STATUS.PENDING
         };
 
         return this.http.post('leaves', leave);
@@ -87,12 +82,16 @@ export class LeaveService {
         return this.fetch('leaves/rejected');
     }
 
-    getCanceledRequests() {
-        return this.fetch('leaves/canceled');
+    deleteRequest(requestId) {
+        return this.http.delete(`leaves/${requestId}`);
     }
 
     updateLeaveRequestStatus(request, status) {
         request.status = status;
+        return this.http.patch(`leaves/${request._id}`, request);
+    }
+
+    updateLeaveRequest(request) {
         return this.http.put(`leaves/${request._id}`, request);
     }
 

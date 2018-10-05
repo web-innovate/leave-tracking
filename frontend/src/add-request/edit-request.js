@@ -145,7 +145,7 @@ export class EditRequest {
             this.start = moment(this.start).startOf('day').toDate();
             this.end = moment(this.end).endOf('day').toDate();
             const leave = {
-                _id :this.request._id,
+                _id: this.request._id,
                 userId: this._user.currentUser.id,
                 leaveType: Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave,
                 start: this.start,
@@ -153,7 +153,7 @@ export class EditRequest {
                 workDays: this.dateDiff
             };
 
-            this._leave.updateLeaveRequestStatus(leave, this.request.status)
+            this._leave.updateLeaveRequest(leave)
                 .then(() => {
                     this.router.navigate('home')
                 });
