@@ -2,6 +2,8 @@ FROM node:10
 
 LABEL maintainer="Bogdan Livadariu <bogdan.livadariu@gmail.com>"
 
+RUN apk --no-cache add nano vim bash curl
+
 ENV NODE_ENV=development
 ENV PORT=3000
 ENV API_URL=http://localhost:4040/api/

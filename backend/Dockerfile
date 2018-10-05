@@ -2,6 +2,8 @@ FROM node:10
 
 LABEL maintainer="Bogdan Livadariu <bogdan.livadariu@gmail.com>"
 
+RUN apk --no-cache add nano vim bash curl
+
 ENV NODE_ENV=development
 ENV PORT=4040
 ENV JWT_SECRET=0a6b944d-d2fb-46fc-a85e-0295c986cd9f
