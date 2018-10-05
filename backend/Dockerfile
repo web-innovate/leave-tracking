@@ -2,7 +2,7 @@ FROM node:10
 
 LABEL maintainer="Bogdan Livadariu <bogdan.livadariu@gmail.com>"
 
-RUN apk --no-cache add nano vim bash curl
+RUN apt-get install bash
 
 ENV NODE_ENV=development
 ENV PORT=4040

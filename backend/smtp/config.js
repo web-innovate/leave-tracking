@@ -9,7 +9,9 @@ const config = {
         user: process.env.SMTP_USER || 'uhzdcegtgaxt427t@ethereal.email',
         pass: process.env.SMTP_PASSWORD || 'cR48DwNMD3ncEwykrG'
     },
-    ignoreTLS: true
+    tls: {
+        rejectUnauthorized: false
+    }
 };
 
 export default config;

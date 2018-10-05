@@ -29,7 +29,7 @@ class Smtp {
         return new Promise((resolve, reject) => {
             this.transporter.sendMail(message, (err, info) => {
                 if (err) {
-                    reject(err);
+                    return reject(err);
                 }
 
                 return resolve(info);
