@@ -15,14 +15,12 @@ async function handleNewLeaveRequest(params, callback) {
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, here is your leave request`;
         const approverEmailSubject = `[${leaveType}] Leave request pending for: ${firstName} ${lastName}`;
 
-        Promise.all(
-            [
-                smtp.sendMail(email, userEmailSubject, 'newUserLeaveRequest', params),
-                smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', params)
-            ])
-            .then(info => callback(null, info))
+        Promise.all([
+            smtp.sendMail(email, userEmailSubject, 'newUserLeaveRequest', params),
+            smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'newApproverLeaveRequest', params)
+        ]).then(info => callback(null, info))
     } catch(error) {
-        console.log('problems are all the time handleNewLeaveRequest', error)
+        console.log('handleNewLeaveRequest:', error);
         return callback(error);
     }
 }
@@ -38,20 +36,16 @@ async function handleApprovedLeaveRequest(params, callback) {
         params.employee = user;
         params.approver = approver;
 
-
         const approvedCopyEmailAddress = process.env.APPROVED_LEAVE_CC_EMAIL || 'hr@APPROVED_LEAVE_CC_EMAIL.com';
-
-
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been APPROVED`;
         const approverEmailSubject = `[${leaveType}] APPROVED Leave request for: ${firstName} ${lastName}`;
 
-        Promise.all(
-            [
-                smtp.sendMail(`${email},${approvedCopyEmailAddress}`, userEmailSubject, 'approvedLeaveRequest', params),
-                smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'approvedLeaveRequest', params)
-            ])
-            .then(info => callback(null, info))
+        Promise.all([
+            smtp.sendMail(`${email},${approvedCopyEmailAddress}`, userEmailSubject, 'approvedLeaveRequest', params),
+            smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'approvedLeaveRequest', params)
+        ]).then(info => callback(null, info))
     } catch(error) {
+        console.log('handleApprovedLeaveRequest:', error);
         return callback(error);
     }
 }
@@ -70,13 +64,12 @@ async function handleRejectedLeaveRequest(params, callback) {
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been DECLINED`;
         const approverEmailSubject = `[${leaveType}] DECLINED Leave request for: ${firstName} ${lastName}`;
 
-        Promise.all(
-            [
-                smtp.sendMail(email, userEmailSubject, 'declinedLeaveRequest', params),
-                smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'declinedLeaveRequest', params)
-            ])
-            .then(info => callback(null, info))
+        Promise.all([
+            smtp.sendMail(email, userEmailSubject, 'declinedLeaveRequest', params),
+            smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'declinedLeaveRequest', params)
+        ]).then(info => callback(null, info))
     } catch(error) {
+        console.log('handleRejectedLeaveRequest:', error);
         return callback(error);
     }
 }
@@ -86,66 +79,50 @@ async function handleCanceledLeaveRequest(params, callback) {
         const { leaveType } = params;
         const { user, project, approver, approversData, approversEmails } = await getAndAgredateLeaveRequestData(params);
         const { email, firstName, lastName } = user;
+
         params.projectName = project.name;
         params.approvers = approversData;
         params.employee = user;
         params.approver = approver;
+
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been CANCELED`;
         const approverEmailSubject = `[${leaveType}] CANCELED Leave request for: ${firstName} ${lastName}`;
-        Promise.all(
-            [
-                smtp.sendMail(email, userEmailSubject, 'canceledLeaveRequest', params),
-                smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'canceledLeaveRequest', params)
-            ])
-            .then(info => callback(null, info))
+        Promise.all([
+            smtp.sendMail(email, userEmailSubject, 'canceledLeaveRequest', params),
+            smtp.sendMail(approversEmails.join(','), approverEmailSubject, 'canceledLeaveRequest', params)
+        ]).then(info => callback(null, info))
     } catch(error) {
+        console.log('handleCanceledLeaveRequest:', error);
         return callback(error);
     }
 }
 
 function getUserDetails(_id) {
-    return User.findOne({ _id }).then(result => stripSensitiveData(result));
+    return User.findOne({ _id }).populate('projectId').then(result => result.toObject());
 }
 
 function getProjectDetails(_id) {
-    return Project.findOne({ _id }).then(result => result.toObject());
-}
-
-function stripSensitiveData(bson) {
-    if (!bson) {
-        return;
-    }
-
-    const noSensitive = bson.toObject();
-
-    delete noSensitive.password;
-
-    return noSensitive;
+    return Project.findOne({ _id }).populate('approvers').then(result => result.toObject());
 }
 
 async function getAndAgredateLeaveRequestData(params) {
-    const { userId, approverId } = params;
+    const { userId, lastUpdatedBy } = params;
 
     const user = await getUserDetails(userId);
     const { projectId } = user;
 
+    const approver = await getUserDetails(lastUpdatedBy);
+
     const project = await getProjectDetails(projectId);
     const { approvers } = project;
 
-    const approver = await getUserDetails(approverId);
-
-    const approversData =
-        await Promise.all(approvers.map(async (approverUserId) => {
-            return await getUserDetails(approverUserId);
-        }));
-
-    const approversEmails = approversData.map(approver => approver.email);
+    const approversEmails = approvers.map(i => i.email);
 
     return {
         user,
         project,
         approver,
-        approversData,
+        approversData: approvers,
         approversEmails
     };
 }

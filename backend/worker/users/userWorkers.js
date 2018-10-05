@@ -54,8 +54,6 @@ function createDefaultUser(params, cb) {
                 userType: 'ADMIN'
             });
 
-
-
             user.save()
                 .then(data => cb(null, data))
                 .catch(err => cb(err));
