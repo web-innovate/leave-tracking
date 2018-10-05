@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import moment from 'moment';
 import LeaveRequest from '../models/leave-request.model';
 import User from '../models/user.model';
@@ -168,13 +167,13 @@ function remove(req, res, next) {
 
                 if (leaveType === LEAVE_TYPES.ANNUAL) {
                     switch (status) {
-                        case REQUEST_STATUS.APPROVED:
-                            user.taken -= workDays;
-                            user.holidays += workDays;
-                            break;
-                        case REQUEST_STATUS.PENDING:
-                            user.pending -= workDays;
-                            break;
+                    case REQUEST_STATUS.APPROVED:
+                        user.taken -= workDays;
+                        user.holidays += workDays;
+                        break;
+                    case REQUEST_STATUS.PENDING:
+                        user.pending -= workDays;
+                        break;
                     }
 
                     await user.save();
@@ -183,7 +182,7 @@ function remove(req, res, next) {
             })
             .catch(e => next(e));
     } else {
-        next(new APIError(`You don't have right to delete this leave request.`, 403, true));
+        next(new APIError('You do not have right to delete this leave request.', 403, true));
     }
 }
 

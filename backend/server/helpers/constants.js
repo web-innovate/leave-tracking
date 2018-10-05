@@ -13,10 +13,10 @@ export const LEAVE_TYPES = {
     HALF_DAY: 'half-day-leave',
     BEREAVEMENT_LEAVE: 'bereavement-leave',
     MARRIAGE_LEAVE: 'marriage-leave'
-}
+};
 
 export const REQUEST_STATUS = {
     APPROVED: 'approved',
     REJECTED: 'rejected',
     PENDING: 'pending',
-}
+};
