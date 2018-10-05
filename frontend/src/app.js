@@ -140,7 +140,7 @@ class AuthorizeStep {
         this._events = _events;
         this.router = router;
 
-        this._events.ea.subscribe('no_token', (rr) => {
+        this._events.ea.subscribe('no_token', () => {
             const { currentInstruction } = this.router;
 
             if (!currentInstruction) {

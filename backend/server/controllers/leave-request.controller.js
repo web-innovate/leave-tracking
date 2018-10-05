@@ -66,10 +66,12 @@ async function updateUserDaysForCreatedLeave(savedLeave, res) {
     return res.json(savedLeave);
 }
 
-function updateStatus(req, res, next) {
+async function updateStatus(req, res, next) {
+    const lastUpdatedBy = await User.findById(req.token.id);
     const leave = req.leaveRequest;
 
     leave.status = req.body.status;
+    leave.lastUpdatedBy = lastUpdatedBy._id;
 
     leave.save()
         .then(async savedLeave => {
