@@ -7,7 +7,6 @@ import {LeaveService} from '~/services/leave-service';
 export class Dash {
     loading = true;
     allRequests = [];
-    allPendingApprovals = [];
 
     statusData = {
         labels: ["Available", "Taken", "Pending"],
@@ -56,6 +55,7 @@ export class Dash {
     }
 
     cancelRequest(request) {
+        this.allRequests = this.allRequests.filter(i => i._id !== request._id);
         return this._leave.deleteRequest(request._id);
     }
 }

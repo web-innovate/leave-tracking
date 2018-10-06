@@ -1,15 +1,12 @@
-import { singleton, inject } from 'aurelia-framework'
+import { singleton } from 'aurelia-framework'
 import { HttpClient } from 'aurelia-http-client';
-import { NotificationService } from 'aurelia-notify';
 import environment from '~/environment';
 
 @singleton()
-@inject(NotificationService)
 export class ApiService {
-    constructor(_notify) {
+    constructor() {
         const backendURL = environment.API_URL;
         const that = this;
-        this._notify = _notify;
 
         this.httpClient = new HttpClient().configure(x => {
             x.withHeader('Content-Type', 'application/json');
@@ -41,10 +38,7 @@ export class ApiService {
     handleError(error) {
         const response = JSON.parse(error.response);
 
-        const message = response && response.message || '';
-
-        console.log(`${error.statusCode} | ${error.statusText} | ${message}`, error);
-        return Promise.reject(new Error(error.statusText));
+        return Promise.reject(response);
     }
 
     handleResponse(httpResponse) {

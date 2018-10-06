@@ -5,6 +5,7 @@ const moment = extendMoment(Moment);
 import business from 'moment-business';
 import { bindable, inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
+import { NotificationService } from 'aurelia-notify';
 import { LeaveService } from '~/services/leave-service';
 import { UserService } from '~/services/user-service';
 import { HolidayService } from '~/services/holiday-service';
@@ -20,16 +21,17 @@ const {
     BEREAVEMENT_LEAVE,
     MARRIAGE_LEAVE } = LEAVE_TYPES;
 
-@inject(LeaveService, UserService, HolidayService, Router)
+@inject(LeaveService, UserService, HolidayService, NotificationService, Router)
 export class EditRequest {
     @bindable sPick;
     @bindable ePick;
     @bindable leaveType;
 
-    constructor(_leave, _user, _holiday, router) {
+    constructor(_leave, _user, _holiday, _notify, router) {
         this._leave = _leave;
         this._user = _user;
         this._holiday = _holiday;
+        this._notify = _notify;
         this.router = router;
     }
 
@@ -154,8 +156,10 @@ export class EditRequest {
             };
 
             this._leave.updateLeaveRequest(leave)
-                .then(() => {
-                    this.router.navigate('home')
+                .then(() => this.router.navigate('home'))
+                .catch(error => {
+                    this._notify.danger(error.message && error.message.message,
+                        { containerSelector: '#edit-request', limit: 1 })
                 });
         }
     }

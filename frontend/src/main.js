@@ -12,7 +12,7 @@ export function configure(aurelia) {
         .plugin('aurelia-bootstrap-select')
         .plugin("aurelia-chart")
         .plugin('aurelia-notify', settings => {
-          settings.timeout = 4000;
+          settings.timeout = 5000;
         })
         .plugin('aurelia-google-analytics', config => {
             config.init('UA-118670465-1');

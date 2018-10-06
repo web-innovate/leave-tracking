@@ -29,9 +29,9 @@ router.route('/rejected')
 
 router.route('/:leaveId')
     .get(permit(), leaveCtrl.get)
-    .put(permit(USER, ADMIN), leaveCtrl.update)
+    .put(permit(), leaveCtrl.update)
     .patch(permit(APPROVER, ADMIN), leaveCtrl.updateStatus)
-    .delete(permit(USER, ADMIN), leaveCtrl.remove);
+    .delete(permit(), leaveCtrl.remove);
 
 router.param('leaveId', leaveCtrl.load);
 

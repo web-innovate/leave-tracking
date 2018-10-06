@@ -33,15 +33,13 @@ async function create(req, res, next) {
             workDays: req.body.workDays
         });
 
-    const pendingAndApproved = await LeaveRequest
-        .find({
-            userId: token.id,
-            $or: [{status: REQUEST_STATUS.APPROVED}, {status: REQUEST_STATUS.PENDING}]
-        });
+    const pendingAndApproved = await LeaveRequest.find({
+        userId: token.id,
+        $or: [{status: REQUEST_STATUS.APPROVED}, {status: REQUEST_STATUS.PENDING}]
+    });
 
     const overlapFound = pendingAndApproved.some(item => checkForOverlap(item, leave, next));
 
-    // stop from saving the request
     if (overlapFound) {
         return;
     }
@@ -110,6 +108,17 @@ async function update(req, res, next) {
     leave.leaveType = req.body.leaveType;
     leave.lastUpdatedBy = lastUpdatedBy._id;
 
+    const pendingAndApproved = await LeaveRequest.find({
+        userId: req.token.id,
+        $or: [{status: REQUEST_STATUS.APPROVED}, {status: REQUEST_STATUS.PENDING}]
+    });
+
+    const overlapFound = pendingAndApproved.some(item => checkForOverlap(item, leave, next));
+
+    if (overlapFound) {
+        return;
+    }
+
     leave.save()
         .then(async savedLeave => {
             const { userId, leaveType, status, workDays } = savedLeave;
@@ -157,7 +166,7 @@ function remove(req, res, next) {
     const leave = req.leaveRequest;
     const { userType } = req.token;
 
-    const hasRights = (leave.status === REQUEST_STATUS.PENDING && userType === USER_TYPES.USER)
+    const hasRights = (leave.status === REQUEST_STATUS.PENDING)
         || (leave.status !== REQUEST_STATUS.REJECTED && userType === USER_TYPES.ADMIN);
 
     if (hasRights) {
