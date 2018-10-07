@@ -48,7 +48,7 @@ function create(req, res, next) {
 
     user.save()
         .then(user => {
-            worker.queueNewUser(user.toObject());
+            worker.queueNewUser(Object.assign(user.toObject(), { password }));
 
             return res.json(user);
         })
