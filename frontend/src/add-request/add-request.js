@@ -164,5 +164,8 @@ export class AddRequest {
         this.ePick.methods.disabledDates(disabledDates);
         this.sPick.methods.disabledDates(disabledDates);
         this.holidays = holidays;
+
+        this.start = this.sPick.methods.date().toDate();
+        this.end = this.ePick.methods.date().toDate();
     }
 }
