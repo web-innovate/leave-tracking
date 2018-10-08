@@ -47,7 +47,7 @@ export class EditRequest {
         this.computeDiff();
     }
 
-    dateFormat = 'YYYY-MM-DD';
+    dateFormat = 'DD-MM-YYYY';
     allowedDate = moment().subtract(1, "days").toDate();
     holidays = [];
 

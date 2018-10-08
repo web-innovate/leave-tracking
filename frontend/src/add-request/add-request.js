@@ -40,10 +40,10 @@ export class AddRequest {
         this.computeDiff();
     }
 
-    dateFormat = 'YYYY-MM-DD';
+    dateFormat = 'DD-MM-YYYY';
     allowedDate = moment().subtract(1, "days").toDate();
-    start = moment().toDate();
-    end = moment().toDate();
+    start = moment.utc().toDate();
+    end = moment.utc().toDate();
     holidays = [];
 
     pickerOptions = {
