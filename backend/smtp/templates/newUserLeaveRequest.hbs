@@ -9,25 +9,24 @@
 </p>
 
 <p>
-    Status <strong>{{ status }}</strong>
+    Number of days: <strong>{{ workDays }}</strong>
 </p>
 
 <p>
-    No. of working days: <strong>{{ workDays }}</strong>
+    Status <strong>{{ status }}</strong>
 </p>
 
 <p>
     Created at: <strong>{{ createdAt }}</strong>
 </p>
 
-
 <p>
     Project: <strong>{{ projectName }}</strong>
 </p>
 
-<h3>
+<P>
     Approvers:
-</h3>
-{{#each approvers }}
-    <p>{{ firstName }} {{ lastName }} : {{ email }}</p>
-{{/each}}
+    {{#each approvers }}
+    <strong><a href="mailto:{{ email }}">{{ firstName }} {{ lastName }}</a></strong>
+    {{/each}}
+</P>

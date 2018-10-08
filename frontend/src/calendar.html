@@ -2,12 +2,11 @@
   <require from="bootstrap-calendar/css/calendar.css"></require>
   <spinner show.bind="isLoading"></spinner>
 
-  <div show.bind="!isLoading" class="col-md-12">
+  <div show.bind="!isLoading" class="panel col-md-12">
     <h3><i class="glyphicon glyphicon-calendar"></i> Calendar</h3>
     <hr>
 
   <div class="page-header">
-
     <div class="pull-right form-inline">
       <div class="btn-group">
         <button click.delegate="navigateTo('prev')" class="btn btn-primary" data-calendar-nav="prev">

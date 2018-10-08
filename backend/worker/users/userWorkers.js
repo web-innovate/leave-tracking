@@ -8,7 +8,7 @@ const User = mongoose.model('User', UserSchema);
 function handleNewUsers(params, callback) {
     try {
         const { email, firstName } = params;
-        const emailSubject = `${firstName} your account has been created`;
+        const emailSubject = `${firstName}, your account has been created`;
         const domain = process.env.FE_DOMAIN || 'http://localhost:3000';
 
         params.domain = domain;

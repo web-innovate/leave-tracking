@@ -1,9 +1,9 @@
 {{#with approver}}
-    <h1>Leave request has been CANCELED by {{ firstName }} {{ lastName }} : {{ email }}</h1>
+<h2>Leave request has been CANCELED by <strong><a href="mailto:{{ email }}">{{ firstName }} {{ lastName }}</a></strong></h2>
 {{/with}}
 
 {{#with employee}}
-    <h2>Employee: {{ firstName }} {{ lastName }} : {{ email }}</h2>
+<h3>Employee: <strong><a href="mailto:{{ email }}">{{ firstName }} {{ lastName }}</a></strong></h3>
 {{/with}}
 
 <p>
@@ -15,17 +15,16 @@
 </p>
 
 <p>
-    Status <strong>{{ status }}</strong>
+    Number of days: <strong>{{ workDays }}</strong>
 </p>
 
 <p>
-    No. of working days: <strong>{{ workDays }}</strong>
+    Status <strong>{{ status }}</strong>
 </p>
 
 <p>
     Created at: <strong>{{ createdAt }}</strong>
 </p>
-
 
 <p>
     Project: <strong>{{ projectName }}</strong>

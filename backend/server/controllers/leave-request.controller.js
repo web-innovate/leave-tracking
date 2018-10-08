@@ -46,7 +46,7 @@ async function create(req, res, next) {
 
     leave.save()
         .then(savedLeave => {
-            worker.queueNewLeaveRequest(savedLeave.toObject());
+            worker.queueNewLeaveRequest(savedLeave);
             return updateUserDaysForCreatedLeave(savedLeave, res);
         })
         .catch(e => next(e));
@@ -77,7 +77,7 @@ async function updateStatus(req, res, next) {
             const user = await User.findById(userId);
 
             if (status === REQUEST_STATUS.APPROVED) {
-                worker.queueApprovedLeaveRequest(savedLeave.toObject());
+                worker.queueApprovedLeaveRequest(savedLeave);
                 user.taken += workDays;
                 user.pending -= workDays;
                 user.holidays -= workDays;
@@ -85,7 +85,7 @@ async function updateStatus(req, res, next) {
             }
 
             if (status === REQUEST_STATUS.REJECTED) {
-                worker.queueRejectedLeaveRequest(savedLeave.toObject());
+                worker.queueRejectedLeaveRequest(savedLeave);
                 user.pending -= workDays;
                 await user.save();
             }
@@ -172,7 +172,7 @@ function remove(req, res, next) {
     if (hasRights) {
         return leave.remove()
             .then(async deleted => {
-                worker.queueCanceledLeaveRequest(deleted.toObject());
+                worker.queueCanceledLeaveRequest(deleted);
                 const { userId, leaveType, status, workDays } = deleted;
                 const user = await User.findById(userId);
 
