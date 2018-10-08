@@ -73,21 +73,23 @@ async function updateStatus(req, res, next) {
 
     leave.save()
         .then(async savedLeave => {
-            const { status, userId, workDays } = savedLeave;
+            const { status, userId, workDays, leaveType } = savedLeave;
             const user = await User.findById(userId);
 
-            if (status === REQUEST_STATUS.APPROVED) {
-                worker.queueApprovedLeaveRequest(savedLeave);
-                user.taken += workDays;
-                user.pending -= workDays;
-                user.holidays -= workDays;
-                await user.save();
-            }
+            if (leaveType === LEAVE_TYPES.ANNUAL) {
+                if (status === REQUEST_STATUS.APPROVED) {
+                    worker.queueApprovedLeaveRequest(savedLeave);
+                    user.taken += workDays;
+                    user.pending -= workDays;
+                    user.holidays -= workDays;
+                    await user.save();
+                }
 
-            if (status === REQUEST_STATUS.REJECTED) {
-                worker.queueRejectedLeaveRequest(savedLeave);
-                user.pending -= workDays;
-                await user.save();
+                if (status === REQUEST_STATUS.REJECTED) {
+                    worker.queueRejectedLeaveRequest(savedLeave);
+                    user.pending -= workDays;
+                    await user.save();
+                }
             }
 
             return res.json(savedLeave);
