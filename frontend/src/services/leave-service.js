@@ -30,8 +30,8 @@ export class LeaveService {
                 title: `${leave.userId.fullName} | ${HUMAN_LEAVE_TYPES[leaveType]}`,
                 type: leaveType,
                 class: this.computeEventClass(leaveType),
-                start: moment(leave.start).toDate().valueOf(),
-                end: moment(leave.end).toDate().valueOf()
+                start: moment(leave.start).valueOf(),
+                end: moment(leave.end).valueOf()
             }
         });
 
@@ -58,12 +58,13 @@ export class LeaveService {
     }
 
     addLeaveRequest(request) {
-        const { start, end, workDays, leaveType } = request;
+        const { start, end, workDays, leaveType, userId } = request;
         const leave = {
             leaveType,
             start,
             end,
             workDays,
+            userId,
             status: REQUEST_STATUS.PENDING
         };
 

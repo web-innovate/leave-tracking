@@ -3,7 +3,8 @@ import smtp from '../../smtp/smtp';
 import User from '../../server/models/user.model';
 import Project from '../../server/models/project.model';
 
-const FORMAT = 'DD MMM YYYY';
+const DATE_FORMAT = 'DD MMM YYYY';
+const DATETIME_FORMAT = 'DD MMM YYYY HH:mm';
 
 async function handleNewLeaveRequest(leave, callback) {
     try {
@@ -14,9 +15,9 @@ async function handleNewLeaveRequest(leave, callback) {
         leave.projectName = project.name;
         leave.approvers = approversData;
         leave.employee = user;
-        leave.start = moment(leave.start).format(FORMAT);
-        leave.end = moment(leave.end).format(FORMAT);
-        leave.createdAt = moment(leave.createdAt).format(FORMAT);
+        leave.start = moment(leave.start).format(DATE_FORMAT);
+        leave.end = moment(leave.end).format(DATE_FORMAT);
+        leave.createdAt = moment(leave.createdAt).format(DATETIME_FORMAT);
 
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, here is your leave request`;
         const approverEmailSubject = `[${leaveType}] Leave request pending for: ${firstName} ${lastName}`;
@@ -41,9 +42,9 @@ async function handleApprovedLeaveRequest(leave, callback) {
         leave.approvers = approversData;
         leave.employee = user;
         leave.approver = approver;
-        leave.start = moment(leave.start).format(FORMAT);
-        leave.end = moment(leave.end).format(FORMAT);
-        leave.createdAt = moment(leave.createdAt).format(FORMAT);
+        leave.start = moment(leave.start).format(DATE_FORMAT);
+        leave.end = moment(leave.end).format(DATE_FORMAT);
+        leave.createdAt = moment(leave.createdAt).format(DATETIME_FORMAT);
 
         const approvedCopyEmailAddress = process.env.APPROVED_LEAVE_CC_EMAIL;
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been APPROVED`;
@@ -69,9 +70,9 @@ async function handleRejectedLeaveRequest(leave, callback) {
         leave.approvers = approversData;
         leave.employee = user;
         leave.approver = approver;
-        leave.start = moment(leave.start).format(FORMAT);
-        leave.end = moment(leave.end).format(FORMAT);
-        leave.createdAt = moment(leave.createdAt).format(FORMAT);
+        leave.start = moment(leave.start).format(DATE_FORMAT);
+        leave.end = moment(leave.end).format(DATE_FORMAT);
+        leave.createdAt = moment(leave.createdAt).format(DATETIME_FORMAT);
 
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been DECLINED`;
         const approverEmailSubject = `[${leaveType}] DECLINED Leave request for: ${firstName} ${lastName}`;
@@ -96,9 +97,9 @@ async function handleCanceledLeaveRequest(leave, callback) {
         leave.approvers = approversData;
         leave.employee = user;
         leave.approver = approver;
-        leave.start = moment(leave.start).format(FORMAT);
-        leave.end = moment(leave.end).format(FORMAT);
-        leave.createdAt = moment(leave.createdAt).format(FORMAT);
+        leave.start = moment(leave.start).format(DATE_FORMAT);
+        leave.end = moment(leave.end).format(DATE_FORMAT);
+        leave.createdAt = moment(leave.createdAt).format(DATETIME_FORMAT);
 
         const userEmailSubject = `[${leaveType}] Hi ${firstName}, your leave request has been CANCELED`;
         const approverEmailSubject = `[${leaveType}] CANCELED Leave request for: ${firstName} ${lastName}`;

@@ -38,17 +38,22 @@ export class EditRequest {
     async activate(params) {
         this.request = await this._leave.getLeaveRequest(params.requestId);
         this.selectedLeave = this.request.leaveType;
-        this.start = moment(this.request.start).toDate();
-        this.end = moment(this.request.end).toDate();
+        this.start = moment(this.request.start);
+        this.end = moment(this.request.end);
         this.dateDiff = this.request.workDays;
     }
 
     attached() {
+        this.start = moment(this.request.start);
+        this.end = moment(this.request.end);
+        this.disableDates();
         this.computeDiff();
     }
 
     dateFormat = 'DD-MM-YYYY';
-    allowedDate = moment().subtract(1, "days").toDate();
+    allowedDate = moment().subtract(1, "days");
+    start = moment();
+    end = moment();
     holidays = [];
 
     pickerOptions = {
@@ -77,12 +82,12 @@ export class EditRequest {
     ];
 
     leaveTypeChanged() {
-        this.leaveType.events.onChanged = (e) => {
-            if (this.isHalfDaySelected()) {
-                this.ePick.methods.date(this.sPick.methods.date().toDate());
+        this.leaveType.events.onChanged = () => {
+            if(this.isHalfDaySelected()) {
+                this.ePick.methods.date(this.sPick.methods.date());
                 this.ePick.methods.disable();
             } else {
-                this.ePick.methods.minDate(this.sPick.methods.date().toDate());
+                this.ePick.methods.minDate(this.sPick.methods.date());
                 this.ePick.methods.enable();
             }
         };
@@ -94,35 +99,35 @@ export class EditRequest {
     }
 
     sPickChanged() {
-        this.sPick.events.onChange = (e) => {
+        this.sPick.events.onChange = () => {
             if (this.isHalfDaySelected()) {
-                this.ePick.methods.date(this.sPick.methods.date().toDate());
+                this.ePick.methods.date(this.sPick.methods.date());
             } else {
-                this.ePick.methods.minDate(this.sPick.methods.date().toDate());
+                this.ePick.methods.minDate(this.sPick.methods.date());
             }
 
-            this.start = this.sPick.methods.date().toDate();
+            this.start = this.sPick.methods.date();
 
             this.computeDiff();
         }
 
-        this.sPick.events.onHide = (e) => {
+        this.sPick.events.onHide = () => {
             this.ePick.methods.show();
         }
     }
 
     ePickChanged() {
-        this.ePick.events.onChange = (e) => {
-            this.end = this.ePick.methods.date().toDate();
+        this.ePick.events.onChange = () => {
+            this.end = this.ePick.methods.date();
             this.computeDiff();
         }
     }
 
     computeDiff() {
-        const fr = moment(this.start);
+        const from = moment(this.start);
         const to = moment(this.end);
-        const range = moment.range(fr, to);
-        let dateDiff = business.weekDays(fr,to) + 1;
+        const range = moment.range(from, to);
+        let dateDiff = business.weekDays(from, to) + 1;
 
         // go over each holiday and see if the range contains any
         // if it does we do not count that holiday :)
@@ -144,11 +149,11 @@ export class EditRequest {
 
     submit() {
         if (this.canSave) {
-            this.start = moment(this.start).startOf('day').toDate();
-            this.end = moment(this.end).endOf('day').toDate();
+            this.start = moment(this.start).startOf('day').toISOString();
+            this.end = moment(this.end).endOf('day').toISOString();
             const leave = {
                 _id: this.request._id,
-                userId: this._user.currentUser.id,
+                userId: this.request.userId._id,
                 leaveType: Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave,
                 start: this.start,
                 end: this.end,
@@ -162,5 +167,14 @@ export class EditRequest {
                         { containerSelector: '#edit-request', limit: 1 })
                 });
         }
+    }
+
+    async disableDates() {
+        const holidays = await this._holiday.getHolidays();
+        const disabledDates = holidays.map(h => moment(h.date).toDate());
+
+        this.ePick.methods.disabledDates(disabledDates);
+        this.sPick.methods.disabledDates(disabledDates);
+        this.holidays = holidays;
     }
 }

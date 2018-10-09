@@ -16,8 +16,8 @@ export class UserService {
             .then(user => new UserModel(user));
     }
 
-    async currentUser() {
-        return await this._auth.me();
+    currentUser() {
+        return this._auth.me();
     }
 
     createUser(user) {

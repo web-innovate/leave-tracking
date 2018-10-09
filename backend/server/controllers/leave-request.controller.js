@@ -28,13 +28,13 @@ async function create(req, res, next) {
             end: req.body.end,
             leaveType: req.body.leaveType,
             lastUpdatedBy: token.id,
-            userId: token.id,
+            userId: req.body.userId,
             status: req.body.status,
             workDays: req.body.workDays
         });
 
     const pendingAndApproved = await LeaveRequest.find({
-        userId: token.id,
+        userId: req.body.userId,
         $or: [{status: REQUEST_STATUS.APPROVED}, {status: REQUEST_STATUS.PENDING}]
     });
 
@@ -100,7 +100,7 @@ async function updateStatus(req, res, next) {
 async function update(req, res, next) {
     const lastUpdatedBy = await User.findById(req.token.id);
     const leave = req.leaveRequest;
-    const { workDays, leaveType } = leave;
+    const { workDays, leaveType, userId } = leave;
     const prevType = leaveType;
     const daysDiff = workDays - req.body.workDays;
 
@@ -111,8 +111,9 @@ async function update(req, res, next) {
     leave.lastUpdatedBy = lastUpdatedBy._id;
 
     const pendingAndApproved = await LeaveRequest.find({
-        userId: req.token.id,
-        $or: [{status: REQUEST_STATUS.APPROVED}, {status: REQUEST_STATUS.PENDING}]
+        userId,
+        _id: {$ne: leave._id},
+        $or: [{status: REQUEST_STATUS.APPROVED}, {status: REQUEST_STATUS.PENDING}],
     });
 
     const overlapFound = pendingAndApproved.some(item => checkForOverlap(item, leave, next));
