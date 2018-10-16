@@ -2,7 +2,6 @@ import { inject } from 'aurelia-framework';
 import moment from 'moment';
 import { LeaveService } from '~/services/leave-service'
 import { HolidayService } from '~/services/holiday-service'
-import { HUMAN_LEAVE_TYPES } from '~/util/constants';
 
 @inject(LeaveService, HolidayService)
 export class Calendar {
@@ -70,7 +69,6 @@ export class Calendar {
         holidays.forEach(h => {
             const date = moment(h.date).format('DD-MM');
             legalHolidays[date] = h.name;
-
         });
 
         this.config.holidays = legalHolidays;

@@ -2,7 +2,7 @@ import express from 'express';
 import validate from 'express-validation';
 import paramValidation from '../../config/param-validation';
 import leaveCtrl from '../controllers/leave-request.controller';
-import expressAuth from '../helpers/ExpressAuth';
+import expressAuth from '../helpers/expressAuth';
 import permit from './permission';
 import { USER_TYPES } from '../helpers/constants';
 
@@ -27,12 +27,11 @@ router.route('/approved')
 router.route('/rejected')
     .get(permit(APPROVER, ADMIN), leaveCtrl.rejected);
 
-router.route('/canceled')
-    .get(permit(APPROVER, ADMIN), leaveCtrl.canceled);
-
 router.route('/:leaveId')
-    .get(permit(ADMIN), leaveCtrl.get)
-    .put(permit(APPROVER, ADMIN), leaveCtrl.update);
+    .get(permit(), leaveCtrl.get)
+    .put(permit(), leaveCtrl.update)
+    .patch(permit(APPROVER, ADMIN), leaveCtrl.updateStatus)
+    .delete(permit(), leaveCtrl.remove);
 
 router.param('leaveId', leaveCtrl.load);
 

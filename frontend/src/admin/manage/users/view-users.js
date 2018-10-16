@@ -1,4 +1,4 @@
-import {inject} from 'aurelia-framework';
+import { inject } from 'aurelia-framework';
 import { ProjectService } from '~/services/project-service';
 import { ProjectRoleService } from '~/services/project-role-service';
 import { UserService } from '~/services/user-service';
@@ -16,8 +16,10 @@ export class ViewUsers {
         const users = await this._user.getUsers();
 
         users.forEach(async user => {
-            const project = await this._project.getProject(user.projectId);
-            const role = await this._role.getProjectRole(user.position);
+            const { projectId, position } = user;
+
+            const project = !!projectId ? await this._project.getProject(projectId) : {};
+            const role = !!position ? await this._role.getProjectRole(position) : {};
 
             user.project = project.name;
             user.role = role;
@@ -26,5 +28,4 @@ export class ViewUsers {
         this.users = users;
         this.loading = false;
     }
-
 }

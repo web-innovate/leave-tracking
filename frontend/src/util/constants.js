@@ -1,8 +1,7 @@
 export const REQUEST_STATUS = {
     APPROVED: 'approved',
     REJECTED: 'rejected',
-    PENDING: 'pending',
-    CANCELLED: 'canceled'
+    PENDING: 'pending'
 }
 
 export const LEAVE_TYPES = {

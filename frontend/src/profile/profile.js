@@ -2,7 +2,6 @@ import { inject } from 'aurelia-framework';
 import { UserService } from '~/services/user-service';
 import { ProjectService } from '~/services/project-service';
 import { ProjectRoleService } from '~/services/project-role-service';
-import md5 from 'md5';
 
 @inject(UserService, ProjectService, ProjectRoleService)
 export class Profile {
@@ -16,8 +15,9 @@ export class Profile {
 
     async attached() {
         this.user = await this._user.currentUser();
-        const { name : projectName } = await this._project.getProject(this.user.projectId);
-        const { name : role } = await this._role.getProjectRole(this.user.position);
+        const { projectId, position } = this.user;
+        const { name : projectName } = !!projectId ? await this._project.getProject(this.user.projectId) : {};
+        const { name : role } = !!position ? await this._role.getProjectRole(this.user.position) : {};
 
         this.user.project = projectName;
         this.user.role = role;

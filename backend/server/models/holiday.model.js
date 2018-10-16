@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import mongoose from 'mongoose';
 import httpStatus from 'http-status';
 import APIError from '../helpers/APIError';
@@ -15,7 +14,7 @@ const HolidaySchema = new mongoose.Schema({
     date: {
         type: Date,
         required: true,
-        index: { unique: true }
+        unique: true,
     },
     createdAt: {
         type: Date,
@@ -29,7 +28,6 @@ HolidaySchema.method({
 HolidaySchema.statics = {
     get(id) {
         return this.findById(id)
-            .exec()
             .then((holiday) => {
                 if (holiday) {
                     return holiday;
@@ -43,8 +41,7 @@ HolidaySchema.statics = {
         return this.find()
             .sort({ date: -1 })
             .skip(+skip)
-            .limit(+limit)
-            .exec();
+            .limit(+limit);
     }
 };
 

@@ -8,7 +8,7 @@ const User = mongoose.model('User', UserSchema);
 function handleNewUsers(params, callback) {
     try {
         const { email, firstName } = params;
-        const emailSubject = `${firstName} your account has been created`;
+        const emailSubject = `${firstName}, your account has been created`;
         const domain = process.env.FE_DOMAIN || 'http://localhost:3000';
 
         params.domain = domain;
@@ -38,7 +38,7 @@ function handlePasswordReset(params, callback) {
 }
 
 function createDefaultUser(params, cb) {
-    User.count()
+    User.countDocuments()
         .then(result => {
             if (result !== 0) {
                 return cb(null, {result});
@@ -50,13 +50,9 @@ function createDefaultUser(params, cb) {
                 lastName: 'admin',
                 email: 'admin@admin',
                 password: bcrypt.hashSync('admin', 10),
-                holidays: 99,
-                position: '',
-                projectId: '',
+                holidays: 24,
                 userType: 'ADMIN'
             });
-
-
 
             user.save()
                 .then(data => cb(null, data))

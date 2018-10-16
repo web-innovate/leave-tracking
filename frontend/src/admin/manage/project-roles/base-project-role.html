@@ -18,24 +18,24 @@
             </div>
         </div>
 
-        <div class="input-group pull-right">
-            <button
-                data-analytics-category="project-role"
-                data-analytics-action="create/update"
-                data-analytics-label="${ctaButtonLabel}"
-                type="submit"
-                disabled.bind="canSave"
-                class="btn btn-primary">
-                ${ctaButtonLabel}
-            </button>
-            <button
-                data-analytics-category="project-role"
-                data-analytics-action="delete"
-                if.bind="isEdit"
-                click.delegate="deleteProjectRole()"
-                class="btn btn-danger">
-                Delete
-            </button>
-        </div>
+        <button
+            data-analytics-category="project-role"
+            data-analytics-action="create/update"
+            data-analytics-label="${ctaButtonLabel}"
+            type="submit"
+            disabled.bind="canSave"
+            class="btn btn-primary col-xs-offset-3">
+            <i class="fa fa-check"></i>
+            ${ctaButtonLabel}
+        </button>
+
+        <button
+            data-analytics-category="project-role"
+            data-analytics-action="delete"
+            if.bind="isEdit"
+            click.delegate="deleteProjectRole()"
+            class="btn btn-danger pull-right">
+            Delete
+        </button>
     </form>
 </template>

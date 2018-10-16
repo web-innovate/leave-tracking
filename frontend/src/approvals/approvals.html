@@ -19,11 +19,8 @@
                         <li>
                             <a href="#rejected" data-toggle="tab">Rejected</a>
                         </li>
-                        <li>
-                            <a href="#canceled" data-toggle="tab">Canceled</a>
-                        </li>
                     </ul>
-                    <hr></hr>
+                    <hr>
 
                     <div class="tab-content clearfix">
                         <div class="tab-pane active" id="pending">
@@ -36,10 +33,6 @@
 
                         <div class="tab-pane" id="rejected">
                             <requests requests.bind="allRejectedRequests" loading.bind="rejectedLoading"></requests>
-                        </div>
-
-                        <div class="tab-pane" id="canceled">
-                            <requests requests.bind="allCanceledRequests" loading.bind="canceledLoading"></requests>
                         </div>
                     </div>
                 </div>

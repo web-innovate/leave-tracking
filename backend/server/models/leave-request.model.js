@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import mongoose from 'mongoose';
 import httpStatus from 'http-status';
 import APIError from '../helpers/APIError';
@@ -21,11 +20,18 @@ const LeaveRequestSchema = new mongoose.Schema({
         required: true
     },
     userId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
+    },
+    lastUpdatedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: false
     },
     status: {
         type: String,
+        enum: ['pending', 'approved', 'rejected'],
         required: true
     },
     workDays: {
@@ -38,15 +44,11 @@ const LeaveRequestSchema = new mongoose.Schema({
     }
 });
 
-
-LeaveRequestSchema.method({
-});
-
-
 LeaveRequestSchema.statics = {
     get(id) {
         return this.findById(id)
-            .exec()
+            .populate('userId')
+            .populate('lastUpdatedBy')
             .then((leaveRequest) => {
                 if (leaveRequest) {
                     return leaveRequest;
@@ -58,10 +60,11 @@ LeaveRequestSchema.statics = {
 
     list({ skip = 0, limit = 50 } = {}) {
         return this.find()
+            .populate('userId')
+            .populate('lastUpdatedBy')
             .sort({ createdAt: -1 })
             .skip(+skip)
-            .limit(+limit)
-            .exec();
+            .limit(+limit);
     }
 };
 

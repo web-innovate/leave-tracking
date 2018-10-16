@@ -1,5 +1,4 @@
 import { inject } from 'aurelia-framework';
-import { REQUEST_STATUS } from '~/util/constants';
 import { ApiService } from './api-service';
 import { UserModel } from '~/models/user-model';
 import { Events } from './events';
@@ -44,7 +43,7 @@ export class AuthService {
     get isAuth() {
         const token = localStorage.getItem('token') || false;
         if (!token) {
-            this._events.ea.publish('no_token', {});
+            this._events.ea.publish('no_token');
         }
 
         this.identifyLogRocket();

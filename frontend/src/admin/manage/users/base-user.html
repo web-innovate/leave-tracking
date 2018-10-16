@@ -36,7 +36,8 @@
         <div class="form-group">
             <label class="col-xs-3 control-label">Password</label>
             <div class="col-xs-9">
-                <input type="password" class="form-control" value.bind="user.password & validate">
+                <input if.bind="!isEdit" type="password" class="form-control" value.bind="user.password & validate">
+                <input if.bind="isEdit" type="password" class="form-control" value.bind="user.password">
             </div>
         </div>
 
@@ -90,7 +91,7 @@
             data-analytics-category="user"
             data-analytics-action="create/update"
             data-analytics-label="${ctaButtonLabel}"
-            class="btn btn-primary"
+            class="btn btn-primary col-xs-offset-3"
             type="submit"
             disabled.bind="canSave">
             <i class="fa fa-check"></i>
@@ -100,7 +101,7 @@
             data-analytics-category="user"
             data-analytics-action="delete"
             if.bind="isEdit"
-            class="btn btn-danger"
+            class="btn btn-danger pull-right"
             click.trigger = "delete()">
             Delete
         </button>

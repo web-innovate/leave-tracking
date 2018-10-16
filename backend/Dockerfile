@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:10
 
 LABEL maintainer="Bogdan Livadariu <bogdan.livadariu@gmail.com>"
 
@@ -20,7 +20,6 @@ ENV APPROVED_LEAVE_CC_EMAIL="hr@leavetracker.domain"
 ENV FE_DOMAIN=http://localhost:3000
 
 # Create app directory
-RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Bundle app source

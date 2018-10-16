@@ -52,16 +52,8 @@ export default class BaseProject {
             .then(() => this.router.navigateToRoute('projects'));
     }
 
-    getUser = function(userId) {
-        return this._user.getUser(userId);
-    }.bind(this);
-
     userSource = function(query, limit) {
         return this._user.searchApproverUserByName(query);
-    }.bind(this);
-
-    getProjectRole = function(userId) {
-        return this._projectRole.getProjectRole(userId);
     }.bind(this);
 
     projectRoleSource = function(query, limit) {

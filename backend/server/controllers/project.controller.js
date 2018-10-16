@@ -80,20 +80,4 @@ function getUsers(req, res, next) {
         .catch(e => next(e));
 }
 
-async function getApprovers(req, res, next) {
-    const { projectId } = req.params;
-    const { approvers } = await Project.findOne({ _id: projectId });
-    const users = Promise.all(approvers.map(async (approver) => {
-        let user = await User.findOne({ _id: approver });
-        const noPasswodUser = user.toObject();
-        delete noPasswodUser.password;
-
-        return noPasswodUser;
-    }));
-
-    users
-        .then(result => res.json(result))
-        .catch(e => next(e));
-}
-
-export default { load, get, create, update, list, remove, getUsers, getApprovers };
+export default { load, get, create, update, list, remove, getUsers };

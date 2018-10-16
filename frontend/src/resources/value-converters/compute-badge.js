@@ -1,4 +1,3 @@
-
 import { REQUEST_STATUS } from '~/util/constants'
 
 export class ComputeBadgeValueConverter {

@@ -44,22 +44,14 @@ function create(req, res, next) {
         userType
     });
 
-    // hash the password
     user.password = bcrypt.hashSync(password, 10);
-
 
     user.save()
         .then(user => {
-            // send password in plain text to user
-            const hashPassword = user.password;
-            user.password = password;
+            worker.queueNewUser(Object.assign(user.toObject(), { password }));
 
-            worker.queueNewUser(user.toObject());
-
-            user.password = hashPassword;
-            return user;
+            return res.json(user);
         })
-        .then(savedUser => res.json(savedUser))
         .catch(e => next(e));
 }
 
@@ -70,7 +62,7 @@ function update(req, res, next) {
     user.firstName = req.body.firstName;
     user.lastName = req.body.lastName;
     user.email = req.body.email.toLowerCase();
-    user.password = bcrypt.hashSync(req.body.password, 10);
+    if (req.body.password) user.password = bcrypt.hashSync(req.body.password, 10);
     user.daysPerYear = req.body.daysPerYear;
     user.holidays = req.body.holidays;
     user.position = req.body.position;

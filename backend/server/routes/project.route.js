@@ -2,7 +2,7 @@ import express from 'express';
 import validate from 'express-validation';
 import paramValidation from '../../config/param-validation';
 import projectCtrl from '../controllers/project.controller';
-import expressAuth from '../helpers/ExpressAuth';
+import expressAuth from '../helpers/expressAuth';
 import permit from './permission';
 import { USER_TYPES } from '../helpers/constants';
 
@@ -24,9 +24,6 @@ router.route('/:projectId')
 
 router.route('/:projectId/users')
     .get(permit(ADMIN), projectCtrl.getUsers);
-
-router.route('/:projectId/approvers')
-    .get(permit(ADMIN), projectCtrl.getApprovers);
 
 router.param('projectId', projectCtrl.load);
 

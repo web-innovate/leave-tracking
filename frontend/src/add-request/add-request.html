@@ -6,7 +6,7 @@
         <h3><i class="glyphicon glyphicon-plus"></i> Add a new leave request here</h3>
         <hr>
 
-        <form submit.delegate = "submit()">
+        <form submit.delegate = "submit()" id="add-request">
             <div class="form-group">
                 <label class="control-label">Leave type</label>
 
@@ -14,7 +14,8 @@
                     element.bind="leaveType"
                     selected-value.bind="selectedLeave"
                     collection.bind="leaveTypes"
-                    object-key="value">
+                    object-key="value"
+                    multiple="false">
                 </abp-select>
             </div>
 

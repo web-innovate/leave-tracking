@@ -1,4 +1,5 @@
 <template>
+    <require from="./dash.css"></require>
     <div class="col-md-12">
         <h3><i class="glyphicon glyphicon-dashboard"></i> Dashboard</h3>
         <hr>
@@ -12,50 +13,48 @@
 
                     <div class="panel-body">
 
-                        <spinner show.bind="!allRequests.length"></spinner>
+                        <spinner show.bind="loading"></spinner>
 
                         <ul id="leave-requests" class="list-group">
-                            <div repeat.for="request of allRequests"
-                                 class="list-group-item ${request.status | computeBadge}"
-                                 data-leave-request-id="${request._id}">
-                                <div
-                                        if.bind="request.status !== 'canceled'">
-                                    <button
+                            <li repeat.for="request of allRequests"
+                                class="list-group-item ${request.status | computeBadge} approval-row"
+                                data-leave-request-id="${request._id}">
+                                <div>
+                                    <div if.bind="request.status === 'pending'" class="btn-group">
+                                        <button
                                             type="button"
                                             class="btn btn-default dropdown-toggle"
                                             data-toggle="dropdown"
                                             aria-haspopup="true"
                                             aria-expanded="false">
-                                        Action<span class="caret"></span>
-                                    </button>
+                                            Action <span class="caret"></span>
+                                        </button>
 
-
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a
-                                                    data-analytics-category="requests"
-                                                    data-analytics-action="cancel"
-                                                    click.delegate="cancelRequest(request)">Cancel</a>
-                                        </li>
-                                        <li>
-                                            <a
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a
                                                     data-analytics-category="requests"
                                                     data-analytics-action="edit"
                                                     href="#/add-request/${request._id}/edit">Edit</a>
-                                        </li>
-                                    </ul>
+                                            </li>
+                                            <li>
+                                                <a
+                                                    data-analytics-category="requests"
+                                                    data-analytics-action="cancel"
+                                                    click.delegate="cancelRequest(request)">Cancel</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <span>
+                                        ${request.workDays | days} | ${request.start | dateFormat}
+                                        <span show.bind="showExtra(request)">
+                                            - ${request.end | dateFormat}
+                                        </span>
+                                        | ${request.leaveType | humanizeLeave}
+                                    </span>
                                 </div>
-
-                                <span>
-                                    ${request.workDays | days}
-                                </span>
-                                ${request.start | dateFormat}
-                                <span show.bind="showExtra(request)">
-                                    - ${request.end | dateFormat}
-                                </span>
-                                | ${request.leaveType | humanizeLeave}
                                 <span class="badge badge-pill">${request.status}</span>
-                                </li>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -68,14 +67,12 @@
                     </div>
 
                     <div class="panel-body">
-
                         <chart id="dynamic-doughnut-chart"
                                style="display: block;"
                                type="doughnut"
                                should-update="true"
                                throttle="10"
                                data.bind="statusData"></chart>
-
                     </div>
                 </div>
             </div>

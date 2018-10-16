@@ -2,12 +2,11 @@ import {inject} from 'aurelia-framework';
 import {UserService} from '~/services/user-service';
 import {AuthService} from '~/services/auth-service';
 import {LeaveService} from '~/services/leave-service';
-import {REQUEST_STATUS} from "./util/constants";
 
 @inject(UserService, AuthService, LeaveService)
 export class Dash {
+    loading = true;
     allRequests = [];
-    allPendingApprovals = [];
 
     statusData = {
         labels: ["Available", "Taken", "Pending"],
@@ -36,6 +35,7 @@ export class Dash {
     async activate() {
         await this.leaveRequests();
         await this.populateData();
+        this.loading = false;
     }
 
     async leaveRequests() {
@@ -54,14 +54,8 @@ export class Dash {
         return extra.workDays > 1;
     }
 
-    isCanceled(request) {
-        // console.log('req', request)
-        const da = request.status === 'canceled'
-        console.log('req', request, da)
-        return da;
-    }
-
     cancelRequest(request) {
-        return this._leave.updateLeaveRequestStatus(request, REQUEST_STATUS.CANCELLED);
+        this.allRequests = this.allRequests.filter(i => i._id !== request._id);
+        return this._leave.deleteRequest(request._id);
     }
 }

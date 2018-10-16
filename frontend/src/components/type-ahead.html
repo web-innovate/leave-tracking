@@ -1,7 +1,7 @@
 <template bindable="data-source,results,field,display-name,placeholder,results-resolver">
     <require from="./type-ahead.css"></require>
 
-    <div class="form-group">
+    <div class="typeahead">
         <aubs-typeahead
             data.call="_dataSource(filter, limit)"
             value.bind="state"
@@ -14,14 +14,13 @@
         </aubs-typeahead>
     </div>
 
-
-    <div class="form-group">
-            <span repeat.for="data of selectedData" class="tag label label-info">
-                <span>${data[displayName]}</span>
-                <a click.delegate="removeTag(data)">
-                    <i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i>
-                </a>
-            </span>
+    <div>
+        <span repeat.for="data of selectedData" class="tag label label-info">
+            <span>${data[displayName]}</span>
+            <a click.delegate="removeTag(data)">
+                <i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i>
+            </a>
+        </span>
     </div>
 
 </template>

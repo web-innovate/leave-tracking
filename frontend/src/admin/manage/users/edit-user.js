@@ -13,8 +13,7 @@ export class EditUser extends BaseUser {
     }
 
     async fetchData(params) {
-        const user = await this._user.getUser(params.userId);
-        this.user = user;
+        this.user = await this._user.getUser(params.userId);
         this.user.submit = this.save.bind(this);
 
         await this.fetchProjectRoles(this.user.projectId);
@@ -24,5 +23,4 @@ export class EditUser extends BaseUser {
         await this._user.deleteUser(this.user._id);
         this.router.navigateBack();
     }
-
 }

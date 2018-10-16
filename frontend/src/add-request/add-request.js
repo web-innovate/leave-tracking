@@ -4,7 +4,8 @@ const moment = extendMoment(Moment);
 
 import business from 'moment-business';
 import { bindable, inject } from 'aurelia-framework';
-import { Router} from 'aurelia-router';
+import { Router } from 'aurelia-router';
+import { NotificationService } from 'aurelia-notify';
 import { LeaveService } from '~/services/leave-service';
 import { UserService } from '~/services/user-service';
 import { HolidayService } from '~/services/holiday-service';
@@ -20,16 +21,17 @@ const {
     BEREAVEMENT_LEAVE,
     MARRIAGE_LEAVE } = LEAVE_TYPES;
 
-@inject(LeaveService, UserService, HolidayService, Router)
+@inject(LeaveService, UserService, HolidayService, NotificationService, Router)
 export class AddRequest {
     @bindable sPick;
     @bindable ePick;
     @bindable leaveType;
 
-   constructor(_leave, _user, _holiday, router) {
+   constructor(_leave, _user, _holiday, _notify, router) {
         this._leave = _leave;
         this._user = _user;
         this._holiday = _holiday;
+        this._notify = _notify;
         this.router = router;
     }
 
@@ -38,10 +40,10 @@ export class AddRequest {
         this.computeDiff();
     }
 
-    dateFormat = 'YYYY-MM-DD';
-    allowedDate = moment().subtract(1, "days").toDate();
-    start = moment().toDate();
-    end = moment().toDate();
+    dateFormat = 'DD-MM-YYYY';
+    allowedDate = moment().subtract(1, "days");
+    start = moment();
+    end = moment();
     holidays = [];
 
     pickerOptions = {
@@ -56,7 +58,7 @@ export class AddRequest {
         }
     };
 
-    selectedLeave = {};
+    selectedLeave = '';
     leaveTypes = [
         { value: ANNUAL , option: HUMAN_LEAVE_TYPES[ANNUAL] },
         { value: SICK, option: HUMAN_LEAVE_TYPES[SICK] },
@@ -69,16 +71,15 @@ export class AddRequest {
     ];
 
     leaveTypeChanged() {
-            this.leaveType.events.onChanged = (e) => {
-                if(this.isHalfDaySelected()) {
-                    this.ePick.methods.date(this.sPick.methods.date().toDate());
-                    this.ePick.methods.disable();
-                } else {
-                    this.ePick.methods.minDate(this.sPick.methods.date().toDate());
-                    this.ePick.methods.enable();
-                }
-            };
-
+        this.leaveType.events.onChanged = () => {
+            if (this.isHalfDaySelected()) {
+                this.ePick.methods.date(this.sPick.methods.date());
+                this.ePick.methods.disable();
+            } else {
+                this.ePick.methods.minDate(this.sPick.methods.date());
+                this.ePick.methods.enable();
+            }
+        };
     }
 
     isHalfDaySelected() {
@@ -86,35 +87,35 @@ export class AddRequest {
     }
 
     sPickChanged() {
-        this.sPick.events.onChange = (e) => {
+        this.sPick.events.onChange = () => {
             if (this.isHalfDaySelected()) {
-                this.ePick.methods.date(this.sPick.methods.date().toDate());
+                this.ePick.methods.date(this.sPick.methods.date());
             } else {
-                this.ePick.methods.minDate(this.sPick.methods.date().toDate());
+                this.ePick.methods.minDate(this.sPick.methods.date());
             }
 
-            this.start = this.sPick.methods.date().toDate();
+            this.start = this.sPick.methods.date();
 
             this.computeDiff();
         }
 
-        this.sPick.events.onHide = (e) => {
+        this.sPick.events.onHide = () => {
             this.ePick.methods.show();
         }
     }
 
     ePickChanged() {
         this.ePick.events.onChange = (e) => {
-            this.end = this.ePick.methods.date().toDate();
+            this.end = this.ePick.methods.date();
             this.computeDiff();
         }
     }
 
     computeDiff() {
-        const fr = moment(this.start);
+        const from = moment(this.start);
         const to = moment(this.end);
-        const range = moment.range(fr, to);
-        let dateDiff = business.weekDays(fr,to) + 1;
+        const range = moment.range(from, to);
+        let dateDiff = business.weekDays(from, to) + 1;
 
         // go over each holiday and see if the range contains any
         // if it does we do not count that holiday :)
@@ -134,25 +135,24 @@ export class AddRequest {
         return this.start && this.end && this.dateDiff >= 1;
     }
 
-    submit() {
+    async submit() {
         if (this.canSave) {
-            this.start = moment(this.start).startOf('day').toDate();
-            this.end = moment(this.end).endOf('day').toDate();
+            const user = await this._user.currentUser();
+            this.start = moment(this.start).startOf('day').toISOString();
+            this.end = moment(this.end).endOf('day').toISOString();
             const leave = {
-                userId: this._user.currentUser.id,
-                leaveType: this.selectedLeave,
+                userId: user._id,
+                leaveType: Array.isArray(this.selectedLeave) ? this.selectedLeave[0] : this.selectedLeave,
                 start: this.start,
                 end: this.end,
                 workDays: this.dateDiff
             };
 
             this._leave.addLeaveRequest(leave)
-                .then(() => {
-                    this.start = moment().toDate();
-                    this.end = moment().toDate();
-                    this.dateDiff = 0;
-
-                    this.router.navigate('home')
+                .then(() => this.router.navigate('home'))
+                .catch(error => {
+                    this._notify.danger(error.message && error.message.message,
+                        { containerSelector: '#add-request', limit: 1 })
                 });
         }
     }

@@ -1,4 +1,11 @@
-dist
-node_modules
-Dockerfile
-.env
+*
+!config
+!server
+!smtp
+!worker
+!.babelrc
+!.eslintrc.js
+!gulpfile.babel.js
+!index.js
+!package-lock.json
+!package.json

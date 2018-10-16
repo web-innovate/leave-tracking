@@ -1,16 +1,17 @@
 import Joi from 'joi';
 
-const userValidations = {
+const updateUserValidations = {
     startDate: Joi.date().required(),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
     email: Joi.string().required(),
-    password: Joi.string().required(),
     holidays: Joi.number().required(),
     position: Joi.string().allow('').optional(),
     projectId: Joi.string().allow('').hex().optional(),
     userType: Joi.string().required()
 };
+
+const createUserValidations = Object.assign({ password: Joi.string().required() }, updateUserValidations);
 
 const projectValidations = {
     name: Joi.string().required(),
@@ -41,11 +42,11 @@ const isObjectId = Joi.string().hex().required();
 
 export default {
     createUser: {
-        body: userValidations
+        body: createUserValidations
     },
 
     updateUser: {
-        body: userValidations,
+        body: updateUserValidations,
         params: {
             userId: isObjectId
         }
