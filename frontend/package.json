@@ -23,7 +23,7 @@
     "aurelia-notify": "^0.7.0",
     "aurelia-validation": "^1.0.0",
     "bluebird": "^3.4.1",
-    "bootstrap": "3.3.7",
+    "bootstrap": "3.4.1",
     "bootstrap-calendar": "^0.2.4",
     "compression": "^1.4.4",
     "express": "^4.12.3",
