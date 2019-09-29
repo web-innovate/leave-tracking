@@ -50,7 +50,7 @@
     "express-oas-generator": "^0.1.25",
     "express-validation": "1.0.1",
     "express-winston": "2.1.2",
-    "helmet": "3.8.2",
+    "helmet": "3.21.1",
     "http-status": "0.2.0",
     "joi": "10.0.6",
     "jsonwebtoken": "7.4.1",
