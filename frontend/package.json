@@ -8,7 +8,9 @@
   },
   "scripts": {
     "start": "au build --env prod && node server.js",
-    "dev": "au run --env dev --watch"
+    "dev": "au run --env dev --watch",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "license": "MIT",
   "dependencies": {
@@ -28,7 +30,7 @@
     "compression": "^1.4.4",
     "express": "^4.12.3",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.2.1",
+    "jquery": "^3.5.0",
     "lodash": "^4.17.4",
     "logrocket": "^0.5.6",
     "md5": "^2.2.1",
@@ -38,7 +40,8 @@
     "serve-static": "^1.9.2",
     "tether": "^1.4.0",
     "text": "github:requirejs/text#latest",
-    "velocity-animate": "^1.5.0"
+    "velocity-animate": "^1.5.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "aurelia-cli": "^0.27.0",
@@ -78,5 +81,6 @@
     "uglify-js": "^2.6.3",
     "underscore": "^1.8.3",
     "vinyl-fs": "^2.4.3"
-  }
+  },
+  "snyk": true
 }
