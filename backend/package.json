@@ -54,7 +54,7 @@
     "http-status": "0.2.0",
     "joi": "10.0.6",
     "jsonwebtoken": "7.4.1",
-    "lodash": "4.17.4",
+    "lodash": "4.17.21",
     "method-override": "2.3.5",
     "mongoose": "5.2.17",
     "monq": "0.3.7",
